@@ -62,14 +62,14 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    if(this.type !== "player"){
-      this.scene.combo.hit();  
-    }
-
     if(this.isDamege === true){
       return;
     }
 
+    if(this.type !== "player"){
+      this.scene.combo.hit();  
+    }
+    
     if(this.type === "player"){
       this.scene.powerUpList.addStep(-1);
     }
@@ -78,7 +78,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     if(damage <= 0){
       damage = 1;
     }
-
 
     if(this.hp.active){
       this.hp.calc(damage*-1,this);

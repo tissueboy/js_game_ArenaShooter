@@ -9,7 +9,7 @@ export default class CollisionCheck{
     _this.physics.add.collider(_this.enemyGroup,_this.groundLayer);
     _this.physics.add.collider(_this.enemyGroup,_this.objectLayer);
 
-    _this.physics.add.overlap(_this.player,_this.enemyGroup,this.player_x_Enemy_Collision);
+    // _this.physics.add.overlap(_this.player,_this.enemyGroup,this.player_x_Enemy_Collision);
     // _this.physics.add.overlap(_this.player,_this.bulletEnemyGroup,this.player_x_EnemyBullet_Collision);
 
     _this.physics.add.overlap(_this.enemyGroup,_this.playerWeaponGroup,this.enemy_x_playerWeapon_Collision);
@@ -65,7 +65,6 @@ export default class CollisionCheck{
     item.checkCollision(item,enemy);
   }
   bulletBounceCollision(bullet,ground){
-    console.log("this",this);
     if(this.scene.player.status.level > 1){
       bullet.bounce(); 
     }else{

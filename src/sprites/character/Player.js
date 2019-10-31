@@ -8,11 +8,11 @@ export default class Player extends Character{
 
     this.status = {
       hp: 10,
-      power: 10,
+      power: 12,
       defense: 1,
       experience: 10,
-      attackPoint: 2,
-      level: 1
+      attackPoint: 3,
+      level: 4
     }
 
     this.type = "player";
@@ -28,6 +28,24 @@ export default class Player extends Character{
     this.activeTime.depth = 1;
     this.playerRing.depth = 2;
     this.depth = 3;
+
+    let _this = this;
+
+    /*==============================
+    バリアー
+    ==============================*/
+    this.barrier = this.scene.add.sprite(this.x, this.y, 'barrier');
+    this.barrier.radian;
+    config.scene.physics.world.enable(this.barrier);
+    config.scene.add.existing(this.barrier);
+
+    this.barrier.setOrigin(0.5,0.5);
+    this.barrier.setVisible(true);
+
+    this.barrierDegree = 0;
+    this.barrierRadius = 20;
+
+    this.barrier.power = 1;
 
   }
   update(keys, time, delta) {
@@ -59,21 +77,86 @@ export default class Player extends Character{
       }
       this.activeTime.pileReset(); 
     }
+    if(this.status.level > 3){
+      // console.log("time",time);
+      this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
+        function(enemy,barrier){
+          enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
+      },null,this);
+      this.barrierDegree += 0.1;
+      this.barrier.setVisible(true);
+      this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
+      this.barrier.y = this.y + Math.sin(this.barrierDegree)*this.barrierRadius;     
+    }else{
+      this.barrierDegree = 0;
+      this.barrier.setVisible(false);
+      this.barrier.x = this.x;
+      this.barrier.y = this.y;
+    }
   }
   attack(){
-    let bullet = new Bullet({
-      scene: this.scene,
-      x: this.x,
-      y: this.y,
-      key: "bullet",
-      vx: this.attackVelocity.x,
-      vy: this.attackVelocity.y,
-      target: this,
-      power: this.status.power ,
-      scale: 1,
-      parent: "player"
-    }); 
-    bullet.depth = 10;  
-    this.scene.playerWeaponGroup.add(bullet);
+    let setScale = 1;
+    if(this.status.level > 4){
+      setScale = 2;
+    }
+    if(this.status.level > 2){
+      let degreeAdd = 30;
+      let degreeBase = Math.atan2(this.attackVelocity.y, this.attackVelocity.x)* 180 / Math.PI;
+      
+      let degreeAfter = 0;
+      let radiusAfter = 0;      
+      let _vx = 0;
+      let _vy = 0;
+      for(var i = 0; i < 3; i++){
+        degreeAfter = 0;
+        radiusAfter = 0;
+        if(i === 0){
+          degreeAfter = degreeBase + degreeAdd;
+          radiusAfter = degreeAfter * ( Math.PI / 180 ) ;
+          _vx = Math.cos(radiusAfter);
+          _vy = Math.sin(radiusAfter);    
+        }
+        if(i === 1){
+          _vx = this.attackVelocity.x;
+          _vy = this.attackVelocity.y;
+          degreeAfter = degreeBase;
+        }
+        if(i === 2){
+          degreeAfter = degreeBase - degreeAdd;
+          radiusAfter = degreeAfter * ( Math.PI / 180 ) ;
+          _vx = Math.cos(radiusAfter);
+          _vy = Math.sin(radiusAfter);   
+        }
+
+        let bullet = new Bullet({
+          scene: this.scene,
+          x: this.x,
+          y: this.y,
+          key: "bullet",
+          vx: _vx,
+          vy: _vy,
+          target: this,
+          power: this.status.power,
+          scale: setScale,
+          parent: "player"
+        }); 
+        this.scene.playerWeaponGroup.add(bullet);  
+
+      }
+    }else{
+      let bullet = new Bullet({
+        scene: this.scene,
+        x: this.x,
+        y: this.y,
+        key: "bullet",
+        vx: this.attackVelocity.x,
+        vy: this.attackVelocity.y,
+        target: this,
+        power: this.status.power ,
+        scale: setScale,
+        parent: "player"
+      }); 
+      this.scene.playerWeaponGroup.add(bullet);  
+    }
   }
 }

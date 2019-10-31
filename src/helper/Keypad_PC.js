@@ -125,18 +125,23 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     /*==============================
     デバッグ
     ==============================*/
-    this.text = this.scene.add.text(10, 10, 'Use up to 4 fingers at once', { font: '8px Courier', fill: '#FFF' });
-    this.text.depth = 100;
+    this.text = this.scene.add.text(10, 10, 'Use up to 4 fingers at once', { fontSize: '8px', fill: '#FFF' });
     this.text.setScrollFactor(0,0);
+    this.text.setStroke('#000', 4);
   }
   update(){
 
     /*==============================
     デバッグ
     ==============================*/
-    this.text.setText([
-      'this.keys.isRELEASE: ' + this.keys.isRELEASE,
-    ]);  
+    // this.text.setText([
+    //   'this.keys.isRELEASE:  ' + this.keys.isRELEASE,
+    //   'this.keys.TOUCH_START:' + this.keys.TOUCH_START.x + "/" + this.keys.TOUCH_START.y,
+    //   'this.keys.TOUCH_MOVE: ' + this.keys.TOUCH_MOVE.x  + "/" + this.keys.TOUCH_MOVE.y,
+    //   'this.keys.DIRECTION:  ' + this.keys.DIRECTION.x  + "/" + this.keys.DIRECTION.y,
+    //   'this.keys.POINTER:    ' + this.keys.POINTER.x  + "/" + this.keys.POINTER.y,
+    //   'this.keys.VECTOR:     ' + this.keys.VECTOR.x  + "/" + this.keys.VECTOR.y,
+    // ]);  
 
     if(this.keys.isTOUCH === true){
 
@@ -152,7 +157,8 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     }else{
       this.pointer.setVisible(false);
       this.pointerCenter.setVisible(false);
-
+      this.keys.DIRECTION.x = 0;
+      this.keys.DIRECTION.y = 0;
     }    
 
   }

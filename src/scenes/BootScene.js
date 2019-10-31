@@ -53,6 +53,8 @@ class BootScene extends Phaser.Scene {
     this.load.image('sword', 'assets/images/sword.png');
     this.load.image('scope', 'assets/images/scope.png');
     this.load.image('axe', 'assets/images/axe.png');
+    this.load.image('lazer_long', 'assets/images/lazer_long.png');
+    this.load.image('lazer_base', 'assets/images/lazer_base.png');
 
     this.load.image('title_start', 'assets/images/title_start.png');
 

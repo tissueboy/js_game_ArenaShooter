@@ -37,6 +37,10 @@ export default class Hp {
     if(this.active === false){
       return;
     }
+    if(this.hp > this.hpMax){
+      this.hp = this.hpMax;
+      return;
+    }
     this.hp = this.hp + num;
     this.hp_bar.displayWidth = this.hp_bar.displayWidthMax * (this.hp / this.hpMax);
     if(this.hp <= 0){

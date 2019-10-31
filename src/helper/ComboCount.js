@@ -32,10 +32,28 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
     this.comboHit.visible = false;
     this.comboText.visible = false;
 
+    this.comboTimerEvent;
+
   }
   hit(){
-    // this.comboHit.visible = true;
-    // this.comboText.visible = true;
+
+    this.combo_count++;
+    
+    this.comboTimerEvent = this.scene.time.addEvent({
+      delay: 2000,
+      callback: function(){
+        // this.comboTimerEvent.destroy();
+        this.betweenComboTime = false;
+        this.combo_count = 0;
+      },
+      callbackScope: this,
+      repeat: 0
+    });
+
+    if(this.combo_count <= 1){
+      return;
+    }
+
     var _comboText = this.comboText;
 
     var _comboText_x_before = this.comboText.x - 12;
@@ -43,7 +61,7 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
 
     var _comboHit = this.comboHit;
     var _this = this;
-    this.combo_count++;
+    
     this.comboText.text = this.combo_count;
     if(this.combo_count > 1){
       this.comboHit.visible = true;
@@ -61,8 +79,6 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
         repeat: 0,
         completeDelay: 400,
         onComplete: function () {
-          // _this.combo_count = 0;
-          // _this.comboText.x = _comboText_x_after;
           _comboText.setVisible(false);
           _comboHit.setVisible(false);
         }
