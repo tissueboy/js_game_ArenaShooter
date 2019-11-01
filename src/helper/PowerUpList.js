@@ -35,8 +35,6 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
 
     this.index += count;
 
-    console.log("this.index="+this.index+"/")
-
     if(this.index > (this.maxLevel-1)){
       /*LEVELの最高値だったら返す*/
       this.index = this.maxLevel-1;
@@ -56,7 +54,7 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
         }
       }
     );
-    console.log("this.index2",this.index);
+
     /*再設定*/
     this.cursor.x = 12+this.index*2+(this.index)*32;
     this.scene.player.status.level = this.index + 1;

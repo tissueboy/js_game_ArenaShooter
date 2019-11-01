@@ -7,6 +7,7 @@ import ClearStage from '../helper/ClearStage';
 import ButtonStop from '../helper/ButtonStop';
 import Animations from '../helper/Animations';
 import PowerUpList from '../helper/PowerUpList';
+import Menu from '../helper/Menu';
 
 // import Character from '../sprites/character/Character';
 import Player from '../sprites/character/Player';
@@ -20,6 +21,8 @@ class GameScene extends Phaser.Scene {
     });
   }
   create(){
+
+    console.log("this game scene",this);
 
     /*==============================
     ステージの表示
@@ -134,6 +137,15 @@ class GameScene extends Phaser.Scene {
     });
 
     /*==============================
+    UI | メニュー
+    ==============================*/
+
+    this.menu = new Menu({
+      scene: this
+    });
+
+    
+    /*==============================
     UI | コンボカウンター
     ==============================*/
     this.combo = new ComboCount({
@@ -175,6 +187,10 @@ class GameScene extends Phaser.Scene {
   update(time, delta) {
 
     this.keypad.update(this.input);
+
+    if (this.physics.world.isPaused) {      
+      return;
+    }    
 
     this.player.update(this.keypad.keys, time, delta);
 

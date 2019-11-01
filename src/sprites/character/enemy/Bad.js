@@ -6,6 +6,8 @@ export default class Bad extends EnemyChase {
 
     super(config);
 
+    this._scene = config.scene;
+
     this.status = {
       hp: 2,
       power: 5,
