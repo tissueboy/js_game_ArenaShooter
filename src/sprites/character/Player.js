@@ -78,7 +78,6 @@ export default class Player extends Character{
       this.activeTime.pileReset(); 
     }
     if(this.status.level > 3){
-      // console.log("time",time);
       this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
         function(enemy,barrier){
           enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));

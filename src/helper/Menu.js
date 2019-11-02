@@ -21,24 +21,27 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       100,
       'player'
     );
-    this.bad = config.scene.add.sprite(
+
+    this.statusText = this.scene.add.bitmapText(
       config.scene.game.config.width/2,
-      120,
-      'bad'
+      160,
+      'bitmapFont',
+      '',
+      24
     );
+    this.statusText.setText(
+      [
+        'ATTACK :'+this.scene.player.status.attackPoint,
+        'DEFENCE:'+this.scene.player.status.defense
+      ],
+    );
+    this.statusText.setOrigin(0.5,0.5);
     this.container.add([
       this.overlapArea,
       this.player,
-      this.bad
+      this.statusText
     ]);
-    /*
-    TODO
-    ・倒したモンスターの数を表示
-    ・レベル表示？
-    ・攻撃力、守備力表示　ステータス
-    */
 
-    // this.container.alpha = 1;
   }
   show(){
 

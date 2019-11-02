@@ -15,6 +15,16 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     this.container = this.scene.add.container(0, 0);
     this.container.depth = 100;
 
+    this.overlapArea = this.scene.add.graphics(
+      {
+        fillStyle: { color: 0x000000 }
+      }
+    );    
+    this.rect = new Phaser.Geom.Rectangle(0, 0, config.scene.game.config.width, config.scene.game.config.height);
+    this.overlapArea.fillRectShape(this.rect);
+    this.overlapArea.alpha = 0.75;
+
+
     this.stageClearTxt = this.scene.add.bitmapText(
       config.scene.game.config.width/2,
       70,
@@ -23,7 +33,6 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       30
     );
     this.stageClearTxt.setOrigin(0.5,0.5);
-    this.stageClearTxt.depth = 101;
     config.scene.physics.world.enable(this.stageClearTxt);
     config.scene.add.existing(this.stageClearTxt);
 
@@ -32,9 +41,8 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       100,
       'bitmapFont',
       'GET ITEM',
-      20
+      24
     );
-    this.getItemText.depth = 101;
     this.getItemText.setOrigin(0.5,0.5);
     config.scene.physics.world.enable(this.getItemText);
     config.scene.add.existing(this.getItemText);
@@ -44,7 +52,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       200,
       'bitmapFont',
       'GO NEXT',
-      20
+      24
     );
     this.btnNextText.setOrigin(0.5,0.5);
     this.btnNextText.depth = 101;
@@ -58,12 +66,16 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       [Star, "star","item"]
     ];
 
-    this.container.add(this.stageClearTxt);
-    this.container.add(this.getItemText);
-    this.container.add(this.btnNextText);
+    this.container.add([
+      this.overlapArea,
+      this.stageClearTxt,
+      this.getItemText,
+      this.btnNextText
+    ]);
+    
     this.container.visible = false;
 
-    // this.getItemGroup = this.scene.add.group();
+
 
     this.getItem;
 
@@ -80,7 +92,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     for(var i = 0; i < 3;i++){
       let dropItemName = this.getRandomObjName(this.dropItemList);
       let type = dropItemName[2];
-      let sprite = this.scene.add.sprite(30*(i+1)+40, 170, dropItemName[1]);
+      let sprite = this.scene.add.sprite(30*(i+1)+40, 140, dropItemName[1]);
       sprite.depth = 10;
       sprite.setInteractive();
       // this.getItemGroup.add(sprite);
@@ -112,4 +124,8 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
 
 
   } 
+  clearStageDisplay(){
+    console.log("clearStageDisplay");
+    this.container.visible = true;
+  }
 }

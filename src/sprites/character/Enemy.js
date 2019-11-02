@@ -8,6 +8,7 @@ export default class Enemy extends Character {
   constructor(config) {
 
     super(config);
+    this._scene = config.scene;
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
     this.setImmovable(true);/*ぶつかっても影響を受けない*/
@@ -89,6 +90,17 @@ export default class Enemy extends Character {
     this.explodeSprite.destroy();
     this.dropItem();
     this.destroy();
+
+    if(this.type === "boss"){
+      let _scene = this._scene;
+      setTimeout(
+        function(){
+          console.log("_scene",_scene);
+          _scene.clearStageObj.clearStageDisplay();
+        }
+      , 1000);
+    
+    }
 
   }
   getRandomObjName(arr){

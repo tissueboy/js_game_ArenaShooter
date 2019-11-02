@@ -64,5 +64,4 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
       this._scene.enemyGroup.add(enemyObject);
     }
   }
-
 }
