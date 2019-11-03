@@ -39,6 +39,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       this.damage_text,
       30
     );
+    this.damageText.depth = 10;
 
     this.damageText.setVisible(false);    
 

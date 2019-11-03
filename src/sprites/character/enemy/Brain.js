@@ -14,6 +14,10 @@ export default class Brain extends EnemyChase {
       experience: 10,
       attackPoint: 2
     }
+    this.hp.hp = this.status.hp;
+    this.hp.hpMax = this.status.hp;
+
+
 
   }
 

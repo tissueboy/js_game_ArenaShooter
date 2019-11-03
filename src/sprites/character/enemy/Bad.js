@@ -16,6 +16,8 @@ export default class Bad extends EnemyChase {
       attackPoint: 1,
       walkSpeed: 12
     }
+    this.hp.hp = this.status.hp;
+    this.hp.hpMax = this.status.hp;
     this.anims.play('badAnime', true);
   }
   update(keys, time, delta) {

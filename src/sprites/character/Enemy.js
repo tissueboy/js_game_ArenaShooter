@@ -17,6 +17,8 @@ export default class Enemy extends Character {
 
     this.active = true;
 
+    this.appearFlg = false;
+
     this.status = {
       hp: 10,
       power: 5,
@@ -80,6 +82,7 @@ export default class Enemy extends Character {
     this.hp.hp_bar.setVisible(true);
     this.hp.hp_bar_bg.setVisible(true);
     this.appearEnemyAfter();
+    this.appearFlg = true;
   }
   appearEnemyAfter(){
 
@@ -95,7 +98,6 @@ export default class Enemy extends Character {
       let _scene = this._scene;
       setTimeout(
         function(){
-          console.log("_scene",_scene);
           _scene.clearStageObj.clearStageDisplay();
         }
       , 1000);

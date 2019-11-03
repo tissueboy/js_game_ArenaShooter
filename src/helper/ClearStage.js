@@ -125,7 +125,6 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
 
   } 
   clearStageDisplay(){
-    console.log("clearStageDisplay");
     this.container.visible = true;
   }
 }

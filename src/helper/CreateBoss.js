@@ -1,3 +1,4 @@
+import Stone from '../sprites/character/boss/Stone';
 import Robot from '../sprites/character/boss/Robot';
 
 export default class CreateBoss  extends Phaser.Time.TimerEvent{
@@ -15,9 +16,10 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
       {
         stage: 1,
         boss: {
-          object: Robot,
+          object: Stone,
           x: config.scene.game.config.width/2,
-          y: 80
+          y: 80,
+          key: 'stone'
         }
       },
       {
@@ -25,7 +27,8 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Robot,
           x: config.scene.game.config.width/2,
-          y: 80
+          y: 80,
+          key: 'robot_base'
         }
       }
     ];
@@ -49,11 +52,13 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
     let _x = bossObj[0].boss.x;
     let _y = bossObj[0].boss.y;
 
+    console.log(bossObj[0])
+
     let boss = new bossObj[0].boss.object({
       scene: this,
       x: _x,
       y: _y,
-      key: 'robot_base'
+      key: bossObj[0].boss.key
     });
 
     this.enemyGroup.add(boss);

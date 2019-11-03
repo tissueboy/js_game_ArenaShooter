@@ -13,7 +13,8 @@ export default class Wizerd extends EnemyChase {
       experience: 10,
       attackPoint: 2
     }
-
+    this.hp.hp = this.status.hp;
+    this.hp.hpMax = this.status.hp;
     let _this = this;
 
     this.ATTACKING_DISTANCE = 30;

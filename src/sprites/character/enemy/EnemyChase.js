@@ -144,7 +144,7 @@ export default class EnemyChase extends Enemy {
   }
   startAttacking() {
     this.attackingPlayerTimerEvent = this.scene.time.addEvent({
-      delay: 1000,
+      delay: 0,
       callback: this.attack,
       callbackScope: this,
       repeat: Infinity

@@ -8,6 +8,7 @@ export default class Hp {
     this.hpMax = config.hp;
     this.active = false;
 
+
     this.hp_bar = config.scene.add.sprite(0, 0, 'hp_bar_s');
     this.hp_bar.displayWidth = this.taget.body.width;
     this.hp_bar.displayWidthMax = this.taget.body.width;
