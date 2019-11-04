@@ -7,6 +7,9 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     super(config.scene, config.x, config.y, config.key);
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
+
+    this._scene = config.scene;
+
     /*==============================
     ヘルパー関数群を呼び出し
     ==============================*/    
@@ -141,8 +144,25 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.active = false;  
     this.explodeSprite.destroy();
-    // this.dropItem();
+    if(this.type === "enemy"){
+      this.dropItem();
+    }
     this.destroy();
-    
+    if(this.type === "player"){
+      let _scene = this._scene;
+      setTimeout(
+        function(){
+          _scene.gameOverObj.gameOverDisplay();
+        }
+      , 1000);
+    }    
+    if(this.type === "boss"){
+      let _scene = this._scene;
+      setTimeout(
+        function(){
+          _scene.clearStageObj.clearStageDisplay();
+        }
+      , 1000);
+    }
   }
 }

@@ -10,10 +10,10 @@ export default class Bad extends EnemyChase {
 
     this.status = {
       hp: 2,
-      power: 5,
+      power: 1,
       defense: 2,
       experience: 10,
-      attackPoint: 1,
+      attackPoint: 100,
       walkSpeed: 12
     }
     this.hp.hp = this.status.hp;

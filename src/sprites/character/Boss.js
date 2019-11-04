@@ -15,7 +15,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
 
     this.status = {
       hp: 10,
-      power: 5,
+      power: 105,
       defense: 1,
       experience: 10,
       attackPoint: 2

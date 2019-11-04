@@ -47,18 +47,16 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     config.scene.physics.world.enable(this.getItemText);
     config.scene.add.existing(this.getItemText);
 
-    this.btnNextText = this.scene.add.bitmapText(
+
+    this.buttonNext = config.scene.add.sprite(
       config.scene.game.config.width/2,
       200,
-      'bitmapFont',
-      'GO NEXT',
-      24
+      'button_next'
     );
-    this.btnNextText.setOrigin(0.5,0.5);
-    this.btnNextText.depth = 101;
-    this.btnNextText.setInteractive();
-    config.scene.physics.world.enable(this.btnNextText);
-    config.scene.add.existing(this.btnNextText);
+    this.buttonNext.setOrigin(0.5,0.5);
+    this.buttonNext.setInteractive();
+    config.scene.physics.world.enable(this.buttonNext);
+    config.scene.add.existing(this.buttonNext);
 
     this.dropItemList = [
       [Axe, "axe","weapon"],
@@ -70,12 +68,10 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       this.overlapArea,
       this.stageClearTxt,
       this.getItemText,
-      this.btnNextText
+      this.buttonNext
     ]);
     
     this.container.visible = false;
-
-
 
     this.getItem;
 
@@ -107,7 +103,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       },this);
     }
 
-    this.btnNextText.on('pointerdown', () => {
+    this.buttonNext.on('pointerdown', () => {
       this.scene.registry.set('stage', "2");
       this.scene.registry.set('coin', this.scene.coin_count);
       if(this.getItem){

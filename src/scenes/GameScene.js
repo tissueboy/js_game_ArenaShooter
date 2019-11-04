@@ -5,11 +5,13 @@ import CreateObjects from '../helper/CreateObjects';
 import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
+import GameOver from '../helper/GameOver';
 import ButtonStop from '../helper/ButtonStop';
 import Animations from '../helper/Animations';
 import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
 
+import Star from '../sprites/item/Star';
 
 // import Character from '../sprites/character/Character';
 import Player from '../sprites/character/Player';
@@ -40,7 +42,7 @@ class GameScene extends Phaser.Scene {
 
 
     this.hasItemList = [
-      // [Star, "star","item"]//デバッグ用
+      [Star, "star","item"]//デバッグ用
     ];
     if(this.registry.list.hasItemList){
       this.hasItemList = this.registry.list.hasItemList;
@@ -77,9 +79,13 @@ class GameScene extends Phaser.Scene {
     /*==============================
     アニメーションの読み込み
     ==============================*/
-    this.animations = new Animations({
-      scene: this
-    });
+    if(this.registry.list.stage === "1"){
+      this.animations = new Animations({
+        scene: this
+      });
+      console.log("アニメーションの読み込み");
+  
+    }
 
     /*==============================
     キー入力
@@ -141,6 +147,13 @@ class GameScene extends Phaser.Scene {
     });
 
     /*==============================
+    UI | ゲームオーバー
+    ==============================*/
+    this.gameOverObj = new GameOver({
+      scene: this
+    });
+
+    /*==============================
     GROUP管理
     ==============================*/
 
@@ -192,7 +205,9 @@ class GameScene extends Phaser.Scene {
     );
 
   }
-
+  titleGame(){
+    this.scene.start('TitleScene');
+  }
   refleshGame(){
     this.scene.start('GameScene');
   }

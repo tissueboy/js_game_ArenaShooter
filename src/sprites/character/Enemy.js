@@ -69,7 +69,7 @@ export default class Enemy extends Character {
       onComplete: function () {
         _this.appear();
       },
-  });
+    });
   }
 
   update(keys, time, delta) {
@@ -87,24 +87,23 @@ export default class Enemy extends Character {
   appearEnemyAfter(){
 
   }
-  explode(){
+  // explode(){
 
-    this.active = false;  
-    this.explodeSprite.destroy();
-    this.dropItem();
-    this.destroy();
+  //   this.active = false;  
+  //   this.explodeSprite.destroy();
+  //   this.dropItem();
+  //   this.destroy();
 
-    if(this.type === "boss"){
-      let _scene = this._scene;
-      setTimeout(
-        function(){
-          _scene.clearStageObj.clearStageDisplay();
-        }
-      , 1000);
-    
-    }
+  //   if(this.type === "boss"){
+  //     let _scene = this._scene;
+  //     setTimeout(
+  //       function(){
+  //         _scene.clearStageObj.clearStageDisplay();
+  //       }
+  //     , 1000);
+  //   }
 
-  }
+  // }
   getRandomObjName(arr){
     let random = arr[Math.floor(Math.random() * arr.length)];
     return random;

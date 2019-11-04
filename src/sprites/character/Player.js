@@ -12,7 +12,7 @@ export default class Player extends Character{
       defense: 1,
       experience: 10,
       attackPoint: 3,
-      level: 4
+      level: 1
     }
 
     this.type = "player";
@@ -157,5 +157,19 @@ export default class Player extends Character{
       }); 
       this.scene.playerWeaponGroup.add(bullet);  
     }
+  }
+  starMode(){
+    let _this = this;
+    this.anims.play('playerStarAnime', true);
+    this.invincible = true;
+    this.starTimerEvent = this.scene.time.delayedCall(
+      // delay: 0,
+      2000,
+      function(){
+        _this.invincible = false;
+        _this.anims.play('playerIdleAnime', true);
+      },
+      [],
+      this);
   }
 }

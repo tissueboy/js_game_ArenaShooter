@@ -108,6 +108,9 @@ export default class Stone extends Enemy {
     });    
   }
   attackMove(){
+    if(!this.active){
+      return;
+    }
     let _target = this;
     let _target_y = this.base_y;
     this.bossAttackMove = this.scene.tweens.timeline({

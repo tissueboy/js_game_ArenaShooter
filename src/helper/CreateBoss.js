@@ -52,8 +52,6 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
     let _x = bossObj[0].boss.x;
     let _y = bossObj[0].boss.y;
 
-    console.log(bossObj[0])
-
     let boss = new bossObj[0].boss.object({
       scene: this,
       x: _x,

@@ -46,6 +46,11 @@ class BootScene extends Phaser.Scene {
     this.load.image('cursor', 'assets/images/ui/cursor.png');
     this.load.image('button_stop', 'assets/images/ui/button_stop.png');
     this.load.image('player_ring', 'assets/images/player_ring.png');
+    this.load.image('button_next', 'assets/images/ui/button_next.png');
+    this.load.image('button_continue', 'assets/images/ui/button_continue.png');
+    this.load.image('button_start', 'assets/images/ui/button_start.png');
+    this.load.image('button_ok', 'assets/images/ui/button_ok.png');
+    this.load.image('button_title', 'assets/images/ui/button_title.png');
     this.load.image('powerUpList_1', 'assets/images/ui/powerUpList_1.png');
     this.load.image('powerUpList_2', 'assets/images/ui/powerUpList_2.png');
     this.load.image('powerUpList_3', 'assets/images/ui/powerUpList_3.png');
