@@ -1,5 +1,5 @@
 import EnemyChase from './EnemyChase';
-import Bullet from '../weapon/Bullet';
+import Bullet from '../../weapon/Bullet';
 
 export default class Brain extends EnemyChase {
 

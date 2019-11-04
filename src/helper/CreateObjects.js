@@ -1,4 +1,7 @@
 import Bad from '../sprites/character/enemy/Bad';
+import Brain from '../sprites/character/enemy/Brain';
+import Wizerd from '../sprites/character/enemy/Wizerd';
+import Wizerd2 from '../sprites/character/enemy/Wizerd2';
 
 export default class CreateObjects  extends Phaser.Time.TimerEvent{
   constructor(config) {
@@ -26,7 +29,16 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
     this.appear_max_length = 3;
 
     this.objListEnemy = [
-      [Bad,"bad"]
+      //stage 1
+      [
+        [Bad,"bad"],
+        [Brain,"brain"]  
+      ],
+      //stage 2
+      [
+        [Wizerd,"wizerd"],
+        [Wizerd2,"wizerd2"]  
+      ]
     ];
   }
   getRandomObjName(arr){
@@ -49,9 +61,12 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
       return;
     }
 
+    let _enemyList = this.objListEnemy[this._scene.stageNumber-1]
+
+
     for(var i = 0;i<appear_length;i++){
 
-      let enemyName = this.getRandomObjName(this.objListEnemy);
+      let enemyName = this.getRandomObjName(_enemyList);
 
       var randomPostion = this.createRandomPosition();
 

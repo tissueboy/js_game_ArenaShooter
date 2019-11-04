@@ -12,6 +12,7 @@ import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
 
 import Star from '../sprites/item/Star';
+import Portion from '../sprites/item/Portion';
 
 // import Character from '../sprites/character/Character';
 import Player from '../sprites/character/Player';
@@ -42,7 +43,8 @@ class GameScene extends Phaser.Scene {
 
 
     this.hasItemList = [
-      [Star, "star","item"]//デバッグ用
+      // [Star, "star","item"]//デバッグ用
+      [Portion, "portion","item"]//デバッグ用
     ];
     if(this.registry.list.hasItemList){
       this.hasItemList = this.registry.list.hasItemList;
@@ -79,7 +81,8 @@ class GameScene extends Phaser.Scene {
     /*==============================
     アニメーションの読み込み
     ==============================*/
-    if(this.registry.list.stage === "1"){
+    this.animations;
+    if(!this.animations){
       this.animations = new Animations({
         scene: this
       });

@@ -6,7 +6,7 @@ export default class Portion extends Item {
     this.key = "portion";
     this.frame = "portion";
     this.recoveryPoint = 5;
-    this.scene.hp.calc(this.recoveryPoint);
+    this.scene.player.hp.calc(this.recoveryPoint);
     this.destroy();  
   }
 }

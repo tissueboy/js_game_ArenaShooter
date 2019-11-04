@@ -7,14 +7,15 @@ export default class Player extends Character{
     super(config);
 
     this.status = {
-      hp: 10,
+      hp: 1000,
       power: 12,
       defense: 1,
       experience: 10,
       attackPoint: 3,
       level: 1
     }
-
+    this.hp.hp = this.status.hp;
+    this.hp.hpMax = this.status.hp;
     this.type = "player";
 
     this.activeTime = new ActiveTime({

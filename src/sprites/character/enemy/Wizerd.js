@@ -25,11 +25,18 @@ export default class Wizerd extends EnemyChase {
     });
     this.sword.setOrigin(0.5,0.5);
     this.sword.setVisible(false);
+
     this.sword.on(
       'animationcomplete',
       function(){
-        this.isAttacking = false;
         this.sword.setVisible(false);
+        this.sword.alpha = 0;
+        let _this = this;
+        this.zone.x = this.x - this.width/2;
+        this.zone.y = this.y - this.height/2;  
+        setTimeout(function(){
+          _this.isAttacking = false;
+        }, 1000);
       },
       this
     );
@@ -94,6 +101,7 @@ export default class Wizerd extends EnemyChase {
       return;
     }
     this.isAttacking = true;
+    this.sword.alpha = 1;
     this.attackHitEvent = this.scene.time.addEvent({
       delay: 300,
       callback: function(){
