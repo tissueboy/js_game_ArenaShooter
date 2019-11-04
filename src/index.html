@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>RPG | Phaser3 - ES6 - Webpack</title>
+<title>ARENA SHOOTER | Phaser3 - ES6 - Webpack</title>
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> -->
 <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 <meta name="HandheldFriendly" content="True">
@@ -27,8 +27,14 @@ body {
   image-rendering: pixelated;                  /* Chrome 41 */
 }
 canvas{
-  width: 100% !important;
-  height: auto !important;
+  width: auto !important;
+  height: 100vh !important;
+}
+@media screen and (max-width: 750px){
+  canvas{
+    width: 100% !important;
+    height: auto !important;
+  }
 }
 </style>
 </head>
