@@ -195,11 +195,11 @@ class GameScene extends Phaser.Scene {
         sprite.update(time, delta);
       }
     );
-    // this.bulletEnemyGroup.children.entries.forEach(
-    //   (sprite) => {
-    //     sprite.update(time, delta);
-    //   }
-    // ); 
+    this.enemyWeaponGroup.children.entries.forEach(
+      (sprite) => {
+        sprite.update(time, delta);
+      }
+    ); 
 
     this.enemyGroup.children.entries.forEach(
       (sprite) => {

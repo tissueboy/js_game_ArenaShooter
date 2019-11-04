@@ -51,9 +51,13 @@ export default class Wizerd extends EnemyChase {
     TODO:
     this.barrierの削除
      */
+    if(this.hp <= 0){
+      this.barrier.destroy();
+    }
     if (!this.active) {
       return;
     }
+
     this.handleChase();
     this.hp.move(this.x,this.y);
 

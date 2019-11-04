@@ -17,7 +17,9 @@ export default class Brain extends EnemyChase {
     this.hp.hp = this.status.hp;
     this.hp.hpMax = this.status.hp;
 
-
+    this.CHASING_DISTANCE = 160;
+    this.ATTACKING_DISTANCE = 100;    
+    this.attackingTimerEvent;
 
   }
 
@@ -32,6 +34,20 @@ export default class Brain extends EnemyChase {
   attack(){
     if (!this.active) {
       return;
+    }
+
+    if(this.attackingTimerEvent){
+      return;
+    }else{
+      this.attackingTimerEvent = this.scene.time.addEvent({
+        delay: 3000,
+        callback: function(){
+          this.attackingTimerEvent.remove(false);
+          this.attackingTimerEvent = null;
+        },
+        callbackScope: this,
+        repeat: 0
+      });  
     }
     var radian = Math.atan2(this.direction.x, this.direction.y);
     var rangeRadius = 10;
@@ -50,8 +66,7 @@ export default class Brain extends EnemyChase {
       scale: 1,
       type: "enemy"
     });
-    this.scene.bulletEnemyGroup.add(bullet);   
-    this.countTouch++; 
+    this.scene.enemyWeaponGroup.add(bullet);   
   }
   attackStop(){
     
