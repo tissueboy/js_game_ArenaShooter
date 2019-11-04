@@ -10,7 +10,7 @@
 <meta name="MobileOptimized" content="640">
 <meta http-equiv="cleartype" content="on">
 <meta name="format-detection" content="telephone=no">
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script> -->
 
 <!-- <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet"> -->
 <style>
@@ -27,8 +27,14 @@ body {
   image-rendering: pixelated;                  /* Chrome 41 */
 }
 canvas{
-  width: 100% !important;
-  height: auto !important;
+  width: auto !important;
+  height: 100vh !important;
+}
+@media screen and (max-width: 750px){
+  canvas{
+    width: 100% !important;
+    height: auto !important;
+  }
 }
 </style>
 </head>
