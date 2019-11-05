@@ -1,6 +1,8 @@
 import Character from './Character';
 import ActiveTime from './ActiveTime';
 import Bullet from '../weapon/Bullet';
+import Calcs from '../../helper/Calcs';
+import Scope from './Scope';
 
 export default class Player extends Character{
   constructor(config) {
@@ -24,13 +26,22 @@ export default class Player extends Character{
     });
     
     this.playerRing = config.scene.add.sprite(this.x, this.y, 'player_ring');
+    this.playerRing.setVisible(false);
     this.attackVelocity = new Phaser.Math.Vector2();
 
     this.activeTime.depth = 1;
     this.playerRing.depth = 2;
     this.depth = 3;
+    this.activeTime.circle.setVisible(false);
 
     let _this = this;
+
+    this.calc = new Calcs();
+
+    this.scope = new Scope({
+      scene: config.scene,
+      target: this
+    });
 
     /*==============================
     バリアー
@@ -43,8 +54,11 @@ export default class Player extends Character{
     this.barrier.setOrigin(0.5,0.5);
     this.barrier.setVisible(true);
 
+    this.barrier.scaleX = 0;
+    this.barrier.scaleY = 0;
+
     this.barrierDegree = 0;
-    this.barrierRadius = 20;
+    this.barrierRadius = 24;
 
     this.barrier.power = 1;
 
@@ -67,8 +81,41 @@ export default class Player extends Character{
       var degree = radian *  180 / Math.PI *-1;
       this.playerRing.angle = degree;
     }  
+
+    this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
+      function(enemy,barrier){
+        enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
+    },null,this);
+
+    this.barrierDegree += 0.1;
+
+    this.barrier.setVisible(true);
+    this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
+    this.barrier.y = this.y + Math.sin(this.barrierDegree)*this.barrierRadius;
+
+
     if(keys.isTOUCH === true){
+      console.log("this.activeTime.per",this.activeTime.per);
+      this.barrier.scaleX = this.activeTime.per;
+      this.barrier.scaleY = this.activeTime.per;
+
       this.activeTime.pileUp();
+      // this.scope.head.setVisible(true);
+      // this.scope.head.x = this.barrier.x + Math.cos(this.barrierDegree)*this.barrierRadius;
+      // this.scope.head.y = this.barrier.y + Math.sin(this.barrierDegree)*this.barrierRadius;
+      this.scope.playerShotLine.clear();
+      // this.scope.head.vector = this.calcs.returnMax1(keys.VECTOR.x,keys.VECTOR.y);
+      this.scope.playerShotLine.lineBetween(
+        this.x,
+        this.y,
+        this.x + this.activeTime.per * Math.cos(this.barrierDegree)*this.barrierRadius,
+        this.y + this.activeTime.per * Math.sin(this.barrierDegree)*this.barrierRadius
+      );
+    }else{
+      this.barrier.scaleX = 0;
+      this.barrier.scaleY = 0;
+      this.scope.head.setVisible(false);        
+      this.scope.playerShotLine.clear();
     }
 
     if(keys.isRELEASE === true){
@@ -77,25 +124,17 @@ export default class Player extends Character{
         this.attack();
       }
       this.activeTime.pileReset(); 
-    }
-    if(this.status.level > 3){
-      this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
-        function(enemy,barrier){
-          enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
-      },null,this);
-      this.barrierDegree += 0.1;
-      this.barrier.setVisible(true);
-      this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
-      this.barrier.y = this.y + Math.sin(this.barrierDegree)*this.barrierRadius;     
-    }else{
-      this.barrierDegree = 0;
-      this.barrier.setVisible(false);
-      this.barrier.x = this.x;
-      this.barrier.y = this.y;
-    }
+    } 
+
   }
   attack(){
     let setScale = 1;
+    let vec = this.calc.returnMax1(
+      this.barrier.x - this.x,
+      this.barrier.y - this.y
+    );
+    let _vx = 0;
+    let _vy = 0;
     if(this.status.level > 4){
       setScale = 2;
     }
@@ -105,8 +144,7 @@ export default class Player extends Character{
       
       let degreeAfter = 0;
       let radiusAfter = 0;      
-      let _vx = 0;
-      let _vy = 0;
+
       for(var i = 0; i < 3; i++){
         degreeAfter = 0;
         radiusAfter = 0;
@@ -117,8 +155,10 @@ export default class Player extends Character{
           _vy = Math.sin(radiusAfter);    
         }
         if(i === 1){
-          _vx = this.attackVelocity.x;
-          _vy = this.attackVelocity.y;
+          // _vx = this.attackVelocity.x;
+          // _vy = this.attackVelocity.y;
+          _vx = vec.x;
+          _vy = vec.y;
           degreeAfter = degreeBase;
         }
         if(i === 2){
@@ -130,8 +170,8 @@ export default class Player extends Character{
 
         let bullet = new Bullet({
           scene: this.scene,
-          x: this.x,
-          y: this.y,
+          x: this.barrier.x,
+          y: this.barrier.y,
           key: "bullet",
           vx: _vx,
           vy: _vy,
@@ -144,13 +184,15 @@ export default class Player extends Character{
 
       }
     }else{
+      _vx = vec.x;
+      _vy = vec.y;
       let bullet = new Bullet({
         scene: this.scene,
-        x: this.x,
-        y: this.y,
+        x: this.barrier.x,
+        y: this.barrier.y,
         key: "bullet",
-        vx: this.attackVelocity.x,
-        vy: this.attackVelocity.y,
+        vx: _vx,
+        vy: _vy,
         target: this,
         power: this.status.power ,
         scale: setScale,

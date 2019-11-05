@@ -19,25 +19,30 @@ export default class ActiveTime extends Phaser.Physics.Arcade.Sprite {
 
     this.pileUpSpeed = 0.04;
     this.flg_max = false;
+
+    this.per = 0;
   }
   move(x,y){
     this.circle.x = x;
     this.circle.y = y;
   }
   pileUp(){
-    if(this.circle.scaleX < 1){
+    if(this.per < 1){
       this.circle.scaleX += this.pileUpSpeed;
       this.circle.scaleY += this.pileUpSpeed;
+      this.per = this.per + this.pileUpSpeed;
       this.flg_max = false;
     }else{
       this.circle.scaleX = 1;
       this.circle.scaleY = 1;      
+      this.per = 1;
       this.flg_max = true;
     }
   }
   pileReset(){
     this.circle.scaleX = 0;
     this.circle.scaleY = 0;
+    this.per = 0;
     this.flg_max = false;
   }
 }
