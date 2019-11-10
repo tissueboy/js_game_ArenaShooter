@@ -29,12 +29,13 @@ export default class Player extends Character{
     this.playerRing.setVisible(false);
     this.attackVelocity = new Phaser.Math.Vector2();
 
+    let _this = this;
+
     this.activeTime.depth = 1;
     this.playerRing.depth = 2;
     this.depth = 3;
     this.activeTime.circle.setVisible(false);
 
-    let _this = this;
 
     this.calc = new Calcs();
 
@@ -58,9 +59,11 @@ export default class Player extends Character{
     this.barrier.scaleY = 0;
 
     this.barrierDegree = 0;
-    this.barrierRadius = 24;
+    this.barrierRadius = 18;
 
     this.barrier.power = 1;
+
+    
 
   }
   update(keys, time, delta) {
@@ -70,6 +73,8 @@ export default class Player extends Character{
     if(this.active === false){
       return;
     }
+
+
     this.setVelocityX(keys.DIRECTION.x*4);
     this.setVelocityY(keys.DIRECTION.y*4);
     if (this.active) {
@@ -87,7 +92,7 @@ export default class Player extends Character{
         enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
     },null,this);
 
-    this.barrierDegree += 0.1;
+    this.barrierDegree += 0.15;
 
     this.barrier.setVisible(true);
     this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
@@ -95,7 +100,6 @@ export default class Player extends Character{
 
 
     if(keys.isTOUCH === true){
-      console.log("this.activeTime.per",this.activeTime.per);
       this.barrier.scaleX = this.activeTime.per;
       this.barrier.scaleY = this.activeTime.per;
 

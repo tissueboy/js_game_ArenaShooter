@@ -34,4 +34,16 @@ export default class Calcs {
 
     return arr;
   }
+  createRandomPosition(min_x,max_x,min_y,max_y){
+    var randNumX = Math.floor(Math.random()*(max_x-min_x)+min_x);
+    var randNumY = Math.floor(Math.random()*(max_y-min_y)+min_y);
+    var randPos = {
+      x:randNumX,
+      y:randNumY
+    };
+    return randPos;  
+  }
+  getRandomInt(min, max) {
+    return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
 }

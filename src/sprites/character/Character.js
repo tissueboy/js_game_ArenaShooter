@@ -24,6 +24,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
     this.active = true;
     this.invincible = false;
+    this.appeared = true;
     this.type;
     
     this.hp = new Hp({
