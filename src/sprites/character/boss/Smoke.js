@@ -20,23 +20,22 @@ export default class Smoke extends Enemy {
       walkSpeed: 12
     }
 
-    this.TILE_WIDTH = 16;
+    /*======
+    弾の準備
+    ========*/    
+    this.smokeChildGroup = config.scene.add.group();
+    let smokeChildLength = 7;
 
-    this.maxDistanceArea = {
-      top: 20,
-      left: this.width/2 + this.TILE_WIDTH,
-      right: config.scene.game.config.width - this.width/2 - this.TILE_WIDTH,
-      bottom: 200
+    for(var i = 0; i < smokeChildLength; i++){
+      let smoleChildSprite = config.scene.add.sprite(this.x, this.y, 'smoke_s');
+      config.scene.physics.world.enable(smoleChildSprite);
+      config.scene.add.existing(smoleChildSprite);  
+      smoleChildSprite.setOrigin(0.5,0.5);
+      smoleChildSprite.setVisible(false);
+      this.smokeChildGroup.add(smoleChildSprite);
     }
-    this.moveDirection = {
-      x: 1,
-      y: 10
-    }
-    this.attackTimerEvent;
-
-    this.runMode = "run";
-    this.bossAttackBefore = this.scene.tweens.createTimeline();
-    this.bossAttackMove = this.scene.tweens.createTimeline();
+    this.attackStartTimerEvent;
+    this.attackAppearTimerEvent;
   }
   update(){
     if (!this.active) {
@@ -44,119 +43,117 @@ export default class Smoke extends Enemy {
     }
     if (this.active) {
       this.hp.move(this.x,this.y);
-      if(this.runMode === "run"){
-        this.invincible = true;
-        this.checkDistance("run");
-      }
-      if(this.runMode === "attack"){
-        this.invincible = false;
-        this.checkDistance("attack");
-      }      
-      
-
-      if(!this.attackTimerEvent){
-        this.attack();
-      }
-
     }
-    if (!this.active) {
-      this.attackTimerEvent.remove(false);
-      this.bossAttackBefore.stop();
-      this.bossAttackBefore.destroy();
-      this.bossAttackMove.stop()
-      this.bossAttackMove.destroy();
-    }
-    if(this.explodeAnime){
-      this.explodeAnime.update(time, delta);
+    if(!this.attackAppearTimerEvent){
+      let _this = this;
+      this.attackAppearTimerEvent = this.scene.time.delayedCall(
+        2000,
+        function(){
+          let moveAttackStart = this.scene.tweens.add({
+            targets: this,
+            ease: 'liner',
+            x: 100,
+            y: 40,
+            duration: 1000,
+            repeat: 0,
+            onComplete: function () {
+              _this.appearChildAnime();
+            },
+          });   
+        },
+        [],
+        this
+      );
+
+  
     }
   }
   attack(){
-    this.attackTimerEvent = this.scene.time.addEvent({
-      delay: 6000,
-      callback: this.attackAnimation,
-      callbackScope: this,
-      repeat: -1,
-      // startAt: 1000,
-    });    
   }
-  attackAnimation(){
-    if(!this.active){
-      return;
-    }
-    this.runMode = "attack";
-    let _target = this;
-    this.body.setVelocity(0,0);
-    let _target_y = _target.y;
-    
-    this.bossAttackBefore = this.scene.tweens.timeline({
-      targets: _target,
-      // y: _target_y+10,
-      tweens: [{
-        y: _target_y,
-      },
-      {
-        y: _target_y+5,
-      }],
-      ease: 'liner',
-      duration: 100,
-      repeat: 4,
-      // loop: 3,
-      completeDelay: 400,
-      onComplete: function () {
-        _target.attackMove();
-      }
-    });    
-  }
-  attackMove(){
-    if(!this.active){
-      return;
-    }
-    let _target = this;
-    let _target_y = this.base_y;
-    this.bossAttackMove = this.scene.tweens.timeline({
-      targets: _target,
-      tweens: [{
-        x: _target.x,
-        y: _target_y,
-      },
-      {
-        x: _target.x,
-        y: _target.maxDistanceArea.bottom
-      },
-      {
-        x: _target.x,
-        y: _target_y,
-      },
-      ],
-      ease: 'liner',
-      duration: 600,
-      repeat: 0,
-      completeDelay: 400,
-      onComplete: function () {
-        _target.runMode = "run";
-      }
-    });     
-  }
-  checkDistance(_mode){
+  appearChildAnime(sprite){
+    let _this = this;
+    let _delay = 1000;
+    let _start_pos_x = 40;
+    let _start_pos_y = 80;
+    let _padding_side = 20;
+    let _distance_height = 260;
+    let _pos_x = 0;
+    let _pos_y = 0;
 
-    if(_mode === "attack"){
-      this.body.setVelocity(0,0);
-      return;
-    }
+    this.smokeChildGroup.children.entries.forEach(
+      (sprite,index) => {
 
-    if(_mode === "run"){
-      if(this.x <= this.maxDistanceArea.left ){
-        this.moveDirection.x = 1;
+        _pos_x = _start_pos_x + _padding_side * index;
+        if(index % 2 === 0){
+          _pos_y = _start_pos_y
+        }else{
+          _pos_y = _distance_height;
+        }
+
+        sprite.x = _pos_x;
+        sprite.y = _pos_y - 20;
+        sprite.opacity = 0;
+        sprite.scaleX = 0;
+        sprite.scaleY = 0;
+        sprite.setVisible(true);
+
+        let appearAnime = _this.scene.tweens.add({
+          targets: sprite,
+          ease: 'liner',
+          x: _pos_x,
+          y: _pos_y,
+          scaleX: 1,
+          scaleY: 1,
+          duration: 1000,
+          delay: index * _delay,
+          repeat: 0,
+          onComplete: function () {
+            console.log("child index",index);
+            if(index === 6){
+              _this.attackStartTimerEvent = _this.scene.time.delayedCall(
+                2000,
+                function(){
+                  _this.appearChild();
+                },
+                [],
+                _this
+              );              
+            }
+          },
+        }); 
       }
-      if(this.x >= this.maxDistanceArea.right ){
-        this.moveDirection.x = -1;
+    );
+  }
+  appearChild(){
+    let _this = this;
+    let _top = -100;
+    let _bottom = 500;
+    let _pos_y = 0;
+    this.smokeChildGroup.children.entries.forEach(
+      (sprite,index) => {
+        if(index % 2 === 0){
+          _pos_y = _bottom;
+        }else{
+          _pos_y = _top;
+        }
+        let appearAttackAnime = _this.scene.tweens.add({
+          targets: sprite,
+          ease: 'liner',
+          y: _pos_y,
+          scaleX: 1,
+          scaleY: 1,
+          duration: 1800,
+          repeat: 0,
+          completeDelay: 2000,
+          onComplete: function () {
+            sprite.x = _this.x;
+            sprite.y = _this.y;
+            _this.attackAppearTimerEvent = null;
+            sprite.setVisible(false);
+          },
+        }); 
       }
-  
-      this.body.setVelocity(
-        this.moveDirection.x*this.status.walkSpeed,
-        0
-      );   
-    }
+    );
   }
 
 }
