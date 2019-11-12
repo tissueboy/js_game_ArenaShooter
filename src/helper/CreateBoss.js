@@ -16,7 +16,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
 
     this.stageList = [
       {
-        stage: 4,
+        stage: 1,
         boss: {
           object: Stone,
           x: config.scene.game.config.width/2,
@@ -27,15 +27,6 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
       {
         stage: 2,
         boss: {
-          object: Robot,
-          x: config.scene.game.config.width/2,
-          y: 80,
-          key: 'robot_base'
-        }
-      },
-      {
-        stage: 3,
-        boss: {
           object: Sun,
           x: config.scene.game.config.width/2,
           y: config.scene.game.config.height/2,
@@ -43,17 +34,26 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         }
       },
       {
-        stage: 1,
+        stage: 3,
         boss: {
           object: Smoke,
           x: config.scene.game.config.width/2,
           y: 80,
           key: 'smoke'
         }
+      },
+      {
+        stage: 4,
+        boss: {
+          object: Robot,
+          x: config.scene.game.config.width/2,
+          y: 80,
+          key: 'robot_base'
+        }
       }
     ];
     this.createBossTimerEvent = config.scene.time.addEvent({
-      delay: 1000,
+      delay: 8000,
       callback: this.createBoss,
       callbackScope: config.scene,
       startAt: 0,

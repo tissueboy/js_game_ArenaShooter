@@ -56,11 +56,7 @@ class GameScene extends Phaser.Scene {
       y: 100,
       key: 'player'
     });
-    // this.player.depth = 11;
-    // if(!this.registry.list.weapon){
-    //   this.registry.set('weapon', "bullet");
-    // }
-    // this.player.weapon = this.registry.list.weapon;
+
 
 
 
@@ -86,7 +82,6 @@ class GameScene extends Phaser.Scene {
       this.animations = new Animations({
         scene: this
       });
-      console.log("アニメーションの読み込み");
   
     }
 

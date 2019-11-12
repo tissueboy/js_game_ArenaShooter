@@ -38,6 +38,16 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
       [
         [Wizerd,"wizerd"],
         [Wizerd2,"wizerd2"]  
+      ],
+      //stage 3
+      [
+        [Bad,"bad"],
+        [Brain,"brain"]  
+      ],
+      //stage 4
+      [
+        [Wizerd,"wizerd"],
+        [Wizerd2,"wizerd2"]  
       ]
     ];
   }

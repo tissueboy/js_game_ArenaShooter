@@ -21,6 +21,8 @@ class BootScene extends Phaser.Scene {
     this.load.image('tiles', 'assets/tilemaps/tile.png');
     this.load.tilemapTiledJSON('map1', 'assets/tilemaps/tilemap.json');
     this.load.tilemapTiledJSON('map2', 'assets/tilemaps/tilemap2.json');
+    this.load.tilemapTiledJSON('map3', 'assets/tilemaps/tilemap3.json');
+    this.load.tilemapTiledJSON('map4', 'assets/tilemaps/tilemap4.json');
     
     this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 16, frameHeight: 22 });    
     this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 16, frameHeight: 16 });    

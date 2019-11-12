@@ -104,7 +104,8 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     }
 
     this.buttonNext.on('pointerdown', () => {
-      this.scene.registry.set('stage', "2");
+      this.scene.registry.list.stage++;
+      this.scene.registry.set('stage', this.scene.registry.list.stage);
       this.scene.registry.set('coin', this.scene.coin_count);
       if(this.getItem){
         if(this.getItem[2] == "weapon"){

@@ -14,9 +14,9 @@ export default class Sun extends Enemy {
     this.base_y = this.y;
 
     this.status = {
-      hp: 2000,
+      hp: 20,
       power: 5,
-      defense: 106,
+      defense: 4,
       experience: 10,
       attackPoint: 1,
       walkSpeed: 12
