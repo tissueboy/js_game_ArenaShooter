@@ -1,4 +1,5 @@
 import Enemy from '../Enemy';
+import Calcs from '../../../helper/Calcs';
 
 export default class Smoke extends Enemy {
 
@@ -19,6 +20,13 @@ export default class Smoke extends Enemy {
       attackPoint: 1,
       walkSpeed: 12
     }
+    this.MONSTER_SPEED = 20;
+
+    this.isAttacking = false;
+
+    this.smakeChildStatus = {
+      power: 10
+    };
 
     /*======
     弾の準備
@@ -28,6 +36,7 @@ export default class Smoke extends Enemy {
 
     for(var i = 0; i < smokeChildLength; i++){
       let smoleChildSprite = config.scene.add.sprite(this.x, this.y, 'smoke_s');
+      smoleChildSprite.power = this.smakeChildStatus.power;
       config.scene.physics.world.enable(smoleChildSprite);
       config.scene.add.existing(smoleChildSprite);  
       smoleChildSprite.setOrigin(0.5,0.5);
@@ -36,43 +45,118 @@ export default class Smoke extends Enemy {
     }
     this.attackStartTimerEvent;
     this.attackAppearTimerEvent;
+    this.idleTimerEvent;
+
+    this.moveAttackStart = null;
+    
   }
   update(){
     if (!this.active) {
+      if(this.moveAttackStart){
+        this.moveAttackStart.stop();
+        this.attackAppearTimerEvent.remove(false);
+        this.idleTimerEvent.remove(false);
+      }
       return;
     }
     if (this.active) {
       this.hp.move(this.x,this.y);
     }
+    if(!this.idleTimerEvent){
+      this.idleTimerEvent = this.scene.time.addEvent({
+        startAt: 3000,
+        delay: 3000,
+        // duration: 3000,
+        callback: this.run,
+        callbackScope: this,
+        loop: true
+      });
+    }
     if(!this.attackAppearTimerEvent){
       let _this = this;
       this.attackAppearTimerEvent = this.scene.time.delayedCall(
-        2000,
+        6000,
         function(){
-          let moveAttackStart = this.scene.tweens.add({
-            targets: this,
-            ease: 'liner',
-            x: 100,
-            y: 40,
-            duration: 1000,
-            repeat: 0,
-            onComplete: function () {
-              _this.appearChildAnime();
-            },
-          });   
+          this.isAttacking = true;
+          this.stopRun();
+          this.moveAttackStartAnime();
         },
         [],
         this
-      );
-
-  
+      );  
     }
+    this.scene.physics.overlap(this.scene.player,this.smokeChildGroup,
+      function(player,smokeChild){
+        if(smokeChild.visible === false){
+          return;
+        }
+        // console.log("smokeChild",smokeChild.visible);
+        player.damage(smokeChild.power);
+    },null,this);
+
+    this.scene.physics.overlap(this.scene.player.barrier,this.smokeChildGroup,
+      function(barrier,smokeChild){
+        if(barrier.visible === false && smokeChild.visible === false){
+          return;
+        }
+        smokeChild.setVisible(false);
+    },null,this);
+
+    this.scene.physics.overlap(this.scene.playerWeaponGroup,this.smokeChildGroup,
+      function(playerWeapon,smokeChild){
+        smokeChild.setVisible(false);
+    },null,this);
   }
   attack(){
   }
+  run(){
+    console.log("run");
+    if(!this.active){
+      return;
+    }
+    if(this.isAttacking === true){
+      return;
+    }
+    let random = {
+      x: this.calcs.getRandom(-1,1),
+      y: this.calcs.getRandom(-1,1)
+    };
+
+    let random_vec = this.calcs.returnMax1(random.x,random.y);
+
+    this.setVelocityX(random_vec.x * this.MONSTER_SPEED);
+    this.setVelocityY(random_vec.y * this.MONSTER_SPEED);
+
+  }
+  stopRun(){
+    if(!this.active){
+      return;      
+    }
+    this.setVelocityX(0);
+    this.setVelocityY(0);    
+    this.idleTimerEvent.paused = true;
+  }
+  moveAttackStartAnime(){
+    if(!this.active){
+      return;
+    }
+    let _this = this;
+    this.moveAttackStart = this.scene.tweens.add({
+      targets: this,
+      ease: 'liner',
+      x: 100,
+      y: 40,
+      duration: 1000,
+      repeat: 0,
+      onComplete: function () {
+        _this.appearChildAnime();
+        
+      },
+    }); 
+  }
   appearChildAnime(sprite){
     let _this = this;
-    let _delay = 1000;
+    let _delay = 400;
     let _start_pos_x = 40;
     let _start_pos_y = 80;
     let _padding_side = 20;
@@ -104,14 +188,14 @@ export default class Smoke extends Enemy {
           y: _pos_y,
           scaleX: 1,
           scaleY: 1,
-          duration: 1000,
+          duration: 400,
           delay: index * _delay,
           repeat: 0,
           onComplete: function () {
             console.log("child index",index);
             if(index === 6){
               _this.attackStartTimerEvent = _this.scene.time.delayedCall(
-                2000,
+                1000,
                 function(){
                   _this.appearChild();
                 },
@@ -142,18 +226,27 @@ export default class Smoke extends Enemy {
           y: _pos_y,
           scaleX: 1,
           scaleY: 1,
-          duration: 1800,
+          duration: 3000,
           repeat: 0,
-          completeDelay: 2000,
+          completeDelay: 0,
           onComplete: function () {
             sprite.x = _this.x;
             sprite.y = _this.y;
-            _this.attackAppearTimerEvent = null;
+            setTimeout(function(){
+              _this.attackAppearTimerEvent = null;
+            }, 1000);
+            
             sprite.setVisible(false);
+            _this.isAttacking = false;
+            _this.idleTimerEvent.paused = false;
           },
         }); 
       }
     );
+  }
+  move1(time){
+
+
   }
 
 }
