@@ -2,6 +2,8 @@ import Stone from '../sprites/character/boss/Stone';
 import Robot from '../sprites/character/boss/Robot';
 import Sun from '../sprites/character/boss/Sun';
 import Smoke from '../sprites/character/boss/Smoke';
+import Dragon from '../sprites/character/boss/Dragon';
+import Shadow from '../sprites/character/boss/Shadow';
 
 export default class CreateBoss  extends Phaser.Time.TimerEvent{
   constructor(config) {
@@ -17,6 +19,24 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
     this.stageList = [
       {
         stage: 1,
+        boss: {
+          object: Dragon,
+          x: config.scene.game.config.width/2,
+          y: 80,
+          key: 'dragon'
+        }
+      },
+      {
+        stage: 6,
+        boss: {
+          object: Shadow,
+          x: config.scene.game.config.width/2,
+          y: 80,
+          key: 'shadow'
+        }
+      },
+      {
+        stage: 5,
         boss: {
           object: Stone,
           x: config.scene.game.config.width/2,
@@ -53,7 +73,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
       }
     ];
     this.createBossTimerEvent = config.scene.time.addEvent({
-      delay: 8000,
+      delay: 100,
       callback: this.createBoss,
       callbackScope: config.scene,
       startAt: 0,

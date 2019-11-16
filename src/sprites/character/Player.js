@@ -137,6 +137,7 @@ export default class Player extends Character{
       this.barrier.x - this.x,
       this.barrier.y - this.y
     );
+    console.log("this.scene player",this.scene)
     let _vx = 0;
     let _vy = 0;
     if(this.status.level > 4){

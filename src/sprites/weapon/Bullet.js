@@ -90,4 +90,5 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
     this.body.setVelocity(this.vector_max_1.x*this.speed,this.vector_max_1.y*this.speed);
   }
+
 }
