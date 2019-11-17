@@ -1,7 +1,6 @@
 import Enemy from '../Enemy';
 import Calcs from '../../../helper/Calcs';
 import Bullet from '../../weapon/Bullet';
-import Shadow from '../Boss/Shadow';
 
 export default class Dragon extends Enemy {
 
@@ -11,7 +10,6 @@ export default class Dragon extends Enemy {
 
     this.type = "boss";
     this.key = "dragon";
-    this.evolutionBoss = true;
     this.depth = 1;
     this._scene = config.scene;
 
@@ -53,14 +51,6 @@ export default class Dragon extends Enemy {
   update(keys, time, delta) {
 
     if (!this.active) {
-      if(this.shotStartTimerEvent){
-        this.shotStartTimerEvent.remove(false);
-        this.shotStartTimerEvent = null;
-      }
-      if(this.shotTimerEvent){
-        this.shotTimerEvent.remove(false);
-        this.shotTimerEvent = null;
-      }
       return;
     }
 
@@ -101,9 +91,6 @@ export default class Dragon extends Enemy {
 
   }
   attack1(){
-    if(!this.active){
-      return;
-    }
     this.shotTimerEvent = this.scene.time.addEvent({
       delay: 200,
       duration: 500,
@@ -116,9 +103,6 @@ export default class Dragon extends Enemy {
     });  
   }
   attack2(){
-    if(!this.active){
-      return;
-    }
     this.shotTimerEvent = this.scene.time.addEvent({
       delay: 1000,
       duration: 1000,
@@ -130,7 +114,6 @@ export default class Dragon extends Enemy {
     });  
   }
   createDropShot(){
-
     let shadowSprite;
     shadowSprite = this.scene.add.graphics({ fillStyle: { color: 0x000000 } });
     shadowSprite.fillCircleShape(new Phaser.Geom.Circle(0, 0, 10));
@@ -166,10 +149,6 @@ export default class Dragon extends Enemy {
     }
   }
   dropShot(){
-    if(!this.active){
-      return;
-    }
-
     this.dropShotObjectPool
     let shotLength = this.calc.getRandomInt(1,6);
     this.shotCount += shotLength;
@@ -279,16 +258,5 @@ export default class Dragon extends Enemy {
     }); 
     this.scene.enemyWeaponGroup.add(bullet);
     this.shotCount++;
-  }
-  nextBoss(){
-    let _this = this._scene;
-    this.destroy();
-    _this.shadow = new Shadow({
-      scene: _this,
-      x: 40,
-      y: 100,
-      key: 'shadow'
-    });  
-    _this.enemyGroup.add(_this.shadow);
   }
 }

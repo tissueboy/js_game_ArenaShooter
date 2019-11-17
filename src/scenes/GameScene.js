@@ -57,6 +57,9 @@ class GameScene extends Phaser.Scene {
       key: 'player'
     });
 
+    /*ラスボス*/
+    this.shadow;
+
 
 
 

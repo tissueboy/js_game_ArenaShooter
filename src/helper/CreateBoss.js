@@ -110,4 +110,5 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
     this.clearStageObj.container.visible = true;
   }
 
+
 }

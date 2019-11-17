@@ -145,6 +145,10 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.active = false;  
     this.explodeSprite.destroy();
+    if(this.key === "dragon"){
+      this.nextBoss();
+      return;
+    }
     if(this.type === "enemy"){
       this.dropItem();
     }
