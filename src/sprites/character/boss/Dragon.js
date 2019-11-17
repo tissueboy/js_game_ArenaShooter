@@ -41,6 +41,12 @@ export default class Dragon extends Enemy {
 
     this.setBullet = false;
 
+    this.dropShotObjectPool = [];
+    this.dropShotMaxLength = 10;
+    // for(var i = 0; i < this.dropShotMaxLength; i++){
+
+    // }
+
   }
   update(keys, time, delta) {
 
@@ -71,7 +77,6 @@ export default class Dragon extends Enemy {
       this.shotTimerEvent = null;
     }  
 
-  
     if (this.active) {
       this.hp.move(this.x,this.y);
     }
@@ -79,7 +84,7 @@ export default class Dragon extends Enemy {
   attackSelect(){
     var rand = Math.floor( Math.random() * 100) ;
     if(rand <= 50){
-      this.attack1();
+      this.attack2();
     }else{
       this.attack2();
     }
@@ -91,53 +96,132 @@ export default class Dragon extends Enemy {
       duration: 500,
       startAt: 200,
       callback: function(){
-        // this.setBullet = true;
         this.shotBullet();
-        // this.shotCount++;
       },
       callbackScope: this,
-      repeat: this.shotMaxCount,
-      // loop: true
+      repeat: this.shotMaxCount
     });  
   }
   attack2(){
-    console.log("attack2")
     this.shotTimerEvent = this.scene.time.addEvent({
       delay: 1000,
       duration: 1000,
-      // startAt: 1000,
       callback: function(){
-        // this.setBullet = true;
         this.dropShot();
-        // this.shotCount++;
       },
       callbackScope: this,
       repeat: this.shotMaxCount,
-      // loop: true
     });  
   }
+  createDropShot(){
+    let shadowSprite;
+    shadowSprite = this.scene.add.graphics({ fillStyle: { color: 0x000000 } });
+    shadowSprite.fillCircleShape(new Phaser.Geom.Circle(0, 0, 10));
+    shadowSprite.alpha = 0.3;
+    shadowSprite.setVisible(false);
+    this.scene.physics.world.enable(shadowSprite);
+    this.scene.add.existing(shadowSprite);
+
+    let dropSprite = this.scene.add.sprite(0, 0, 'barrier');
+    dropSprite.setVisible(false);
+    dropSprite.power = 2;
+
+    let dropGroup = {
+      drop: dropSprite,
+      shadow: shadowSprite,
+      shotAnime: null,
+      shadowAnime: null,
+      shotRemoveAnime:null,
+      active: false
+    }
+    return dropGroup;
+  }
+  toDropShotPool(object){
+    this.dropShotObjectPool.unshift(object);
+  }
+  fromDropShotPool(object){
+    if (this.dropShotObjectPool.length === 0) {
+      // プールが空なら新規生成
+      return this.createDropShot();
+    } else {
+      // プールにストックがあれば取り出す
+      return this.dropShotObjectPool.pop();
+    }
+  }
   dropShot(){
-    console.log("dropShot")
-    let randomPos = this.createRandomPosition();
-    console.log(randomPos)
-    let drop = this.scene.add.sprite(randomPos.x, randomPos.y, 'barrier');
-    let dropAnime = this.scene.tweens.add({
-      targets: drop,
-      ease: 'liner',
-      // x: randomPos.x,
-      y: randomPos.y + 40,
-      scaleX: 1,
-      scaleY: 1,
-      duration: 200,
-      repeat: 0,
-      completeDelay: 200,
-      onComplete: function () {
-        console.log("comp drop");
-        drop.destroy();
-        // _this.appear();
-      },
-    });
-    this.shotCount++;
+    this.dropShotObjectPool
+    let shotLength = this.calc.getRandomInt(1,6);
+    this.shotCount += shotLength;
+    let _this = this;
+    if(this.shotCountMax > this.shotCount){
+      let sa = this.shotCountMax - this.shotCount;
+      shotLength -= sa;
+    }
+    for(var i = 0; i < shotLength; i++){
+      let randomPos = this.createRandomPosition();
+      let dropShotGroup = this.fromDropShotPool();
+      let drop = dropShotGroup.drop;
+      let shadow = dropShotGroup.shadow;
+      shadow.x = randomPos.x;
+      shadow.y = randomPos.y;
+      shadow.setVisible(true);
+      drop.x = randomPos.x;
+      drop.y = randomPos.y - 40;
+      drop.setVisible(true);
+      drop.alpha = 0;
+      shadow.alpha = 0;
+      let damageArea = {
+        radius: 30
+      }
+      dropShotGroup.shadowAnime = this.scene.tweens.add({
+        targets: shadow,
+        ease: 'liner',
+        alpha: 0.4,
+        duration: 400,
+        repeat: 0,
+        completeDelay: 400,
+        onComplete: function () {
+          shadow.alpha = 0;
+        }
+      });
+      let _target = this.scene.player;
+      dropShotGroup.shotAnime = this.scene.tweens.add({
+        targets: drop,
+        ease: 'liner',
+        alpha: 1,
+        y: randomPos.y,
+        scaleX: 1,
+        scaleY: 1,
+        duration: 200,
+        repeat: 0,
+        delay: 600,
+        // completeDelay: 800,
+        onComplete: function () {
+          shadow.x = 0;
+          shadow.y = 0;
+          shadow.setVisible(false);
+          if(damageArea.radius*damageArea.radius >= (drop.x - _target.x)*(drop.x - _target.x) + (drop.y - _target.y)*(drop.y - _target.y)){
+            // if(sprite.active){
+              console.log("fin chaek")
+              _target.damage(drop.power);
+            // }
+          }
+        }
+      });
+      dropShotGroup.shotRemoveAnime = this.scene.tweens.add({
+        targets: drop,
+        completeDelay: 1400,
+        onComplete: function () {
+          drop.x = 0;
+          drop.y = 0;
+          drop.setVisible(false);
+          _this.toDropShotPool(dropShotGroup);
+          console.log("fin")
+        }
+      });
+
+    }
+
   }
   createRandomPosition(){
     let min_x = 2;
