@@ -12,9 +12,11 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
     this.setAlpha = 0.4;
 
     this.powerUpListGroup = this.scene.add.group();
+    // this.powerUpListGroup.setScrollFactor(0);
 
     for(var i = 1;i <= this.maxLevel;i++){
       let item = config.scene.add.sprite(28+i*2+(i-1)*32, 306, 'powerUpList_'+i);
+      item.setScrollFactor(0);
       if(i === 1){
         item.alpha = 1;
       }else{
@@ -25,6 +27,7 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
 
 
     this.cursor = this.scene.add.graphics({ lineStyle: { width: 1, color: 0xFFFFFF } });
+    this.cursor.setScrollFactor(0);
     this.rect = new Phaser.Geom.Rectangle(0, 0, 32, 12);
     this.cursor.strokeRectShape(this.rect);
     this.cursor.x = 14;

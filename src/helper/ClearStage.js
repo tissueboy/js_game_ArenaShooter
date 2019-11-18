@@ -8,12 +8,14 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     super(config.scene);
 
     this.cursor = this.scene.add.sprite(10, 170, 'cursor');
+    this.cursor.setScrollFactor(0);
     this.cursor.visible = false;
     this.cursor.depth = 110;
     this.visible = false;
 
     this.container = this.scene.add.container(0, 0);
     this.container.depth = 100;
+    this.container.setScrollFactor(0);
 
     this.overlapArea = this.scene.add.graphics(
       {
@@ -23,6 +25,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     this.rect = new Phaser.Geom.Rectangle(0, 0, config.scene.game.config.width, config.scene.game.config.height);
     this.overlapArea.fillRectShape(this.rect);
     this.overlapArea.alpha = 0.75;
+    this.overlapArea.setScrollFactor(0);
 
 
     this.stageClearTxt = this.scene.add.bitmapText(
@@ -35,6 +38,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     this.stageClearTxt.setOrigin(0.5,0.5);
     config.scene.physics.world.enable(this.stageClearTxt);
     config.scene.add.existing(this.stageClearTxt);
+    this.stageClearTxt.setScrollFactor(0);
 
     this.getItemText = this.scene.add.bitmapText(
       config.scene.game.config.width/2,
@@ -46,6 +50,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     this.getItemText.setOrigin(0.5,0.5);
     config.scene.physics.world.enable(this.getItemText);
     config.scene.add.existing(this.getItemText);
+    this.getItemText.setScrollFactor(0);
 
 
     this.buttonNext = config.scene.add.sprite(
@@ -53,6 +58,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       200,
       'button_next'
     );
+    this.buttonNext.setScrollFactor(0);
     this.buttonNext.setOrigin(0.5,0.5);
     this.buttonNext.setInteractive();
     config.scene.physics.world.enable(this.buttonNext);
@@ -89,6 +95,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       let dropItemName = this.getRandomObjName(this.dropItemList);
       let type = dropItemName[2];
       let sprite = this.scene.add.sprite(30*(i+1)+40, 140, dropItemName[1]);
+      sprite.setScrollFactor(0);
       sprite.depth = 10;
       sprite.setInteractive();
       // this.getItemGroup.add(sprite);

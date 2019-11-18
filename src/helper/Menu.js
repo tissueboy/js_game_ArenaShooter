@@ -13,12 +13,14 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     ==============================*/    
     this.container = this.scene.add.container(0, 0);
     this.container.setVisible(false);
+    this.container.setScrollFactor(0);
     this.container.depth = 100;
     
     /*==============================
     コンテナーアイテム用
     ==============================*/    
     this.containerItem = this.scene.add.container(0, 0);
+    this.containerItem.setScrollFactor(0);
 
     /*==============================
     背景の表示
@@ -31,6 +33,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     this.rect = new Phaser.Geom.Rectangle(0, 0, config.scene.game.config.width, config.scene.game.config.height);
     this.overlapArea.fillRectShape(this.rect);
     this.overlapArea.alpha = 0.75;
+    this.overlapArea.setScrollFactor(0);
 
 
     /*==============================
@@ -41,6 +44,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       50,
       'player'
     );
+    this.player.setScrollFactor(0);
 
     /*==============================
     ステータス
@@ -69,6 +73,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     ==============================*/       
     this.cursor = this.scene.add.sprite(10, 170, 'cursor');
     this.cursor.visible = false;
+    this.cursor.setScrollFactor(0);
 
     /*==============================
     決定ボタン
@@ -78,6 +83,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       220,
       'button_ok'
     );    
+    this.buttonOK.setScrollFactor(0);
     this.buttonOK.visible = false;
     this.buttonOK.setInteractive();
     this.buttonOK.setOrigin(0.5,0.5);
@@ -124,6 +130,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       let item_key = item[1];
       let sprite = this.scene.add.sprite(30*(i+1), 180, item_key);
       sprite.setInteractive();
+      sprite.setScrollFactor(0);
       this.containerItem.add(sprite);
       sprite.index = i;
       sprite.item = item;

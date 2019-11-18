@@ -52,8 +52,8 @@ class GameScene extends Phaser.Scene {
 
     this.player = new Player({
       scene: this,
-      x: 40,
-      y: 100,
+      x: this.scene.systems.game.config.width/2,
+      y: this.scene.systems.game.config.height*0.7,
       key: 'player'
     });
 
@@ -177,6 +177,11 @@ class GameScene extends Phaser.Scene {
 
     // this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
         
+    // this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
+    this.cameras.main.setBounds(0,0,this.scene.systems.game.config.width,this.scene.systems.game.config.height*2);
+    this.cameras.main.setScroll(this.player.x);
+    this.cameras.main.setSize(this.scene.systems.game.config.width,this.scene.systems.game.config.height);
+    this.cameras.main.startFollow(this.player);
   }
   update(time, delta) {
 

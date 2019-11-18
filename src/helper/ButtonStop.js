@@ -9,6 +9,7 @@ export default class ButtonStop extends Phaser.Physics.Arcade.Sprite{
 
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
+    this.setScrollFactor(0);
 
     this.setInteractive();
 

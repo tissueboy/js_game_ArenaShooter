@@ -13,6 +13,7 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
     this.comboHit.depth = 104;
     this.comboHit.setScrollFactor(0,0);
     this.comboHit.setOrigin(1);
+    this.comboHit.setScrollFactor(0);
 
     this.combo_count = 0;
 
@@ -23,6 +24,7 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
       this.combo_count,
       60
     );
+    this.comboText.setScrollFactor(0);
 
     this.comboText.depth = 104;
 
