@@ -40,7 +40,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Stone,
           x: config.scene.game.config.width/2,
-          y: 80,
+          y: 220,
           key: 'stone'
         }
       },

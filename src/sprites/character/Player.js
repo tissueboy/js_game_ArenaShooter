@@ -63,7 +63,7 @@ export default class Player extends Character{
 
     this.barrier.power = 1;
 
-    
+    this.shotObjectPool = [];
 
   }
   update(keys, time, delta) {
@@ -219,5 +219,36 @@ export default class Player extends Character{
       },
       [],
       this);
+  }
+  createShot(object){
+    let _vx = object.vx;
+    let _vy = object.vy;
+    let _setScale = object.setScale;
+    
+    let bullet = new Bullet({
+      scene: this.scene,
+      x: this.barrier.x,
+      y: this.barrier.y,
+      key: "bullet",
+      vx: _vx,
+      vy: _vy,
+      target: this,
+      power: this.status.power ,
+      scale: _setScale,
+      parent: "player"
+    }); 
+    this.scene.playerWeaponGroup.add(bullet);  
+  }
+  toShotPool(object){
+    this.shotObjectPool.unshift(object);
+  }
+  fromShotPool(object){
+    if (this.shotObjectPool.length === 0) {
+      // プールが空なら新規生成
+      return this.createShot();
+    } else {
+      // プールにストックがあれば取り出す
+      return this.scene.playerWeaponGroup.children.entries();
+    }
   }
 }

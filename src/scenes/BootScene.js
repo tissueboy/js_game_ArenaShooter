@@ -17,12 +17,17 @@ class BootScene extends Phaser.Scene {
       this.progress.destroy();
       this.scene.start('TitleScene');
     });
+    /*bitmap
+    midori_box
+    https://www.pixiv.net/artworks/56487227
+     */
 
     this.load.image('tiles', 'assets/tilemaps/tile.png');
     this.load.tilemapTiledJSON('map1', 'assets/tilemaps/tilemap.json');
     this.load.tilemapTiledJSON('map2', 'assets/tilemaps/tilemap2.json');
     this.load.tilemapTiledJSON('map3', 'assets/tilemaps/tilemap3.json');
     this.load.tilemapTiledJSON('map4', 'assets/tilemaps/tilemap4.json');
+    this.load.tilemapTiledJSON('map5', 'assets/tilemaps/tilemap5.json');
     
     this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 16, frameHeight: 22 });    
     this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 16, frameHeight: 16 });    
@@ -86,6 +91,7 @@ class BootScene extends Phaser.Scene {
     this.load.image('star', 'assets/images/items/star.png');
     this.load.image('portion', 'assets/images/items/portion.png');
     this.load.image('powerUp', 'assets/images/items/power_up.png');
+    this.load.image('timer', 'assets/images/items/timer.png');
 
     this.load.image('fire_area', 'assets/images/items/fire_area.png');
 

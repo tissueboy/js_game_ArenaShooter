@@ -34,11 +34,11 @@ class GameScene extends Phaser.Scene {
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
-    this.groundLayer.setCollisionBetween(0, 2);
+    this.groundLayer.setCollisionBetween(0, 100);
     this.groundLayer.setCollisionByProperty({ collides: true });
 
     this.objectLayer = this.map.createDynamicLayer('object', this.tileset, 0, 0);
-    this.objectLayer.setCollisionBetween(0, 2);
+    this.objectLayer.setCollisionBetween(0, 100);
     this.objectLayer.setCollisionByProperty({ collides: true });
 
 
@@ -53,7 +53,8 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.scene.systems.game.config.width/2,
-      y: this.scene.systems.game.config.height/2,
+      y: 380,
+      // y: 1080,
       key: 'player'
     });
 
@@ -179,7 +180,7 @@ class GameScene extends Phaser.Scene {
         
     // this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
     // this.cameras.main.setOrigin(0.5,0.5);
-    this.cameras.main.setBounds(0,this.scene.systems.game.config.height*-1,this.scene.systems.game.config.width,this.scene.systems.game.config.height*3);
+    this.cameras.main.setBounds(0,this.scene.systems.game.config.height*-1,this.scene.systems.game.config.width,this.scene.systems.game.config.height*6);
     // this.cameras.main.setScroll(this.player.x);
     this.cameras.main.setScroll(this.player.x);
     // this.cameras.main.setPosition(this.player.x,this.player.y)

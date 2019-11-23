@@ -38,9 +38,9 @@ export default class Robot extends EnemyChase {
 
 
     this.status = {
-      hp: 30,
+      hp: 10,
       power: 5,
-      defense: 10,
+      defense: 5,
       experience: 10,
       attackPoint: 1,
       walkSpeed: 12

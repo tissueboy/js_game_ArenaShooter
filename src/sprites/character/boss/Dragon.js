@@ -44,10 +44,6 @@ export default class Dragon extends Enemy {
     this.setBullet = false;
 
     this.dropShotObjectPool = [];
-    this.dropShotMaxLength = 10;
-    // for(var i = 0; i < this.dropShotMaxLength; i++){
-
-    // }
 
   }
   update(keys, time, delta) {
@@ -170,7 +166,7 @@ export default class Dragon extends Enemy {
       return;
     }
 
-    this.dropShotObjectPool
+    this.dropShotObjectPool;
     let shotLength = this.calc.getRandomInt(1,6);
     this.shotCount += shotLength;
     let _this = this;

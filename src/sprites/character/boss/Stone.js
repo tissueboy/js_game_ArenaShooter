@@ -23,10 +23,10 @@ export default class Stone extends Enemy {
     this.TILE_WIDTH = 16;
 
     this.maxDistanceArea = {
-      top: 20,
+      top: this.y + 20,
       left: this.width/2 + this.TILE_WIDTH,
       right: config.scene.game.config.width - this.width/2 - this.TILE_WIDTH,
-      bottom: 200
+      bottom: this.y + 140
     }
     this.moveDirection = {
       x: 1,
