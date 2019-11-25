@@ -4,7 +4,6 @@ import FireArea from './FireArea';
 export default class Fire extends Item {
   constructor(config) {
     super(config);
-    // this.recoveryPoint = 1;
     this.scene = config.scene;
     this.throwed = false;
     this.speed = 10;

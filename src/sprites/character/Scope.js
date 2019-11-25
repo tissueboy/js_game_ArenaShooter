@@ -16,8 +16,6 @@ export default class Scope extends Phaser.GameObjects.Sprite {
 
     this.playerShotLineLength = 40;
 
-    console.log("config.scene.player.x",config.target.x)
-
     this.head = this.scene.add.sprite(config.target.x, config.target.y + this.playerShotLineLength, 'scope');
     config.scene.physics.world.enable(this.head);
     config.scene.add.existing(this.head);

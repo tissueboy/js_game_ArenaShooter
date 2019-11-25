@@ -2,6 +2,7 @@ import Keypad from '../helper/Keypad';
 import Keypad_PC from '../helper/Keypad_PC';
 import CollisionCheck from '../helper/CollisionCheck';
 import CreateObjects from '../helper/CreateObjects';
+import ParseObjectLayers from '../helper/ParseObjectLayers';
 import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
@@ -10,13 +11,8 @@ import ButtonStop from '../helper/ButtonStop';
 import Animations from '../helper/Animations';
 import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
-
-import Star from '../sprites/item/Star';
 import Portion from '../sprites/item/Portion';
-
-// import Character from '../sprites/character/Character';
 import Player from '../sprites/character/Player';
-// import Boss1 from '../sprites/Character/boss/Boss1';
 
 
 class GameScene extends Phaser.Scene {
@@ -34,11 +30,11 @@ class GameScene extends Phaser.Scene {
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
-    this.groundLayer.setCollisionBetween(0, 100);
+    this.groundLayer.setCollisionBetween(0, 1000);
     this.groundLayer.setCollisionByProperty({ collides: true });
 
     this.objectLayer = this.map.createDynamicLayer('object', this.tileset, 0, 0);
-    this.objectLayer.setCollisionBetween(0, 100);
+    this.objectLayer.setCollisionBetween(0, 1000);
     this.objectLayer.setCollisionByProperty({ collides: true });
 
 
@@ -53,7 +49,7 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.scene.systems.game.config.width/2,
-      y: 380,
+      y: 1000,
       // y: 1080,
       key: 'player'
     });
@@ -61,15 +57,14 @@ class GameScene extends Phaser.Scene {
     /*ラスボス*/
     this.shadow;
 
-
-
-
     /*==============================
     モンスターの生成
     ==============================*/
     this.createObjects = new CreateObjects({
       scene: this
     });
+
+
 
     /*==============================
     ボスの生成
@@ -127,7 +122,6 @@ class GameScene extends Phaser.Scene {
     /*==============================
     UI | メニュー
     ==============================*/
-
     this.menu = new Menu({
       scene: this
     });
@@ -158,16 +152,16 @@ class GameScene extends Phaser.Scene {
     /*==============================
     GROUP管理
     ==============================*/
-
     this.playerWeaponGroup = this.add.group();
     this.enemyWeaponGroup = this.add.group();
-    
     this.enemyGroup = this.add.group();
-
     this.itemGroup = this.add.group();
-
     this.spellGroup = this.add.group();
 
+    this.objectLayers = new ParseObjectLayers({
+      scene: this
+    });
+    this.objectLayers.addObject();
 
     /*==============================
     衝突判定
@@ -176,14 +170,8 @@ class GameScene extends Phaser.Scene {
       scene: this
     });
 
-    // this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
-        
-    // this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
-    // this.cameras.main.setOrigin(0.5,0.5);
     this.cameras.main.setBounds(0,this.scene.systems.game.config.height*-1,this.scene.systems.game.config.width,this.scene.systems.game.config.height*6);
-    // this.cameras.main.setScroll(this.player.x);
     this.cameras.main.setScroll(this.player.x);
-    // this.cameras.main.setPosition(this.player.x,this.player.y)
     this.cameras.main.setSize(this.scene.systems.game.config.width,this.scene.systems.game.config.height);
     this.cameras.main.startFollow(this.player,100);
   }

@@ -6,16 +6,10 @@ export default class Coin extends Item {
     this.coinPoint = 1;
 
   }
-  // hasEffect(player,item){
-  //   player.hp = player.hp + item.recoveryPoint;
-  //   this.scene.updateHp(player.hp);
-  //   item.destroy();
-    
-  // }
+
   hit(){
     this.scene.coin_count = this.scene.coin_count + this.coinPoint;
-    // this.scene.coinText.text = this.scene.coin_count;
-    // this.scene.coin.calc(this.coinPoint);
+
     this.scene.player.status.power += this.coinPoint;
     this.destroy();
   }

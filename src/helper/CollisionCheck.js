@@ -17,11 +17,6 @@ export default class CollisionCheck{
 
     _this.physics.add.collider(_this.playerWeaponGroup,_this.objectLayer,this.bulletBounceCollision,null, this);
 
-    // _this.physics.add.collider(_this.itemGroup,_this.objectLayer,this.item_x_objectGround_Collision);
-    // _this.physics.add.overlap(_this.itemGroup,_this.enemyGroup,this.item_x_enemy_Collision);
-
-    // _this.physics.add.overlap(_this.player,_this.bossGroup,this.player_x_Enemy_Collision);
-
   }
   player_x_Enemy_Collision(player,enemy){
     if(!enemy.active){
@@ -31,9 +26,7 @@ export default class CollisionCheck{
       return;
     }
     player.damage(enemy.status.attackPoint);
-    // if(player.active){
-    //   player.explode();
-    // }    
+ 
   }
   player_x_enemyWeapon_Collision(player,obj){
     player.damage(obj.attackPoint);

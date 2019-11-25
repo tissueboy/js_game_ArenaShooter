@@ -104,11 +104,7 @@ export default class Player extends Character{
       this.barrier.scaleY = this.activeTime.per;
 
       this.activeTime.pileUp();
-      // this.scope.head.setVisible(true);
-      // this.scope.head.x = this.barrier.x + Math.cos(this.barrierDegree)*this.barrierRadius;
-      // this.scope.head.y = this.barrier.y + Math.sin(this.barrierDegree)*this.barrierRadius;
       this.scope.playerShotLine.clear();
-      // this.scope.head.vector = this.calcs.returnMax1(keys.VECTOR.x,keys.VECTOR.y);
       this.scope.playerShotLine.lineBetween(
         this.x,
         this.y,
@@ -137,7 +133,6 @@ export default class Player extends Character{
       this.barrier.x - this.x,
       this.barrier.y - this.y
     );
-    console.log("this.scene player",this.scene)
     let _vx = 0;
     let _vy = 0;
     if(this.status.level > 4){
@@ -160,8 +155,6 @@ export default class Player extends Character{
           _vy = Math.sin(radiusAfter);    
         }
         if(i === 1){
-          // _vx = this.attackVelocity.x;
-          // _vy = this.attackVelocity.y;
           _vx = vec.x;
           _vy = vec.y;
           degreeAfter = degreeBase;
