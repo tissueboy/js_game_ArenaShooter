@@ -17,7 +17,7 @@ export default class ActiveTime extends Phaser.Physics.Arcade.Sprite {
     this.circle.scaleX = 0;
     this.circle.scaleY = 0;
 
-    this.pileUpSpeed = 0.04;
+    this.pileUpSpeed = 0.5;
     this.flg_max = false;
 
     this.per = 0;

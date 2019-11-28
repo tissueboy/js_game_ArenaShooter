@@ -64,12 +64,13 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     }, this);
 
     config.input.on('pointerup', function (pointer) {
+      if(this.keys.isTOUCH){/*タッチ後に判定する */
+        this.keys.isRELEASE = true;
+      }
       this.keys.isTOUCH = false;
-      this.keys.isRELEASE = true;
+      
       this.keys.TOUCH_START.x = 0;
       this.keys.TOUCH_START.y = 0;
-      // this.keys.VECTOR.x = 0;
-      // this.keys.VECTOR.y = 0;
       this.keys.DIRECTION.x = 0;
       this.keys.DIRECTION.y = 0;
     }, this);
@@ -115,8 +116,6 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
 
           this.keys.DIRECTION.x = 0;
           this.keys.DIRECTION.y = 0;
-          // this.keys.VECTOR.x = 0;
-          // this.keys.VECTOR.y = 0;
 
         }
       }
@@ -128,6 +127,8 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     this.text = this.scene.add.text(10, 10, 'Use up to 4 fingers at once', { fontSize: '8px', fill: '#FFF' });
     this.text.setScrollFactor(0,0);
     this.text.setStroke('#000', 4);
+
+    console.log("isRELEASE",this.keys.isRELEASE)
   }
   update(){
 
@@ -160,6 +161,6 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
       this.keys.DIRECTION.x = 0;
       this.keys.DIRECTION.y = 0;
     }    
-
   }
+  
 }

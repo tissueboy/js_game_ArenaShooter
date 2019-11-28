@@ -1,9 +1,9 @@
 import Keypad from '../helper/Keypad';
 import Keypad_PC from '../helper/Keypad_PC';
 import CollisionCheck from '../helper/CollisionCheck';
-import CreateObjects from '../helper/CreateObjects';
+// import CreateObjects from '../helper/CreateObjects';
 import ParseObjectLayers from '../helper/ParseObjectLayers';
-import CreateBoss from '../helper/CreateBoss';
+// import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
 import GameOver from '../helper/GameOver';
@@ -13,7 +13,7 @@ import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
 import Portion from '../sprites/item/Portion';
 import Player from '../sprites/character/Player';
-
+import Bullet from '../sprites/weapon/Bullet';
 
 class GameScene extends Phaser.Scene {
   constructor(test) {
@@ -60,18 +60,18 @@ class GameScene extends Phaser.Scene {
     /*==============================
     モンスターの生成
     ==============================*/
-    this.createObjects = new CreateObjects({
-      scene: this
-    });
+    // this.createObjects = new CreateObjects({
+    //   scene: this
+    // });
 
 
 
     /*==============================
     ボスの生成
     ==============================*/
-    this.createBoss = new CreateBoss({
-      scene: this
-    });
+    // this.createBoss = new CreateBoss({
+    //   scene: this
+    // });
 
     /*==============================
     アニメーションの読み込み
@@ -101,6 +101,8 @@ class GameScene extends Phaser.Scene {
         input: this.input
       });            
     }
+    this.keypad.keys.isRELEASE = false;
+    console.log("this.keypad.isRELEASE",this.keypad.keys)
 
     /*==============================
     UI | POWER UP LIST
@@ -152,7 +154,7 @@ class GameScene extends Phaser.Scene {
     /*==============================
     GROUP管理
     ==============================*/
-    this.playerWeaponGroup = this.add.group();
+    this.playerWeaponGroup = this.add.group({ classType: Bullet, maxSize: 50, runChildUpdate: true });
     this.enemyWeaponGroup = this.add.group();
     this.enemyGroup = this.add.group();
     this.itemGroup = this.add.group();

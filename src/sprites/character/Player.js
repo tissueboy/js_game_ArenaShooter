@@ -74,7 +74,6 @@ export default class Player extends Character{
       return;
     }
 
-
     this.setVelocityX(keys.DIRECTION.x*4);
     this.setVelocityY(keys.DIRECTION.y*4);
     if (this.active) {
@@ -119,6 +118,7 @@ export default class Player extends Character{
     }
 
     if(keys.isRELEASE === true){
+
       if(this.activeTime.flg_max === true){
         this.attackVelocity = keys.VECTOR;
         this.attack();
@@ -128,6 +128,11 @@ export default class Player extends Character{
 
   }
   attack(){
+    let bullet = {
+      vx: 0,
+      vy: 0,
+      scale: 1
+    };
     let setScale = 1;
     let vec = this.calc.returnMax1(
       this.barrier.x - this.x,
@@ -151,52 +156,41 @@ export default class Player extends Character{
         if(i === 0){
           degreeAfter = degreeBase + degreeAdd;
           radiusAfter = degreeAfter * ( Math.PI / 180 ) ;
-          _vx = Math.cos(radiusAfter);
-          _vy = Math.sin(radiusAfter);    
+          bullet.vx = Math.cos(radiusAfter);
+          bullet.vy = Math.sin(radiusAfter);    
         }
         if(i === 1){
-          _vx = vec.x;
-          _vy = vec.y;
+          bullet.vx = vec.x;
+          bullet.vy = vec.y;
           degreeAfter = degreeBase;
         }
         if(i === 2){
           degreeAfter = degreeBase - degreeAdd;
           radiusAfter = degreeAfter * ( Math.PI / 180 ) ;
-          _vx = Math.cos(radiusAfter);
-          _vy = Math.sin(radiusAfter);   
+          bullet.vx = Math.cos(radiusAfter);
+          bullet.vy = Math.sin(radiusAfter);   
         }
+        this.fromShotPool(bullet);
 
-        let bullet = new Bullet({
-          scene: this.scene,
-          x: this.barrier.x,
-          y: this.barrier.y,
-          key: "bullet",
-          vx: _vx,
-          vy: _vy,
-          target: this,
-          power: this.status.power,
-          scale: setScale,
-          parent: "player"
-        }); 
-        this.scene.playerWeaponGroup.add(bullet);  
+        // let bullet = new Bullet({
+        //   scene: this.scene,
+        //   x: this.barrier.x,
+        //   y: this.barrier.y,
+        //   key: "bullet",
+        //   vx: _vx,
+        //   vy: _vy,
+        //   target: this,
+        //   power: this.status.power,
+        //   scale: setScale,
+        //   parent: "player"
+        // }); 
+        // this.scene.playerWeaponGroup.add(bullet);  
 
       }
     }else{
-      _vx = vec.x;
-      _vy = vec.y;
-      let bullet = new Bullet({
-        scene: this.scene,
-        x: this.barrier.x,
-        y: this.barrier.y,
-        key: "bullet",
-        vx: _vx,
-        vy: _vy,
-        target: this,
-        power: this.status.power ,
-        scale: setScale,
-        parent: "player"
-      }); 
-      this.scene.playerWeaponGroup.add(bullet);  
+      bullet.vx = vec.x;
+      bullet.vy = vec.y;
+      this.fromShotPool(bullet);
     }
   }
   starMode(){
@@ -213,35 +207,33 @@ export default class Player extends Character{
       [],
       this);
   }
-  createShot(object){
-    let _vx = object.vx;
-    let _vy = object.vy;
-    let _setScale = object.setScale;
-    
+  createShot(object){    
     let bullet = new Bullet({
       scene: this.scene,
-      x: this.barrier.x,
-      y: this.barrier.y,
-      key: "bullet",
-      vx: _vx,
-      vy: _vy,
-      target: this,
-      power: this.status.power ,
-      scale: _setScale,
-      parent: "player"
+      x: this.x,
+      y: this.y,
+      key: "bullet"
     }); 
-    this.scene.playerWeaponGroup.add(bullet);  
-  }
-  toShotPool(object){
-    this.shotObjectPool.unshift(object);
+    this.scene.playerWeaponGroup.add(bullet);
   }
   fromShotPool(object){
-    if (this.shotObjectPool.length === 0) {
-      // プールが空なら新規生成
-      return this.createShot();
-    } else {
-      // プールにストックがあれば取り出す
-      return this.scene.playerWeaponGroup.children.entries();
+    let bullet = this.scene.playerWeaponGroup.getFirst();
+    if(!bullet){
+      this.createShot();
+      bullet = this.scene.playerWeaponGroup.get()
     }
+    let param = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      scale: 0,
+      power: 0
+    }
+    param.x = this.barrier.x;
+    param.y = this.barrier.y;
+    param.vx = object.vx;
+    param.vy = object.vy;
+    bullet.shot(param);
   }
 }

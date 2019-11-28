@@ -8,78 +8,77 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       config.x,
       config.y,
       config.key,
-      config.frame,
-      config.vx,
-      config.vy,
-      config.target,
-      config.power,
-      config.scale,
-      config.type,
-      config.effects
+      config.frame
     );
     this.power = 1;
-    this.attribute = "weapon";
+    this.active = false;
+    this.key = "bullet";
 
-    this.type = config.type;
-    this._scene = config.scene;
-
-  
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
-
-
-    this.target = config.target;
     
-    this.attackPoint = Math.floor(1 * this.target.status.power + this.power);
+    this.attackPoint = 0;
 
     this.speed = 100;
-    this.depth = 10;
 
-    this.vx = config.vx;
-    this.vy = config.vy;
-
-    /*==============================
-    受け取ったベクトルをMAXを1にしてvx*speedを均等にする。
-    ==============================*/
     this.calcs = new Calcs();
 
-    this.vector_max_1 = this.calcs.returnMax1(this.vx,this.vy);
+    this.vector_max_1;
     
     this.body.setGravity(0,0);
-    this.body.setVelocity(
-      this.vector_max_1.x*this.speed,
-      this.vector_max_1.y*this.speed
-    );   
 
-    this.breakTime = 1600;
 
-    this.breakTimerEvent;
+    this.breakTime = 3000;
+    this.breakCounter = this.breakTime;
 
-    this.scaleX = this.scaleX * config.scale;
-    this.scaleY = this.scaleY * config.scale;
-
+    this.setActive(false);
+    this.setVisible(false);
   }
 
   update(time, delta) {
 
-    this.breakTime -= delta;
-    if(this.breakTime < 0){
-      this.explode();
+    this.breakCounter -= delta;
+
+    if(!this.active){
+      this.body.setVelocity(0,0);
     }
+
+    if(this.breakCounter < 0){
+      this.setActive(false);
+      this.setVisible(false);
+      this.body.setVelocity(0,0);
+    }
+
+    this.body.setVelocity(
+      this.vector_max_1.x*this.speed,
+      this.vector_max_1.y*this.speed
+    );
   }
 
-  collided(bullet,layer) {
+  // collided(bullet,layer) {
 
+  // }
+  shot(param){
+    this.breakCounter = this.breakTime;
+    this.setPosition(param.x,param.y);
+    this.setActive(true);
+    this.setVisible(true);
+    /*==============================
+    受け取ったベクトルをMAXを1にしてvx*speedを均等にする。
+    ==============================*/
+    this.vector_max_1 = this.calcs.returnMax1(param.vx,param.vy);
   }
 
   explode() {
-    if(this.type === "player"){
-    }
-    this.scene.playerWeaponGroup.remove(this);
-    this.scene.enemyWeaponGroup.remove(this);
-    this.destroy();
+    this.setActive(false);
+    this.setVisible(false);
   }
   bounce(){
+
+    if(!this.active){
+      this.body.setVelocity(0,0);
+      return false;
+    }
 
     if(this.body.blocked.up || this.body.blocked.down){
       this.vector_max_1.y = this.vector_max_1.y * -1;

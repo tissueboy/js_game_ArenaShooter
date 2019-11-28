@@ -73,7 +73,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
       }
     ];
     this.createBossTimerEvent = config.scene.time.addEvent({
-      delay: 100,
+      delay: 30000,
       callback: this.createBoss,
       callbackScope: config.scene,
       startAt: 0,
@@ -101,10 +101,8 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
 
     this.enemyGroup.add(boss);
     this.createObjects.createObjTimerEvent.remove(false);
-    // this.createObjects.createObjTimerEvent = false;
 
     this.createBoss.createBossTimerEvent.remove(false);
-    // this.createBossTimerEvent = null;
   }
   clearStageDisplay(){
     this.clearStageObj.container.visible = true;

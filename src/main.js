@@ -13,8 +13,8 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      // fps: 30,
-      // debug: true,
+      fps: 30,
+      debug: true,
       gravity: {
           y: 0
       },

@@ -54,19 +54,58 @@ export default class Brain extends EnemyChase {
     var direction_x = rangeRadius * Math.sin(radian);
     var direction_y = rangeRadius * Math.cos(radian);
 
-    var bullet = new Bullet({
+
+    let bullet = {
+      vx: direction_x,
+      vy: direction_y
+    }
+    // bullet.vx = direction_x;
+    // bullet.vx = direction_x;
+
+    this.fromShotPool(bullet);
+
+    // var bullet = new Bullet({
+    //   scene: this.scene,
+    //   key: 'bullet',
+    //   x: this.x,
+    //   y: this.y,
+    //   vx: direction_x,
+    //   vy: direction_y,
+    //   target: this,
+    //   power: 0,
+    //   scale: 1,
+    //   type: "enemy"
+    // });
+    // this.scene.enemyWeaponGroup.add(bullet);   
+  }
+  createShot(object){    
+    let bullet = new Bullet({
       scene: this.scene,
-      key: 'bullet',
       x: this.x,
       y: this.y,
-      vx: direction_x,
-      vy: direction_y,
-      target: this,
-      power: 0,
-      scale: 1,
-      type: "enemy"
-    });
-    this.scene.enemyWeaponGroup.add(bullet);   
+      key: "bullet"
+    }); 
+    this.scene.enemyWeaponGroup.add(bullet);
+  }
+  fromShotPool(object){
+    let bullet = this.scene.enemyWeaponGroup.getFirst();
+    if(!bullet){
+      this.createShot();
+      bullet = this.scene.enemyWeaponGroup.get()
+    }
+    let param = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      scale: 0,
+      power: 0
+    }
+    param.x = this.x;
+    param.y = this.y;
+    param.vx = object.vx;
+    param.vy = object.vy;
+    bullet.shot(param);
   }
   attackStop(){
     

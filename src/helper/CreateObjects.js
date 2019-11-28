@@ -13,7 +13,7 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
     this._scene = config.scene;
 
     this.createObjTimerEvent = config.scene.time.addEvent({
-      delay: 3000,
+      delay: 1000,
       callback: this.createObj,
       callbackScope: this,
       repeat: Infinity,
@@ -24,7 +24,7 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
     this.max_x = 10;
     this.min_y = 2;
     this.max_y = 14;
-    this.max_enemy_length = 8;
+    this.max_enemy_length = 28;
     this.interval = 16;
     this.appear_max_length = 3;
 
@@ -64,6 +64,8 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
   }
 
   createObj(){
+
+    console.log("createObj");
 
     let appear_length = Math.floor(Math.random()*(this.appear_max_length-1)+1);
 
