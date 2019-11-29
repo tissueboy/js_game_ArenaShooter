@@ -53,6 +53,7 @@ export default class Player extends Character{
     config.scene.add.existing(this.barrier);
 
     this.barrier.setOrigin(0.5,0.5);
+    this.barrier.setActive(true);
     this.barrier.setVisible(true);
 
     this.barrier.scaleX = 0;
@@ -62,8 +63,6 @@ export default class Player extends Character{
     this.barrierRadius = 18;
 
     this.barrier.power = 1;
-
-    this.shotObjectPool = [];
 
   }
   update(keys, time, delta) {
@@ -88,17 +87,23 @@ export default class Player extends Character{
 
     this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
       function(enemy,barrier){
+        if(!barrier.active){
+          return;
+        }
         enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
     },null,this);
 
     this.barrierDegree += 0.15;
 
-    this.barrier.setVisible(true);
-    this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
-    this.barrier.y = this.y + Math.sin(this.barrierDegree)*this.barrierRadius;
-
 
     if(keys.isTOUCH === true){
+
+      this.barrier.setVisible(true);
+      this.barrier.setActive(true);
+      this.barrier.x = this.x + Math.cos(this.barrierDegree)*this.barrierRadius;
+      this.barrier.y = this.y + Math.sin(this.barrierDegree)*this.barrierRadius;
+
+      
       this.barrier.scaleX = this.activeTime.per;
       this.barrier.scaleY = this.activeTime.per;
 
@@ -113,6 +118,8 @@ export default class Player extends Character{
     }else{
       this.barrier.scaleX = 0;
       this.barrier.scaleY = 0;
+      this.barrier.setVisible(false);
+      this.barrier.setActive(false);
       this.scope.head.setVisible(false);        
       this.scope.playerShotLine.clear();
     }
@@ -130,8 +137,7 @@ export default class Player extends Character{
   attack(){
     let bullet = {
       vx: 0,
-      vy: 0,
-      scale: 1
+      vy: 0
     };
     let setScale = 1;
     let vec = this.calc.returnMax1(
@@ -171,21 +177,6 @@ export default class Player extends Character{
           bullet.vy = Math.sin(radiusAfter);   
         }
         this.fromShotPool(bullet);
-
-        // let bullet = new Bullet({
-        //   scene: this.scene,
-        //   x: this.barrier.x,
-        //   y: this.barrier.y,
-        //   key: "bullet",
-        //   vx: _vx,
-        //   vy: _vy,
-        //   target: this,
-        //   power: this.status.power,
-        //   scale: setScale,
-        //   parent: "player"
-        // }); 
-        // this.scene.playerWeaponGroup.add(bullet);  
-
       }
     }else{
       bullet.vx = vec.x;
@@ -198,7 +189,6 @@ export default class Player extends Character{
     this.anims.play('playerStarAnime', true);
     this.invincible = true;
     this.starTimerEvent = this.scene.time.delayedCall(
-      // delay: 0,
       2000,
       function(){
         _this.invincible = false;
@@ -226,9 +216,7 @@ export default class Player extends Character{
       x: 0,
       y: 0,
       vx: 0,
-      vy: 0,
-      scale: 0,
-      power: 0
+      vy: 0
     }
     param.x = this.barrier.x;
     param.y = this.barrier.y;

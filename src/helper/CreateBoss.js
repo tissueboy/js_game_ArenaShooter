@@ -72,37 +72,41 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         }
       }
     ];
-    this.createBossTimerEvent = config.scene.time.addEvent({
-      delay: 30000,
-      callback: this.createBoss,
-      callbackScope: config.scene,
-      startAt: 0,
-    });
+
+    // this.createBossTimerEvent = config.scene.time.addEvent({
+    //   delay: 30000,
+    //   callback: this.createBoss,
+    //   callbackScope: config.scene,
+    //   startAt: 0,
+    // });
+    this.active = false;
   }
 
 
   createBoss(){
-    let _stageNumber = this.createBoss.stageNumber;
-    let bossObj = this.createBoss.stageList.filter(function(item, index){
+    this.active = true;
+    let _stageNumber = this.stageNumber;
+    let bossObj = this.stageList.filter(function(item, index){
       if (item.stage == _stageNumber){
         return true;
       }
     });
+    console.log("this",this)
 
     let _x = bossObj[0].boss.x;
     let _y = bossObj[0].boss.y;
 
     let boss = new bossObj[0].boss.object({
-      scene: this,
+      scene: this._scene,
       x: _x,
       y: _y,
       key: bossObj[0].boss.key
     });
 
-    this.enemyGroup.add(boss);
-    this.createObjects.createObjTimerEvent.remove(false);
+    this._scene.enemyGroup.add(boss);
+    // this.createObjects.createObjTimerEvent.remove(false);
 
-    this.createBoss.createBossTimerEvent.remove(false);
+    // this.createBoss.createBossTimerEvent.remove(false);
   }
   clearStageDisplay(){
     this.clearStageObj.container.visible = true;

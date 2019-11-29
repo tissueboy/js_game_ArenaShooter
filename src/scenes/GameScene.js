@@ -3,7 +3,7 @@ import Keypad_PC from '../helper/Keypad_PC';
 import CollisionCheck from '../helper/CollisionCheck';
 // import CreateObjects from '../helper/CreateObjects';
 import ParseObjectLayers from '../helper/ParseObjectLayers';
-// import CreateBoss from '../helper/CreateBoss';
+import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
 import GameOver from '../helper/GameOver';
@@ -69,9 +69,9 @@ class GameScene extends Phaser.Scene {
     /*==============================
     ボスの生成
     ==============================*/
-    // this.createBoss = new CreateBoss({
-    //   scene: this
-    // });
+    this.createBoss = new CreateBoss({
+      scene: this
+    });
 
     /*==============================
     アニメーションの読み込み
@@ -159,11 +159,13 @@ class GameScene extends Phaser.Scene {
     this.enemyGroup = this.add.group();
     this.itemGroup = this.add.group();
     this.spellGroup = this.add.group();
+    this.checkZoneGroup = this.add.group();
 
     this.objectLayers = new ParseObjectLayers({
       scene: this
     });
     this.objectLayers.addObject();
+    this.objectLayers.addCheck();
 
     /*==============================
     衝突判定
@@ -203,6 +205,7 @@ class GameScene extends Phaser.Scene {
         sprite.update(time, delta);
       }
     );
+
 
   }
   titleGame(){

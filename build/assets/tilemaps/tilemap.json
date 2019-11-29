@@ -376,9 +376,42 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":38,
+         "name":"check",
+         "objects":[
+                {
+                 "height":15.5,
+                 "id":93,
+                 "name":"boss",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":63,
+                 "x":64,
+                 "y":319.5
+                }, 
+                {
+                 "height":7.5,
+                 "id":94,
+                 "name":"start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":93,
+                 "x":49,
+                 "y":965.5
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":33,
- "nextobjectid":83,
+ "nextlayerid":39,
+ "nextobjectid":95,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.3",

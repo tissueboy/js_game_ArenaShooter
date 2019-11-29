@@ -4,12 +4,13 @@ import Bad from '../sprites/character/enemy/Bad';
 export default class ParseObjectLayers {
   constructor(config) {
     this.scene = config.scene;
-    // console.log("ParseObjectLayers");
+
+    this.scene.physics.add.overlap(this.scene.player,this.scene.checkZoneGroup,this.zoneCheck, null, this);
+
+    this.checkBossFlg = false;
+
   }
   addObject() {
-    console.log("this.scene.map",this.scene.map.getObjectLayer('enemy').objects);
-    // let _this = this._scene;
-    // let _this2 = this;
     this.scene.map.getObjectLayer('enemy').objects.forEach(
       (enemy) => {
         let enemyObject;
@@ -40,5 +41,31 @@ export default class ParseObjectLayers {
       }
     );
   }
+  addCheck() {
+    let _this = this;
+    this.scene.map.getObjectLayer('check').objects.forEach(
+      (object) => {
+        // let object;
+        console.log("object",object)
+        let zone = _this.scene.add.zone(object.x, object.y).setSize(object.width, object.height);
+        zone.name = object.name;
+        _this.scene.checkZoneGroup.add(zone);
+        _this.scene.physics.world.enable(zone);
+        zone.body.setAllowGravity(false);
+        // zone.body.debugBodyColor = 0x00ffff;
+      }
+    )
+  }
+  zoneCheck(player,obj){
+    console.log("obj.name",obj.name);
+    if(obj.name === "boss" && !this.checkBossFlg){
 
+      this.checkBossFlg = true;
+
+      this.scene.cameras.main.shake(500, 0.01, 0.01) //Duration, intensity, force
+
+      this.scene.createBoss.createBoss();
+
+    }
+  }
 }

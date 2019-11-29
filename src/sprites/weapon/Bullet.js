@@ -26,13 +26,11 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.vector_max_1;
     
     this.body.setGravity(0,0);
-
-
     this.breakTime = 3000;
     this.breakCounter = this.breakTime;
 
-    this.setActive(false);
-    this.setVisible(false);
+    this.alive();
+    
   }
 
   update(time, delta) {
@@ -44,9 +42,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     }
 
     if(this.breakCounter < 0){
-      this.setActive(false);
-      this.setVisible(false);
-      this.body.setVelocity(0,0);
+      this.explode();      
     }
 
     this.body.setVelocity(
@@ -54,10 +50,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       this.vector_max_1.y*this.speed
     );
   }
-
-  // collided(bullet,layer) {
-
-  // }
   shot(param){
     this.breakCounter = this.breakTime;
     this.setPosition(param.x,param.y);
@@ -69,9 +61,15 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.vector_max_1 = this.calcs.returnMax1(param.vx,param.vy);
   }
 
+  alive(){
+    this.setActive(false);
+    this.setVisible(false);
+  }
+
   explode() {
     this.setActive(false);
     this.setVisible(false);
+    this.body.setVelocity(0,0);
   }
   bounce(){
 

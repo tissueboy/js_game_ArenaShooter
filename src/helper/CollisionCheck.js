@@ -15,6 +15,8 @@ export default class CollisionCheck{
     _this.physics.add.overlap(_this.enemyGroup,_this.playerWeaponGroup,this.enemy_x_playerWeapon_Collision);
     _this.physics.add.overlap(_this.player,_this.itemGroup,this.player_x_item_Collision);
 
+   
+
     _this.physics.add.collider(_this.playerWeaponGroup,_this.objectLayer,this.bulletBounceCollision,null, this);
     _this.physics.add.collider(_this.enemyWeaponGroup,_this.objectLayer,this.bulletCollision,null, this);
 
@@ -58,6 +60,7 @@ export default class CollisionCheck{
     }
     obj.hit(player,obj);
   }
+
   item_x_ground_Collision(item,obj){
     // item.checkCollision(item,obj);
   }
