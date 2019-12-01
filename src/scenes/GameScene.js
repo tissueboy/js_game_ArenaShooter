@@ -6,6 +6,7 @@ import ParseObjectLayers from '../helper/ParseObjectLayers';
 import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
+import DisplayStageNumber from '../helper/DisplayStageNumber';
 import GameOver from '../helper/GameOver';
 import ButtonStop from '../helper/ButtonStop';
 import Animations from '../helper/Animations';
@@ -60,15 +61,6 @@ class GameScene extends Phaser.Scene {
     this.shadow;
 
     /*==============================
-    モンスターの生成
-    ==============================*/
-    // this.createObjects = new CreateObjects({
-    //   scene: this
-    // });
-
-
-
-    /*==============================
     ボスの生成
     ==============================*/
     this.createBoss = new CreateBoss({
@@ -105,6 +97,25 @@ class GameScene extends Phaser.Scene {
     }
     this.keypad.keys.isRELEASE = false;
     console.log("this.keypad.isRELEASE",this.keypad.keys)
+
+
+    /*==============================
+    UI | ステージ数の表示
+    ==============================*/
+    this.displayStageNumber = new DisplayStageNumber({
+      scene: this
+    });
+    this.stageActive = false;
+
+    // this.stageActiveTimerEvent = this.time.addEvent({
+    //   // startAt: 3000,
+    //   delay: 3000,
+    //   // duration: 3000,
+    //   callback: function(){
+    //   },
+    //   callbackScope: this,
+    //   loop: false
+    // });
 
     /*==============================
     UI | POWER UP LIST
@@ -190,6 +201,10 @@ class GameScene extends Phaser.Scene {
     }    
 
     this.player.update(this.keypad.keys, time, delta);
+
+    if(!this.stageActive){
+      return;
+    }
 
     this.playerWeaponGroup.children.entries.forEach(
       (sprite) => {

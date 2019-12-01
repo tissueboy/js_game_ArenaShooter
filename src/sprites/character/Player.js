@@ -72,6 +72,9 @@ export default class Player extends Character{
     if(this.active === false){
       return;
     }
+    if(!this.scene.stageActive){
+      return;
+    }
 
     this.setVelocityX(keys.DIRECTION.x*4);
     this.setVelocityY(keys.DIRECTION.y*4);
