@@ -54,10 +54,10 @@ export default class Sun extends Enemy {
     this.TILE_WIDTH = 16;
 
     this.maxDistanceArea = {
-      top: 20,
+      top: config.scene.game.config.height*1.2,
       left: this.width/2 + this.TILE_WIDTH,
       right: config.scene.game.config.width - this.width/2 - this.TILE_WIDTH,
-      bottom: 200
+      bottom: config.scene.game.config.height*1.6
     }
 
     /*======

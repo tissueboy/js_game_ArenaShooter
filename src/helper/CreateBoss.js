@@ -22,7 +22,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Dragon,
           x: config.scene.game.config.width/2,
-          y: 80,
+          y: config.scene.game.config.height*0.7,
           key: 'dragon'
         }
       },
@@ -40,7 +40,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Stone,
           x: config.scene.game.config.width/2,
-          y: 220,
+          y: config.scene.game.config.height*0.7,
           key: 'stone'
         }
       },
@@ -49,7 +49,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Sun,
           x: config.scene.game.config.width/2,
-          y: config.scene.game.config.height/2,
+          y: config.scene.game.config.height*0.7,
           key: 'sun'
         }
       },
@@ -58,7 +58,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Smoke,
           x: config.scene.game.config.width/2,
-          y: 80,
+          y: config.scene.game.config.height*0.7,
           key: 'smoke'
         }
       },
@@ -67,7 +67,7 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
         boss: {
           object: Robot,
           x: config.scene.game.config.width/2,
-          y: 80,
+          y: config.scene.game.config.height*0.7,
           key: 'robot_base'
         }
       }
