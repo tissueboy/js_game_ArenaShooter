@@ -7,11 +7,14 @@ export default class DisplayStageNumber extends Phaser.Physics.Arcade.Sprite{
     console.log("okoko")
 
     let stageNumber = config.scene.stageNumber;
+    stageNumber = String(stageNumber);
     if(stageNumber === "1"){
       stageNumber = '1st';
     }
+    console.log(stageNumber);
     if(stageNumber === "2"){
       stageNumber = '2nd';
+      console.log("stageNumber2",stageNumber)
     }
     if(stageNumber === "3"){
       stageNumber = '3rd';
@@ -22,6 +25,7 @@ export default class DisplayStageNumber extends Phaser.Physics.Arcade.Sprite{
     if(stageNumber === "5"){
       stageNumber = 'LAST';
     }
+    console.log("stageNumber",stageNumber)
 
 
     this.stageNowText = this.scene.add.bitmapText(

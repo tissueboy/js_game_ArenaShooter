@@ -28,7 +28,7 @@ class GameScene extends Phaser.Scene {
     ステージの表示
     ==============================*/
     this.stageNumber = this.registry.list.stage;
-    // this.stageNumber = 5;
+    // this.stageNumber = 2;
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
