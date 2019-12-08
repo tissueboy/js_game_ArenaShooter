@@ -65,8 +65,6 @@ export default class CreateObjects  extends Phaser.Time.TimerEvent{
 
   createObj(){
 
-    console.log("createObj");
-
     let appear_length = Math.floor(Math.random()*(this.appear_max_length-1)+1);
 
     if(this._scene.enemyGroup.getLength() >= this.max_enemy_length){

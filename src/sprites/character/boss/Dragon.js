@@ -90,7 +90,7 @@ export default class Dragon extends Enemy {
   attackSelect(){
     var rand = Math.floor( Math.random() * 100) ;
     if(rand <= 50){
-      this.attack1();
+      this.attack2();
     }else{
       this.attack2();
     }
@@ -219,7 +219,6 @@ export default class Dragon extends Enemy {
           shadow.setVisible(false);
           if(damageArea.radius*damageArea.radius >= (drop.x - _target.x)*(drop.x - _target.x) + (drop.y - _target.y)*(drop.y - _target.y)){
             // if(sprite.active){
-              console.log("fin chaek")
               _target.damage(drop.power);
             // }
           }
@@ -233,7 +232,6 @@ export default class Dragon extends Enemy {
           drop.y = 0;
           drop.setVisible(false);
           _this.toDropShotPool(dropShotGroup);
-          console.log("fin")
         }
       });
 
@@ -260,18 +258,20 @@ export default class Dragon extends Enemy {
     let _vx = Math.cos(this.shotRadian);
     let _vy = Math.sin(this.shotRadian);
 
+    console.log("this.x",this.x)
+
     let vec = this.calcs.returnMax1(_vx,_vy);
     let bullet = new Bullet({
       scene: this.scene,
-      x: this.x+10,
-      y: this.y+10,
-      key: "bullet",
-      vx: vec.x,
-      vy: vec.y,
-      target: this,
-      power: 10,
-      scale: 1,
-      parent: "dragon"
+      x: 10,
+      y: 10,
+      // key: "bullet",
+      // vx: vec.x,
+      // vy: vec.y,
+      // target: this,
+      // power: 10,
+      // scale: 1,
+      // parent: "dragon"
     }); 
     this.scene.enemyWeaponGroup.add(bullet);
     this.shotCount++;
@@ -279,10 +279,13 @@ export default class Dragon extends Enemy {
   nextBoss(){
     let _this = this._scene;
     this.destroy();
+    this._scene.map = _this.make.tilemap({ key: 'map2',tileWidth: 16, tileHeight: 16});
+    this.groundLayer = this._scene.map.createDynamicLayer('ground', this._scene.tileset, 0, 0);
+    this.groundLayer.depth = 1;
     _this.shadow = new Shadow({
       scene: _this,
-      x: 40,
-      y: 100,
+      x: _this.game.config.width/2,
+      y: _this.game.config.height*0.7,
       key: 'shadow'
     });  
     _this.enemyGroup.add(_this.shadow);

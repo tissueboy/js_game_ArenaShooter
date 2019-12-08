@@ -62,12 +62,10 @@ export default class GameOver extends Phaser.Physics.Arcade.Sprite{
     this.container.visible = false;
 
     this.buttonContinue.on('pointerdown', () => {
-      console.log("buttonContinue");
       this.scene.refleshGame();
 
     });
     this.buttonTitle.on('pointerdown', () => {
-      console.log("buttonTitle");
       this.scene.titleGame();
     });
 

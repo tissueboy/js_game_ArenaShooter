@@ -27,8 +27,8 @@ class GameScene extends Phaser.Scene {
     /*==============================
     ステージの表示
     ==============================*/
-    this.stageNumber = this.registry.list.stage;
-    // this.stageNumber = 2;
+    // this.stageNumber = this.registry.list.stage;
+    this.stageNumber = 5;
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
@@ -51,8 +51,8 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.scene.systems.game.config.width/2,
-      y: 1000,
-      // y: this.scene.systems.game.config.height*1.2,
+      // y: 1000,
+      y: this.scene.systems.game.config.height*1.1,
       // y: 1080,
       key: 'player'
     });

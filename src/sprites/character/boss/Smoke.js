@@ -90,7 +90,6 @@ export default class Smoke extends Enemy {
         if(smokeChild.visible === false){
           return;
         }
-        // console.log("smokeChild",smokeChild.visible);
         player.damage(smokeChild.power);
     },null,this);
 
@@ -110,7 +109,6 @@ export default class Smoke extends Enemy {
   attack(){
   }
   run(){
-    console.log("run");
     if(!this.active){
       return;
     }
@@ -192,7 +190,6 @@ export default class Smoke extends Enemy {
           delay: index * _delay,
           repeat: 0,
           onComplete: function () {
-            console.log("child index",index);
             if(index === 6){
               _this.attackStartTimerEvent = _this.scene.time.delayedCall(
                 1000,

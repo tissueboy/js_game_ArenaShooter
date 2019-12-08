@@ -1,6 +1,5 @@
 export default class Animations{
   constructor(config) {
-    console.log(config.scene.registry.list.stage);
 
     config.scene.anims.create({
       key: 'explosionAnime_m',

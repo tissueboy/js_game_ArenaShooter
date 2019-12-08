@@ -128,7 +128,6 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     this.text.setScrollFactor(0,0);
     this.text.setStroke('#000', 4);
 
-    console.log("isRELEASE",this.keys.isRELEASE)
   }
   update(){
 

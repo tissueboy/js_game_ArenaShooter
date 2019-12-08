@@ -20,25 +20,35 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.attackPoint = 0;
 
     this.speed = 100;
+    this.active = false;
 
     this.calcs = new Calcs();
 
-    this.vector_max_1;
+    this.vector_max_1 = {
+      x: 0,
+      y: 0
+    };
     
     this.body.setGravity(0,0);
-    this.breakTime = 3000;
+    this.breakTime = 1000;
     this.breakCounter = this.breakTime;
 
-    this.alive();
+    // this.alive();
+    this.canShot = false;
     
   }
 
   update(time, delta) {
 
-    this.breakCounter -= delta;
-
     if(!this.active){
       this.body.setVelocity(0,0);
+      return;
+    }
+    if(!this.canShot){
+      return;
+    }
+    if(this.canShot){
+      this.breakCounter -= delta;
     }
 
     if(this.breakCounter < 0){
@@ -51,10 +61,12 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     );
   }
   shot(param){
-    this.breakCounter = this.breakTime;
+    this.canShot = true;
+    
     this.setPosition(param.x,param.y);
     this.setActive(true);
     this.setVisible(true);
+    this.breakCounter = this.breakTime;
     /*==============================
     受け取ったベクトルをMAXを1にしてvx*speedを均等にする。
     ==============================*/
@@ -64,12 +76,17 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
   alive(){
     this.setActive(false);
     this.setVisible(false);
+    this.active = true;
   }
 
   explode() {
     this.setActive(false);
     this.setVisible(false);
+    this.active = false;
     this.body.setVelocity(0,0);
+    this.canShot = false;
+    this.breakCounter = this.breakTime;
+    // this.breakCounter = this.breakTime;
   }
   bounce(){
 
@@ -87,5 +104,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
     this.body.setVelocity(this.vector_max_1.x*this.speed,this.vector_max_1.y*this.speed);
   }
+  // stop(){
+  //   this.canShot = false;
+  // }
 
 }

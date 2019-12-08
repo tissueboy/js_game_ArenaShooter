@@ -35,7 +35,6 @@ export default class ParseObjectLayers {
               this.scene.enemyGroup.add(enemyObject);
               break;                      
             default:
-            // console.error('Unknown:', enemy.name); // eslint-disable-line no-console
             break;
         }
       }
@@ -46,7 +45,6 @@ export default class ParseObjectLayers {
     this.scene.map.getObjectLayer('check').objects.forEach(
       (object) => {
         // let object;
-        console.log("object",object)
         let zone = _this.scene.add.zone(object.x, object.y).setSize(object.width, object.height);
         zone.name = object.name;
         _this.scene.checkZoneGroup.add(zone);
@@ -57,7 +55,6 @@ export default class ParseObjectLayers {
     )
   }
   zoneCheck(player,obj){
-    console.log("obj.name",obj.name);
     if(obj.name === "boss" && !this.checkBossFlg){
 
       this.checkBossFlg = true;

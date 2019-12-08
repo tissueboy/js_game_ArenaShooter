@@ -201,7 +201,6 @@ export default class Sun extends Enemy {
       repeat: 0,
       completeDelay: 4000,
       onComplete: function () {
-        console.log("comp hide")
         _this.x = nextPostion.x;
         _this.y = nextPostion.y;
         _this.mask.bitmapMask.x = _this.x;
@@ -223,7 +222,6 @@ export default class Sun extends Enemy {
       repeat: 0,
       // completeDelay: 100,
       onComplete: function () {
-        console.log("comp appear")
         _this.shotActive = true;
         _this.hp.hp_bar_bg.setVisible(true);
         _this.hp.hp_bar.setVisible(true);
