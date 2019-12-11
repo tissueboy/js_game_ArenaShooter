@@ -32,8 +32,6 @@ export default class Shadow extends Enemy {
     this.canAttack = false;
 
     this.shadowAttack = config.scene.add.group({
-      // classType: Bullet,
-      // maxSize: 50,
       runChildUpdate: true 
     });
     this.attackDirection = ["left", "right", "bottom"];
@@ -50,6 +48,8 @@ export default class Shadow extends Enemy {
     this.shotAllTimerEvent;
 
     this.attackMode = "";
+
+    this.playerPosition;
 
   }
   bullet_x_player_Collision(bullet,player){
@@ -96,7 +96,6 @@ export default class Shadow extends Enemy {
 
   }
   attack1(){
-    console.log("attack1");
     this.attackMode = "attack1";
     if(!this.active){
       return;
@@ -111,11 +110,10 @@ export default class Shadow extends Enemy {
         this.shotCount++;
       },
       callbackScope: this,
-      repeat: this.shotMaxCount
+      repeat: this.shotMaxCount - 1
     });
   }
   hideAttack(){
-    console.log("hideAttack")
     this.canAttack = true;
     this.shotCount = 0;
     this.attackDegree = 0;
@@ -126,24 +124,30 @@ export default class Shadow extends Enemy {
     // this.shotTimerEvent.remove(false)
   }
   attack2(){
-    console.log("attack2");
     this.attackMode = "attack2";
-
-    let playerPosition = this.scene.player.getCenter();
-
-    console.log("playerPosition",playerPosition)
+    // let pos;
+    this.playerPosition = {
+      x: this.scene.player.x + this.scene.player.width/2,
+      y: this.scene.player.y + this.scene.player.height/2
+    }
 
     this.shotTimerEvent = this.scene.time.addEvent({
       delay: 100,
       duration: 100,
       startAt: 100,
       callback: function(){
+        // let pos;
+        if(this.shotCount === 0){
+          // pos = this.scene.player.getCenter();
+          // console.log("this.playerPosition",this.playerPosition);
+          // console.log("this.scene.player.getCenter()",this.scene.player.getCenter());
+          // console.log("pos",pos);
+        }
+        this.arroundBullet(this.playerPosition);
         this.shotCount++;
-        this.arroundBullet(playerPosition);
-        console.log("this.shotCount____",this.shotCount)
       },
       callbackScope: this,
-      repeat: this.shotMaxCount
+      repeat: this.shotMaxCount - 1
     });
   }
   arroundBullet(playerPosition){
@@ -152,19 +156,22 @@ export default class Shadow extends Enemy {
     let radius = 50;
     let add_x = radius * Math.sin(degree);
     let add_y = radius * Math.cos(degree);
-    let playerPoint = this.scene.player.getCenter();
-    // let playerPoint = playerPosition;
-    console.log("playerPosition.x:"+playerPosition.x+"/playerPosition.y:"+playerPosition.y);
-    console.log("playerPoint   .x:"+playerPoint.x   +"/playerPoint   .y:"+playerPosition.y);
-    console.log("this.scene.pla.x:"+this.scene.player.x+"/this.scene.pla.y:"+this.scene.player.y);
+    let playerPoint2 = this.scene.player.getCenter();
+    let playerPoint = playerPosition;
+
     let bulletPoint = {
       x: playerPosition.x + add_x,
       y: playerPosition.y + add_y
-      // x: playerPoint.x + add_x,
-      // y: playerPoint.y + add_y
     }
 
-    var vecter = playerPoint.subtract(bulletPoint);
+    // var vecter = playerPoint.subtract(bulletPoint);
+
+    var vecter = {
+      x: playerPosition.x - bulletPoint.x,
+      y: playerPosition.y - bulletPoint.y
+    }
+    console.log("vecter",vecter)
+
 
     var rangeRadius = 1;
     var radian = Math.atan2(vecter.x, vecter.y);
@@ -174,11 +181,11 @@ export default class Shadow extends Enemy {
     let bullet = {
       x: playerPosition.x + add_x,
       y: playerPosition.y + add_y,
-      // x: playerPoint.x + add_x,
-      // y: playerPoint.y + add_y,
       vx: _vx,
-      vy: _vy
+      vy: _vy,
+      deadPoint: playerPosition
     }
+    console.log("bullet",bullet)
     this.fromShotPool(bullet);
 
 
@@ -227,19 +234,6 @@ export default class Shadow extends Enemy {
       this.createShot();
       bullet = this.shadowAttack.get()
     }
-    let param = {
-      x: 0,
-      y: 0,
-      vx: 0,
-      vy: 0,
-      scale: 0,
-      power: 0,
-      
-    }
-    param.x = object.x;
-    param.y = object.y;
-    param.vx = object.vx;
-    param.vy = object.vy;
 
     bullet.x = object.x;
     bullet.y = object.y;
@@ -247,52 +241,30 @@ export default class Shadow extends Enemy {
     bullet.vy = object.vy;
 
     if(this.attackMode === "attack1"){
-      bullet.shot(param);
+      bullet.shot();
     }
     if(this.attackMode === "attack2"){
       // bullet.shot(param);
+      bullet.deadPoint = object.deadPoint;
+      bullet.canShot = false;
+      bullet.active = true;
       bullet.setActive(true);
       bullet.setVisible(true);
       this.scene.time.delayedCall(
-        (this.shotMaxCount - this.shotCount + 8) * 200,
+        (this.shotMaxCount - this.shotCount + 8) * 100,
         function(){
-          bullet.shot(param);
+          if(!bullet.active){
+            bullet.vx = 0;
+            bullet.vy = 0;
+            return;
+          }
+          bullet.canShot = true;
+          // bullet.isWait = false;
+          bullet.shot();
         },
         [],
         this
       );  
     }
-    // if(this.shotMaxCount < this.shotCount && !this.shotAllTimerEvent){
-    //   console.log("this.shotCount",this.shotCount);
-    //   console.log("this.shotMaxCount",this.shotMaxCount);
-    //   console.log("maxmax callback")
-    //   this.shotCount = 0;
-    //   this.shotAllTimerEvent = this.scene.time.addEvent({
-    //     delay: 2000,
-    //     callback: function(){
-    //       console.log("callback")
-    //       this.shadowAttack.children.entries.forEach(
-    //         (bullet,index) => {
-    //           // console.log("bullet",bullet)
-    //           let param = {
-    //             x: bullet.x,
-    //             y: bullet.y,
-    //             vx: bullet.vx,
-    //             vy: bullet.vy,
-    //             scale: 0,
-    //             power: 0
-    //           }
-    //           console.log("param_index"+":"+index+"=")
-    //           console.log("param",param)
-    //           bullet.shot(param);
-    //         }
-    //       );
-    //       this.shotAllTimerEvent.remove(false);
-    //       this.shotAllTimerEvent = null;
-          
-    //     },
-    //     callbackScope: this
-    //   });     
-    // }
   }
 }

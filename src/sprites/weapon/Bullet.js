@@ -19,6 +19,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     
     this.attackPoint = 0;
 
+    this.vx = 0;
+    this.vy = 0;
+
     this.speed = 100;
     this.active = false;
 
@@ -34,7 +37,14 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.breakCounter = this.breakTime;
 
     // this.alive();
-    this.canShot = false;
+    this.canShot = true;
+    // this.isWait = false;
+
+    this.deadPoint = {
+      x: 0,
+      y: 0
+    }
+    this.deadRadius = 10;
     
   }
 
@@ -54,28 +64,40 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     if(this.breakCounter < 0){
       this.explode();      
     }
-
-    this.body.setVelocity(
-      this.vector_max_1.x*this.speed,
-      this.vector_max_1.y*this.speed
-    );
+    if(this.active){
+      let getCenter = this.getCenter();
+      if(this.deadRadius*this.deadRadius >= (this.deadPoint.x - getCenter.x)*(this.deadPoint.x - getCenter.x) + (this.deadPoint.y - getCenter.y)*(this.deadPoint.y - getCenter.y)){
+        this.explode();
+        return;
+      }
+      if(this.deadPoint.x == getCenter.x && this.deadPoint.y === getCenter.y){
+      }
+      this.body.setVelocity(
+        this.vector_max_1.x*this.speed,
+        this.vector_max_1.y*this.speed
+      );
+    }
   }
   shot(param){
+
+    if(!this.canShot){
+      return;
+    }
     this.canShot = true;
     
-    this.setPosition(param.x,param.y);
+    this.setPosition(this.x,this.y);
     this.setActive(true);
     this.setVisible(true);
     this.breakCounter = this.breakTime;
     /*==============================
     受け取ったベクトルをMAXを1にしてvx*speedを均等にする。
     ==============================*/
-    this.vector_max_1 = this.calcs.returnMax1(param.vx,param.vy);
+    this.vector_max_1 = this.calcs.returnMax1(this.vx,this.vy);
   }
 
   alive(){
-    this.setActive(false);
-    this.setVisible(false);
+    this.setActive(true);
+    this.setVisible(true);
     this.active = true;
   }
 
@@ -84,8 +106,10 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.setVisible(false);
     this.active = false;
     this.body.setVelocity(0,0);
-    this.canShot = false;
-    this.breakCounter = this.breakTime;
+    this.vx = 0;
+    this.vy = 0;
+    // this.canShot = false;
+    // this.breakCounter = this.breakTime;
     // this.breakCounter = this.breakTime;
   }
   bounce(){

@@ -215,16 +215,10 @@ export default class Player extends Character{
       this.createShot();
       bullet = this.scene.playerWeaponGroup.get()
     }
-    let param = {
-      x: 0,
-      y: 0,
-      vx: 0,
-      vy: 0
-    }
-    param.x = this.barrier.x;
-    param.y = this.barrier.y;
-    param.vx = object.vx;
-    param.vy = object.vy;
-    bullet.shot(param);
+    bullet.x = this.barrier.x;
+    bullet.y = this.barrier.y;
+    bullet.vx = object.vx;
+    bullet.vy = object.vy;
+    bullet.shot();
   }
 }
