@@ -10,7 +10,7 @@ export default class Player extends Character{
 
     this.status = {
       hp: 1000,
-      power: 10,
+      power: 1,
       defense: 1,
       experience: 10,
       attackPoint: 3,

@@ -3,13 +3,20 @@ import BootScene from './scenes/BootScene';
 import TitleScene from './scenes/TitleScene';
 import GameScene from './scenes/GameScene';
 
+let BASE_WIDTH = 192;
+let DEVICE_WIDTH = window.innerWidth;
+let DEVICE_HEIGHT = window.innerHeight;
+let wd = BASE_WIDTH/DEVICE_WIDTH;
+let hi = DEVICE_HEIGHT * wd;
+console.log("DEVICE_WIDTH",DEVICE_WIDTH)
+console.log("DEVICE_HEIGHT",DEVICE_HEIGHT)
 const config = {
   type: Phaser.WEBGL,
   pixelArt: true,
   // roundPixels: true,
   parent: 'content',
-  width: 192,
-  height: 320,
+  width: BASE_WIDTH,
+  height: hi,
   physics: {
     default: 'arcade',
     arcade: {

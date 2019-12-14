@@ -55,6 +55,7 @@ export default class Wizerd extends EnemyChase {
       this.barrier.destroy();
     }
     if (!this.active) {
+      this.barrier.setVisible(false);
       return;
     }
 

@@ -7,6 +7,8 @@ export default class Smoke extends Enemy {
 
     super(config);
 
+    this._scene = config.scene;
+
     this.type = "boss";
     this.key = "stone";
 
@@ -142,8 +144,8 @@ export default class Smoke extends Enemy {
     this.moveAttackStart = this.scene.tweens.add({
       targets: this,
       ease: 'liner',
-      x: 100,
-      y: 40,
+      x: this._scene.game.config.width/2,
+      y: this._scene.game.config.width + this.height,
       duration: 1000,
       repeat: 0,
       onComplete: function () {
@@ -156,9 +158,9 @@ export default class Smoke extends Enemy {
     let _this = this;
     let _delay = 400;
     let _start_pos_x = 40;
-    let _start_pos_y = 80;
+    let _start_pos_y = this._scene.game.config.width + this.height + 40;
     let _padding_side = 20;
-    let _distance_height = 260;
+    let _distance_height = this._scene.game.config.width + this.height + 200;
     let _pos_x = 0;
     let _pos_y = 0;
 

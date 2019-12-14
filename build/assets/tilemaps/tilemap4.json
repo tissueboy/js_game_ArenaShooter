@@ -67,10 +67,10 @@
                  "y":959.5
                 }, 
                 {
-                 "gid":282,
+                 "gid":290,
                  "height":16,
                  "id":46,
-                 "name":"brain",
+                 "name":"wizerd",
                  "properties":[
                         {
                          "name":"area",
@@ -78,7 +78,7 @@
                          "value":2
                         }],
                  "rotation":0,
-                 "type":"Brain",
+                 "type":"Wizerd",
                  "visible":true,
                  "width":16,
                  "x":80,
@@ -121,10 +121,10 @@
                  "y":878
                 }, 
                 {
-                 "gid":282,
+                 "gid":289,
                  "height":16,
                  "id":49,
-                 "name":"brain",
+                 "name":"wizerd2",
                  "properties":[
                         {
                          "name":"area",
@@ -132,17 +132,17 @@
                          "value":3
                         }],
                  "rotation":0,
-                 "type":"Brain",
+                 "type":"Wizerd2",
                  "visible":true,
                  "width":16,
                  "x":64,
                  "y":674.5
                 }, 
                 {
-                 "gid":282,
+                 "gid":290,
                  "height":16,
                  "id":50,
-                 "name":"brain",
+                 "name":"wizerd",
                  "properties":[
                         {
                          "name":"area",
@@ -150,7 +150,7 @@
                          "value":3
                         }],
                  "rotation":0,
-                 "type":"Brain",
+                 "type":"Wizerd",
                  "visible":true,
                  "width":16,
                  "x":111.5,
@@ -211,10 +211,10 @@
                  "y":575.5
                 }, 
                 {
-                 "gid":282,
+                 "gid":289,
                  "height":16,
                  "id":54,
-                 "name":"brain",
+                 "name":"wizerd2",
                  "properties":[
                         {
                          "name":"area",
@@ -222,15 +222,15 @@
                          "value":4
                         }],
                  "rotation":0,
-                 "type":"Brain",
+                 "type":"Wizerd2",
                  "visible":true,
                  "width":16,
-                 "x":47.5,
-                 "y":573.5
+                 "x":86.8333333333333,
+                 "y":496.833333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 

@@ -1,5 +1,7 @@
 import Brain from '../sprites/character/enemy/Brain';
 import Bad from '../sprites/character/enemy/Bad';
+import Wizerd from '../sprites/character/enemy/Wizerd';
+import Wizerd2 from '../sprites/character/enemy/Wizerd2';
 
 export default class ParseObjectLayers {
   constructor(config) {
@@ -34,6 +36,25 @@ export default class ParseObjectLayers {
               });
               this.scene.enemyGroup.add(enemyObject);
               break;                      
+            case 'wizerd':
+              enemyObject = new Wizerd({
+                  scene: this.scene,
+                  key: 'wizerd',
+                  x: enemy.x,
+                  y: enemy.y
+              });
+              this.scene.enemyGroup.add(enemyObject);
+              break;   
+            case 'wizerd2':
+              enemyObject = new Wizerd2({
+                  scene: this.scene,
+                  key: 'wizerd2',
+                  x: enemy.x,
+                  y: enemy.y
+              });
+              this.scene.enemyGroup.add(enemyObject);
+              break;   
+  
             default:
             break;
         }

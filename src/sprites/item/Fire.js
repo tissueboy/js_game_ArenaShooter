@@ -15,13 +15,6 @@ export default class Fire extends Item {
 
     this.attack_once = false;
 
-    /*==============================
-    デバッグ
-    ==============================*/
-    this.debugText = this.scene.add.text(20, 20, '', { font: '8px Courier', fill: '#ff0000' });
-    this.debugText.depth = 100;
-    this.debugText.setScrollFactor(0,0);
-
   }
 
   update(){

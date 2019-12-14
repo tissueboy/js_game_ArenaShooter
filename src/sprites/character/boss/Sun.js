@@ -54,11 +54,12 @@ export default class Sun extends Enemy {
     this.TILE_WIDTH = 16;
 
     this.maxDistanceArea = {
-      top: config.scene.game.config.height*1.2,
-      left: this.width/2 + this.TILE_WIDTH,
-      right: config.scene.game.config.width - this.width/2 - this.TILE_WIDTH,
-      bottom: config.scene.game.config.height*1.6
+      top   : config.scene.game.config.width + this.height,
+      left  : this.TILE_WIDTH + this.width,
+      right : config.scene.game.config.width - this.TILE_WIDTH*2 - this.width,
+      bottom: config.scene.game.config.width*2  - this.height
     }
+
 
     /*======
     マスクの追加
@@ -79,6 +80,11 @@ export default class Sun extends Enemy {
   update(keys, time, delta) {
 
     if (!this.active) {
+      this.aroundBulletGroup.children.entries.forEach(
+        (sprite,index) => {
+          sprite.setVisible(false);
+        }
+      );
       return;
     }
 
@@ -146,13 +152,13 @@ export default class Sun extends Enemy {
     if(this.shotActive){
       this.aroundBulletGroup.children.entries.forEach(
         (sprite,index) => {
-          if(_this.active && _this.flgShot){
-            sprite.scaleX +=_time/10;
-            sprite.scaleY +=_time/10;
-          }else{
-            sprite.scaleX = 1;
-            sprite.scaleY = 1;            
-          }
+          // if(_this.active && _this.flgShot){
+          //   sprite.scaleX +=_time/10;
+          //   sprite.scaleY +=_time/10;
+          // }else{
+          //   sprite.scaleX = 1;
+          //   sprite.scaleY = 1;            
+          // }
           _this.barrierDegree += _time/2000;
           sprite.x = _this.x + Math.cos(_this.barrierDegree + index)*_this.barrierRadius;
           sprite.y = _this.y + Math.sin(_this.barrierDegree + index)*_this.barrierRadius;  
@@ -178,18 +184,19 @@ export default class Sun extends Enemy {
     this.appeared = false;
     this.invincible = true;
     this.hp.alpha = 0;
-    let nextPostion = {
-      x: this.scene.game.config.width/2,
-      y: this.scene.game.config.height/2
-    };
-    if(this.calc.getRandomInt(0,1) === 0){
+    let nextPostion;
+    // let nextPostion = {
+    //   x: this.scene.game.config.width/2,
+    //   y: this.scene.game.config.height/2
+    // };
+    // if(this.calc.getRandomInt(0,1) === 0){
       nextPostion = this.calc.createRandomPosition(
         this.maxDistanceArea.left,
         this.maxDistanceArea.right,
         this.maxDistanceArea.top,
         this.maxDistanceArea.bottom
       );
-    }
+    // }
     _this.hp.hp_bar_bg.setVisible(false);
     _this.hp.hp_bar.setVisible(false);
     let hideAnime = this.scene.tweens.add({

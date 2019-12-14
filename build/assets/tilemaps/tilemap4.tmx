@@ -172,7 +172,7 @@
 189,189,189,189,189,189,189,189,189,189,189,189
 </data>
  </layer>
- <objectgroup id="24" name="enemy" visible="0">
+ <objectgroup id="24" name="enemy">
   <object id="44" name="bad" type="Bad" gid="281" x="63.5" y="959.5" width="16" height="16">
    <properties>
     <property name="area" type="int" value="1"/>
@@ -183,7 +183,7 @@
     <property name="area" type="int" value="1"/>
    </properties>
   </object>
-  <object id="46" name="brain" type="Brain" gid="282" x="80" y="800" width="16" height="16">
+  <object id="46" name="wizerd" type="Wizerd" gid="290" x="80" y="800" width="16" height="16">
    <properties>
     <property name="area" type="int" value="2"/>
    </properties>
@@ -198,12 +198,12 @@
     <property name="area" type="int" value="2"/>
    </properties>
   </object>
-  <object id="49" name="brain" type="Brain" gid="282" x="64" y="674.5" width="16" height="16">
+  <object id="49" name="wizerd2" type="Wizerd2" gid="289" x="64" y="674.5" width="16" height="16">
    <properties>
     <property name="area" type="int" value="3"/>
    </properties>
   </object>
-  <object id="50" name="brain" type="Brain" gid="282" x="111.5" y="672.5" width="16" height="16">
+  <object id="50" name="wizerd" type="Wizerd" gid="290" x="111.5" y="672.5" width="16" height="16">
    <properties>
     <property name="area" type="int" value="3"/>
    </properties>
@@ -223,7 +223,7 @@
     <property name="area" type="int" value="4"/>
    </properties>
   </object>
-  <object id="54" name="brain" type="Brain" gid="282" x="47.5" y="573.5" width="16" height="16">
+  <object id="54" name="wizerd2" type="Wizerd2" gid="289" x="86.8333" y="496.833" width="16" height="16">
    <properties>
     <property name="area" type="int" value="4"/>
    </properties>

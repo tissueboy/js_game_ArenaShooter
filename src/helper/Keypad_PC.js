@@ -124,9 +124,9 @@ export default class Keypad_PC extends Phaser.Physics.Arcade.Sprite{
     /*==============================
     デバッグ
     ==============================*/
-    this.text = this.scene.add.text(10, 10, 'Use up to 4 fingers at once', { fontSize: '8px', fill: '#FFF' });
-    this.text.setScrollFactor(0,0);
-    this.text.setStroke('#000', 4);
+    // this.text = this.scene.add.text(10, 10, 'Use up to 4 fingers at once', { fontSize: '8px', fill: '#FFF' });
+    // this.text.setScrollFactor(0,0);
+    // this.text.setStroke('#000', 4);
 
   }
   update(){

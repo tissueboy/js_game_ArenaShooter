@@ -28,7 +28,7 @@ class GameScene extends Phaser.Scene {
     ステージの表示
     ==============================*/
     // this.stageNumber = this.registry.list.stage;
-    this.stageNumber = 5;
+    this.stageNumber = 4;
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
@@ -187,10 +187,21 @@ class GameScene extends Phaser.Scene {
       scene: this
     });
 
-    this.cameras.main.setBounds(0,this.scene.systems.game.config.height*-1,this.scene.systems.game.config.width,this.scene.systems.game.config.height*6);
+    this.cameras.main.setBounds(
+      0,
+      this.scene.systems.game.config.height*-1,
+      this.scene.systems.game.config.width,
+      this.scene.systems.game.config.height*6
+    );
     this.cameras.main.setScroll(this.player.x);
     this.cameras.main.setSize(this.scene.systems.game.config.width,this.scene.systems.game.config.height);
-    this.cameras.main.startFollow(this.player,100);
+    this.cameras.main.startFollow(this.player,10,10,10,0,-20);
+    /*==============================
+    デバッグ
+    ==============================*/
+    // this.debugText = this.add.text(20, 20, '', { font: '8px Courier', fill: '#ff0000' });
+    // this.debugText.depth = 100;
+    // this.debugText.setScrollFactor(0,0);
   }
   update(time, delta) {
 
