@@ -15,10 +15,23 @@ export default class Animations{
     });      
     config.scene.anims.create({
       key: 'playerIdleAnime',
-      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
       frameRate: 10,
       repeat: -1
     }); 
+    config.scene.anims.create({
+      key: 'playerBottom',
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
+      frameRate: 10,
+      repeat: -1
+    }); 
+    config.scene.anims.create({
+      key: 'playerTop',
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
+      frameRate: 10,
+      repeat: -1
+    }); 
+
     config.scene.anims.create({
       key: 'playerStarAnime',
       frames: config.scene.anims.generateFrameNumbers('player_star', { start: 0, end: 1 }),

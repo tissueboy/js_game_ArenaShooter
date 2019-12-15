@@ -2,7 +2,7 @@ import Character from './Character';
 import ActiveTime from './ActiveTime';
 import Bullet from '../weapon/Bullet';
 import Calcs from '../../helper/Calcs';
-import Scope from './Scope';
+
 
 export default class Player extends Character{
   constructor(config) {
@@ -25,24 +25,22 @@ export default class Player extends Character{
       parent: this
     });
     
-    this.playerRing = config.scene.add.sprite(this.x, this.y, 'player_ring');
-    this.playerRing.setVisible(false);
+
     this.attackVelocity = new Phaser.Math.Vector2();
 
     let _this = this;
 
     this.activeTime.depth = 1;
-    this.playerRing.depth = 2;
+
     this.depth = 3;
     this.activeTime.circle.setVisible(false);
 
 
     this.calc = new Calcs();
 
-    this.scope = new Scope({
-      scene: config.scene,
-      target: this
-    });
+    this.animsStatus = "playerBottom";
+
+
 
     /*==============================
     バリアー
@@ -80,12 +78,11 @@ export default class Player extends Character{
     this.setVelocityY(keys.DIRECTION.y*4);
     if (this.active) {
       this.hp.move(this.x,this.y);
-      this.playerRing.x = this.x;
-      this.playerRing.y = this.y;
+
       this.activeTime.move(this.x,this.y);
       var radian = Math.atan2(keys.VECTOR.x, keys.VECTOR.y);
       var degree = radian *  180 / Math.PI *-1;
-      this.playerRing.angle = degree;
+
     }  
 
     this.scene.physics.overlap(this.scene.enemyGroup,this.barrier,
@@ -97,6 +94,14 @@ export default class Player extends Character{
     },null,this);
 
     this.barrierDegree += 0.15;
+
+    if(keys.DIRECTION.y > 0.2 && keys.DIRECTION.y !== 0){
+      this.animsStatus = "playerBottom";
+    }
+    if(keys.DIRECTION.y < 0.2 && keys.DIRECTION.y !== 0){
+      this.animsStatus = "playerTop";
+    } 
+    this.anims.play(this.animsStatus, true);
 
 
     if(keys.isTOUCH === true){
@@ -111,20 +116,12 @@ export default class Player extends Character{
       this.barrier.scaleY = this.activeTime.per;
 
       this.activeTime.pileUp();
-      this.scope.playerShotLine.clear();
-      this.scope.playerShotLine.lineBetween(
-        this.x,
-        this.y,
-        this.x + this.activeTime.per * Math.cos(this.barrierDegree)*this.barrierRadius,
-        this.y + this.activeTime.per * Math.sin(this.barrierDegree)*this.barrierRadius
-      );
+
     }else{
       this.barrier.scaleX = 0;
       this.barrier.scaleY = 0;
       this.barrier.setVisible(false);
       this.barrier.setActive(false);
-      this.scope.head.setVisible(false);        
-      this.scope.playerShotLine.clear();
     }
 
     if(keys.isRELEASE === true){

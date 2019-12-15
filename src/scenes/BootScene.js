@@ -29,7 +29,7 @@ class BootScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('map4', 'assets/tilemaps/tilemap4.json');
     this.load.tilemapTiledJSON('map5', 'assets/tilemaps/tilemap5.json');
     
-    this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 16, frameHeight: 22 });    
+    this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 16, frameHeight: 16 });    
     this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 16, frameHeight: 16 });    
     this.load.spritesheet('bad', 'assets/images/bad.png', { frameWidth: 10, frameHeight: 10 });    
     this.load.image('brain', 'assets/images/brain.png');
@@ -60,7 +60,6 @@ class BootScene extends Phaser.Scene {
     this.load.image('ui_level_icon', 'assets/images/ui/level.png');
     this.load.image('cursor', 'assets/images/ui/cursor.png');
     this.load.image('button_stop', 'assets/images/ui/button_stop.png');
-    this.load.image('player_ring', 'assets/images/player_ring.png');
     this.load.image('button_next', 'assets/images/ui/button_next.png');
     this.load.image('button_continue', 'assets/images/ui/button_continue.png');
     this.load.image('button_start', 'assets/images/ui/button_start.png');
@@ -75,7 +74,6 @@ class BootScene extends Phaser.Scene {
     this.load.image('bullet', 'assets/images/bullet.png');
     this.load.image('barrier', 'assets/images/barrier.png');
     this.load.image('sword', 'assets/images/sword.png');
-    this.load.image('scope', 'assets/images/scope.png');
     this.load.image('axe', 'assets/images/axe.png');
     this.load.image('lazer_long', 'assets/images/lazer_long.png');
     this.load.image('lazer_base', 'assets/images/lazer_base.png');
