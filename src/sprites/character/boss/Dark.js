@@ -202,7 +202,6 @@ export default class Dragon extends Enemy {
           shadow.setVisible(false);
           if(damageArea.radius*damageArea.radius >= (drop.x - _target.x)*(drop.x - _target.x) + (drop.y - _target.y)*(drop.y - _target.y)){
             // if(sprite.active){
-              console.log("fin chaek")
               _target.damage(drop.power);
             // }
           }
@@ -216,7 +215,6 @@ export default class Dragon extends Enemy {
           drop.y = 0;
           drop.setVisible(false);
           _this.toDropShotPool(dropShotGroup);
-          console.log("fin")
         }
       });
 

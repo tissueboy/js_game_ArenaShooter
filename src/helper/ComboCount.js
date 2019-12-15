@@ -36,25 +36,40 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
 
     this.comboTimerEvent;
 
+    this.betweenComboTime = 1500;
+    this.betweenComboTimeBase = 1500;
+
+  }
+  update(time, delta) {
+    if(this.combo_count > 0){
+      this.betweenComboTime -= delta;
+      if(this.betweenComboTime < 0){
+        
+        this.hideCount();
+      }
+    }    
   }
   hit(){
 
-    this.combo_count++;
-    
-    this.comboTimerEvent = this.scene.time.addEvent({
-      delay: 2000,
-      callback: function(){
-        // this.comboTimerEvent.destroy();
-        this.betweenComboTime = false;
-        this.combo_count = 0;
-      },
-      callbackScope: this,
-      repeat: 0
-    });
+    console.log("combo_count",this.combo_count)
 
-    if(this.combo_count <= 1){
-      return;
-    }
+    this.combo_count++;
+
+    this.betweenComboTime = this.betweenComboTimeBase;
+    
+    // this.comboTimerEvent = this.scene.time.addEvent({
+    //   delay: 2000,
+    //   callback: function(){
+    //     this.betweenComboTime = false;
+    //     this.combo_count = 0;
+    //   },
+    //   callbackScope: this,
+    //   repeat: 0
+    // });
+
+    // if(this.combo_count <= 1){
+    //   return;
+    // }
 
     var _comboText = this.comboText;
 
@@ -65,27 +80,32 @@ export default class ComboCount extends Phaser.Physics.Arcade.Sprite{
     var _this = this;
     
     this.comboText.text = this.combo_count;
-    if(this.combo_count > 1){
-      this.comboHit.visible = true;
-      this.comboText.visible = true;
-      var comboTween = this.scene.tweens.add({
-        targets: _comboText,
-        tweens: [{
-          x: _comboText_x_before,
-        },
-        {
-          x: _comboText_x_after,
-        }],
-        ease: 'liner',
-        duration: 100,
-        repeat: 0,
-        completeDelay: 400,
-        onComplete: function () {
-          _comboText.setVisible(false);
-          _comboHit.setVisible(false);
-        }
-      });
-    }
+    // if(this.combo_count > 1){
+    this.comboHit.visible = true;
+    this.comboText.visible = true;
+    var comboTween = this.scene.tweens.add({
+      targets: _comboText,
+      tweens: [{
+        x: _comboText_x_before,
+      },
+      {
+        x: _comboText_x_after,
+      }],
+      ease: 'liner',
+      duration: 100,
+      repeat: 0,
+      completeDelay: 400,
+      onComplete: function () {
+        _comboText.setVisible(false);
+        _comboHit.setVisible(false);
+      }
+    });
+    // }
 
+  }
+  hideCount(){
+    this.comboText.setVisible(false);
+    this.comboHit.setVisible(false);    
+    this.combo_count = 0;
   }
 }

@@ -139,9 +139,6 @@ export default class Shadow extends Enemy {
         // let pos;
         if(this.shotCount === 0){
           // pos = this.scene.player.getCenter();
-          // console.log("this.playerPosition",this.playerPosition);
-          // console.log("this.scene.player.getCenter()",this.scene.player.getCenter());
-          // console.log("pos",pos);
         }
         this.arroundBullet(this.playerPosition);
         this.shotCount++;
@@ -170,7 +167,6 @@ export default class Shadow extends Enemy {
       x: playerPosition.x - bulletPoint.x,
       y: playerPosition.y - bulletPoint.y
     }
-    console.log("vecter",vecter)
 
 
     var rangeRadius = 1;
@@ -185,7 +181,6 @@ export default class Shadow extends Enemy {
       vy: _vy,
       deadPoint: playerPosition
     }
-    console.log("bullet",bullet)
     this.fromShotPool(bullet);
 
 

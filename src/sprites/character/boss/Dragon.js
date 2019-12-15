@@ -258,7 +258,6 @@ export default class Dragon extends Enemy {
     let _vx = Math.cos(this.shotRadian);
     let _vy = Math.sin(this.shotRadian);
 
-    console.log("this.x",this.x)
 
     let vec = this.calcs.returnMax1(_vx,_vy);
     let bullet = new Bullet({

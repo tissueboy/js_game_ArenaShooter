@@ -93,22 +93,16 @@ export default class Brain extends EnemyChase {
       this.createShot();
       bullet = this.scene.enemyWeaponGroup.get()
     }
-    let param = {
-      x: 0,
-      y: 0,
-      vx: 0,
-      vy: 0,
-      scale: 0,
-      power: 0
-    }
-    param.x = this.x;
-    param.y = this.y;
-    param.vx = object.vx;
-    param.vy = object.vy;
-    bullet.shot(param);
+
+    bullet.x = this.x;
+    bullet.y = this.y;
+    bullet.vx = object.vx;
+    bullet.vy = object.vy;
+    bullet.shot();
   }
   attackStop(){
     
   }
+
 
 }

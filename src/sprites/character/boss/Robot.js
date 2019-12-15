@@ -12,8 +12,6 @@ export default class Robot extends EnemyChase {
     this.type = "boss";
 
     this._scene = config.scene;
-    // this.x = config.scene.game.config.width/2,
-    // this.y = 80;
     this.lazer_base = this.scene.add.sprite(this.x, this.y, 'lazer_base');
     this.lazer_long = this.scene.add.sprite(this.x, this.y, 'lazer_long');
     this.lazer_long.setVisible(false);
@@ -59,6 +57,10 @@ export default class Robot extends EnemyChase {
   }
   update(keys, time, delta) {
     if (!this.active) {
+      this.arm_l.setVisible(false);
+      this.arm_r.setVisible(false);
+      this.lazer_long.setVisible(false);
+      this.lazer_base.setVisible(false);
       return;
     }
     if(this.appearFlg){
@@ -71,8 +73,11 @@ export default class Robot extends EnemyChase {
       this.arm_l.x = this.x-14;
       this.arm_l.y = this.y+12;
       this.arm_r.x = this.x+14;
-      this.arm_r.y = this.y+12;  
+      this.arm_r.y = this.y+12;
+    }else{
+      this.stopRunning();
     }
+
     this.scene.physics.overlap(this.scene.player,this.arm_r,
       function(player,arm_r){
         player.damage(arm_r.power);
@@ -195,8 +200,6 @@ export default class Robot extends EnemyChase {
       {
         x: _player.x,
         y: _player.y,
-        // scaleX: 2,
-        // scaleY: 2
       },
       {
         x: _target_x,

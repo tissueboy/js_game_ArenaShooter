@@ -27,8 +27,8 @@ class GameScene extends Phaser.Scene {
     /*==============================
     ステージの表示
     ==============================*/
-    // this.stageNumber = this.registry.list.stage;
-    this.stageNumber = 4;
+    this.stageNumber = this.registry.list.stage;
+    // this.stageNumber = 4;
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
@@ -52,8 +52,8 @@ class GameScene extends Phaser.Scene {
       scene: this,
       x: this.scene.systems.game.config.width/2,
       // y: 1000,
-      y: this.scene.systems.game.config.height*1.1,
-      // y: 1080,
+      // y: this.scene.systems.game.config.height*1.1,
+      y: 1080,
       key: 'player'
     });
 
@@ -96,7 +96,6 @@ class GameScene extends Phaser.Scene {
       });            
     }
     this.keypad.keys.isRELEASE = false;
-    console.log("this.keypad.isRELEASE",this.keypad.keys)
 
 
     /*==============================
@@ -195,7 +194,7 @@ class GameScene extends Phaser.Scene {
     );
     this.cameras.main.setScroll(this.player.x);
     this.cameras.main.setSize(this.scene.systems.game.config.width,this.scene.systems.game.config.height);
-    this.cameras.main.startFollow(this.player,10,10,10,0,-20);
+    this.cameras.main.startFollow(this.player,100,100,100,0,-20);
     /*==============================
     デバッグ
     ==============================*/
@@ -209,7 +208,9 @@ class GameScene extends Phaser.Scene {
 
     if (this.physics.world.isPaused) {      
       return;
-    }    
+    }
+    
+    this.combo.update(time, delta);
 
     this.player.update(this.keypad.keys, time, delta);
 

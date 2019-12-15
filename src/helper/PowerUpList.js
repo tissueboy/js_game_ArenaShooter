@@ -12,9 +12,6 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
     this.setAlpha = 0.4;
 
     this.powerUpListGroup = this.scene.add.group();
-    // this.powerUpListGroup.setScrollFactor(0);
-
-    console.log("config.scene.game.config.height",config.scene.game.config.height)
 
     for(var i = 1;i <= this.maxLevel;i++){
       let item = config.scene.add.sprite(28+i*2+(i-1)*32, config.scene.game.config.height - 10, 'powerUpList_'+i);
