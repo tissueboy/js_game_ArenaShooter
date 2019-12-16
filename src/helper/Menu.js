@@ -94,7 +94,8 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     this.buttonOK.on('pointerdown', () => {
       let selectedItem = this.selectItem.item[0];
       let selectedItemIndex = this.selectItemIndex;
-      this.containerItem.removeAt(selectedItemIndex);
+      // this.containerItem.removeAt(selectedItemIndex);
+      this.containerItem.removeAll();
       let item_key = selectedItem[1];
       let item = new selectedItem({
         scene: this
@@ -120,10 +121,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
 
   }
   displayItemList(){
-    /*
-    TODO
-    itemのグループを作って一旦削除してから再描画する。
-    */
+
     for(var i = 0; i < this.scene.hasItemList.length; i++){
       let item = this.scene.hasItemList[i];
       let item_obj = item[0];

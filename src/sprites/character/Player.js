@@ -19,6 +19,7 @@ export default class Player extends Character{
     this.hp.hp = this.status.hp;
     this.hp.hpMax = this.status.hp;
     this.type = "player";
+    this.mode = "";
 
     this.activeTime = new ActiveTime({
       scene: config.scene,
@@ -101,6 +102,15 @@ export default class Player extends Character{
     if(keys.DIRECTION.y < 0.2 && keys.DIRECTION.y !== 0){
       this.animsStatus = "playerTop";
     } 
+    if(this.mode == "star"){
+      if(this.animsStatus === "playerBottom"){
+        this.animsStatus = "playerStarBottom";
+      }
+      if(this.animsStatus === "playerTop"){
+        this.animsStatus = "playerStarTop";
+      }
+    }
+
     this.anims.play(this.animsStatus, true);
 
 
@@ -185,14 +195,12 @@ export default class Player extends Character{
     }
   }
   starMode(){
-    let _this = this;
-    this.anims.play('playerStarAnime', true);
     this.invincible = true;
     this.starTimerEvent = this.scene.time.delayedCall(
-      2000,
+      5000,
       function(){
-        _this.invincible = false;
-        _this.anims.play('playerIdleAnime', true);
+        this.invincible = false;
+        this.mode = "";
       },
       [],
       this);

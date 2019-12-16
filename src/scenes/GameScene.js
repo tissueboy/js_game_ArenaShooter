@@ -13,6 +13,7 @@ import Animations from '../helper/Animations';
 import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
 import Portion from '../sprites/item/Portion';
+import Star from '../sprites/item/Star';
 import Player from '../sprites/character/Player';
 import Bullet from '../sprites/weapon/Bullet';
 
@@ -41,7 +42,7 @@ class GameScene extends Phaser.Scene {
 
 
     this.hasItemList = [
-      // [Star, "star","item"]//デバッグ用
+      [Star, "star","item"],//デバッグ用
       [Portion, "portion","item"]//デバッグ用
     ];
     if(this.registry.list.hasItemList){

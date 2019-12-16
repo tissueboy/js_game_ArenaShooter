@@ -5,6 +5,7 @@ export default class Star extends Item {
     super(config.scene);
     this.key = "star";
     this.frame = "star";
+    this.scene.player.mode = "star";
     this.scene.player.starMode();
     this.destroy();
   }

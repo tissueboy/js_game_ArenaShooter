@@ -13,18 +13,13 @@ export default class Animations{
       frameRate: 10,
       repeat: -1
     });      
-    config.scene.anims.create({
-      key: 'playerIdleAnime',
-      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
-      frameRate: 10,
-      repeat: -1
-    }); 
-    config.scene.anims.create({
-      key: 'playerBottom',
-      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
-      frameRate: 10,
-      repeat: -1
-    }); 
+    // config.scene.anims.create({
+    //   key: 'playerIdleAnime',
+    //   frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
+    //   frameRate: 10,
+    //   repeat: -1
+    // }); 
+
     config.scene.anims.create({
       key: 'playerTop',
       frames: config.scene.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
@@ -33,8 +28,22 @@ export default class Animations{
     }); 
 
     config.scene.anims.create({
-      key: 'playerStarAnime',
-      frames: config.scene.anims.generateFrameNumbers('player_star', { start: 0, end: 1 }),
+      key: 'playerBottom',
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
+      frameRate: 10,
+      repeat: -1
+    }); 
+
+    config.scene.anims.create({
+      key: 'playerStarTop',
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 4, end: 5 }),
+      frameRate: 10,
+      repeat: -1
+    });  
+
+    config.scene.anims.create({
+      key: 'playerStarBottom',
+      frames: config.scene.anims.generateFrameNumbers('player', { start: 3, end: 4 }),
       frameRate: 10,
       repeat: -1
     });  
