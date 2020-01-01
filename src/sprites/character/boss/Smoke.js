@@ -19,7 +19,6 @@ export default class Smoke extends Enemy {
       power: 5,
       defense: 6,
       experience: 10,
-      attackPoint: 1,
       walkSpeed: 12
     }
     this.MONSTER_SPEED = 20;

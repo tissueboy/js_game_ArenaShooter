@@ -18,20 +18,20 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
 
     this.stageList = [
       {
-        stage: 6,
+        stage: 5,
         boss: {
           object: Dragon,
           x: config.scene.game.config.width/2,
-          y: config.scene.game.config.height*0.7,
+          y: config.scene.game.config.height*0.8,
           key: 'dragon'
         }
       },
       {
-        stage: 5,
+        stage: 6,
         boss: {
           object: Shadow,
           x: config.scene.game.config.width/2,
-          y: config.scene.game.config.height*0.7,
+          y: config.scene.game.config.height*0.8,
           key: 'shadow'
         }
       },

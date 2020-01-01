@@ -20,7 +20,6 @@ export default class Dragon extends Enemy {
       power: 5,
       defense: 4,
       experience: 10,
-      attackPoint: 1,
       walkSpeed: 12
     }
 

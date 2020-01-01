@@ -24,14 +24,13 @@ export default class ButtonStop extends Phaser.Physics.Arcade.Sprite{
   sceneStop(){
     if(this.scene.physics.world.isPaused){
       this.scene.anims.resumeAll();
-      this.scene.physics.world.resume();    
-      // this.scene.createObjects.createObjTimerEvent.paused = false;
-      this.scene.menu.container.setVisible(false); 
+      this.scene.physics.world.resume();
+      this.scene.menu.close();
+      this.scene.keypad.reset();
     }else{
       this.scene.anims.pauseAll();
       this.scene.physics.world.pause();
-      // this.scene.createObjects.createObjTimerEvent.paused = true;
-      this.scene.menu.container.setVisible(true); 
+      this.scene.menu.open();
 
     }    
   }

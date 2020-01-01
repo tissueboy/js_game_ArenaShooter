@@ -9,11 +9,10 @@ export default class Player extends Character{
     super(config);
 
     this.status = {
-      hp: 1000,
-      power: 1,
+      hp: 100,
+      power: 1000,
       defense: 1,
       experience: 10,
-      attackPoint: 3,
       level: 1
     }
     this.hp.hp = this.status.hp;
@@ -33,9 +32,6 @@ export default class Player extends Character{
 
     this.activeTime.depth = 1;
 
-    this.depth = 3;
-    this.activeTime.circle.setVisible(false);
-
 
     this.calc = new Calcs();
 
@@ -46,7 +42,7 @@ export default class Player extends Character{
     /*==============================
     バリアー
     ==============================*/
-    this.barrier = this.scene.add.sprite(this.x, this.y, 'barrier');
+    this.barrier = this.scene.add.sprite(this.x, this.y, 'bullet_player');
     this.barrier.radian;
     config.scene.physics.world.enable(this.barrier);
     config.scene.add.existing(this.barrier);
@@ -61,7 +57,7 @@ export default class Player extends Character{
     this.barrierDegree = 0;
     this.barrierRadius = 18;
 
-    this.barrier.power = 1;
+    this.barrier.power = this.status.power;
 
   }
   update(keys, time, delta) {
@@ -80,7 +76,7 @@ export default class Player extends Character{
     if (this.active) {
       this.hp.move(this.x,this.y);
 
-      this.activeTime.move(this.x,this.y);
+      // this.activeTime.move(this.x,this.y);
       var radian = Math.atan2(keys.VECTOR.x, keys.VECTOR.y);
       var degree = radian *  180 / Math.PI *-1;
 
@@ -91,7 +87,7 @@ export default class Player extends Character{
         if(!barrier.active){
           return;
         }
-        enemy.damage(Math.floor(1 * this.status.power + this.barrier.power));
+        enemy.damage(this.status.power);
     },null,this);
 
     this.barrierDegree += 0.15;
@@ -137,7 +133,10 @@ export default class Player extends Character{
     if(keys.isRELEASE === true){
 
       if(this.activeTime.flg_max === true){
-        this.attackVelocity = keys.VECTOR;
+        this.attackVelocity = this.calc.returnMax1(
+          this.barrier.x - this.x,
+          this.barrier.y - this.y
+        );
         this.attack();
       }
       this.activeTime.pileReset(); 
@@ -149,16 +148,14 @@ export default class Player extends Character{
       vx: 0,
       vy: 0
     };
-    let setScale = 1;
+    
     let vec = this.calc.returnMax1(
       this.barrier.x - this.x,
       this.barrier.y - this.y
     );
     let _vx = 0;
     let _vy = 0;
-    if(this.status.level > 4){
-      setScale = 2;
-    }
+
     if(this.status.level > 2){
       let degreeAdd = 30;
       let degreeBase = Math.atan2(this.attackVelocity.y, this.attackVelocity.x)* 180 / Math.PI;
@@ -210,7 +207,7 @@ export default class Player extends Character{
       scene: this.scene,
       x: this.x,
       y: this.y,
-      key: "bullet"
+      key: "bullet_player"
     }); 
     this.scene.playerWeaponGroup.add(bullet);
   }
@@ -224,6 +221,13 @@ export default class Player extends Character{
     bullet.y = this.barrier.y;
     bullet.vx = object.vx;
     bullet.vy = object.vy;
-    bullet.shot();
+    if(this.status.level > 4){
+      bullet.scaleX = 2;
+      bullet.scaleY = 2;
+    }else{
+      bullet.scaleX = 1;
+      bullet.scaleY = 1;  
+    }
+    bullet.shot(this.status.power);
   }
 }

@@ -28,6 +28,7 @@ class BootScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('map3', 'assets/tilemaps/tilemap3.json');
     this.load.tilemapTiledJSON('map4', 'assets/tilemaps/tilemap4.json');
     this.load.tilemapTiledJSON('map5', 'assets/tilemaps/tilemap5.json');
+    this.load.tilemapTiledJSON('map6', 'assets/tilemaps/tilemap6.json');
     
     this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 16, frameHeight: 16 });    
     this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 16, frameHeight: 16 });    
@@ -36,8 +37,6 @@ class BootScene extends Phaser.Scene {
     this.load.image('wizerd', 'assets/images/wizerd.png');
     this.load.image('wizerd2', 'assets/images/wizerd2.png');
     this.load.image('wizerd3', 'assets/images/wizerd3.png');
-    this.load.image('boss1', 'assets/images/boss1.png');
-    this.load.image('boss2', 'assets/images/boss2.png');
     this.load.image('stone', 'assets/images/stone.png');
     this.load.image('robot_base', 'assets/images/robot_base.png');
     this.load.image('robot_arm_l', 'assets/images/robot_arm_l.png');
@@ -49,9 +48,21 @@ class BootScene extends Phaser.Scene {
     this.load.image('shadow_shot', 'assets/images/shadow_shot.png');
     this.load.image('dragon', 'assets/images/dragon.png');
 
+    this.load.spritesheet(
+      'bullet_player',
+      'assets/images/bullet_player.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16
+      }
+    );
+    
     this.load.image('circle_mask_30x30', 'assets/images/circle_mask_30x30.png');
 
     /*UI*/
+    this.load.image('title', 'assets/images/ui/title.png');
+    this.load.image('title_start', 'assets/images/ui/title_start.png');
+
     this.load.image('hp_bar', 'assets/images/ui/hp_bar.png');
     this.load.image('hp_bar_bg', 'assets/images/ui/hp_bar_bg.png');
     this.load.image('hp_bar_s', 'assets/images/ui/hp_bar_s.png');
@@ -72,13 +83,11 @@ class BootScene extends Phaser.Scene {
     this.load.image('powerUpList_5', 'assets/images/ui/powerUpList_5.png');
 
     this.load.image('bullet', 'assets/images/bullet.png');
-    this.load.image('barrier', 'assets/images/barrier.png');
+    // this.load.image('bullet_player', 'assets/images/bullet_player.png');
     this.load.image('sword', 'assets/images/sword.png');
-    this.load.image('axe', 'assets/images/axe.png');
     this.load.image('lazer_long', 'assets/images/lazer_long.png');
     this.load.image('lazer_base', 'assets/images/lazer_base.png');
 
-    this.load.image('title_start', 'assets/images/title_start.png');
 
     this.load.bitmapFont('bitmapFont', 'assets/font/font.png', 'assets/font/font.xml');
     this.load.bitmapFont('bitmapFontYellow', 'assets/font/font_yellow.png', 'assets/font/font.xml');

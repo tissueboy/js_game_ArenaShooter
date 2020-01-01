@@ -12,7 +12,7 @@ export default class Explode extends Phaser.GameObjects.Sprite {
 
     config.scene.add.existing(this);
 
-    this.depth = 10;
+    // this.depth = 10;
 
     // config.scene.anims.create({
     //   key: 'explosionAnime_m',
@@ -20,7 +20,6 @@ export default class Explode extends Phaser.GameObjects.Sprite {
     //   frameRate: 10,
     //   repeat: 0
     // });
-    this.anims.play('explosionAnime_m', true);
     
     this.on('animationcomplete', function() {
       config.target.explode();
@@ -33,5 +32,8 @@ export default class Explode extends Phaser.GameObjects.Sprite {
   }
   explode(){
     
+  }
+  setPlay(){
+    this.anims.play('explosionAnime_m', true);
   }
 }

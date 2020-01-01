@@ -13,6 +13,13 @@ export default class Animations{
       frameRate: 10,
       repeat: -1
     });      
+
+    config.scene.anims.create({
+      key: 'bulletAnime',
+      frames: config.scene.anims.generateFrameNumbers('bullet_player', { start: 0, end: 1 }),
+      frameRate: 10,
+      repeat: -1
+    });      
     // config.scene.anims.create({
     //   key: 'playerIdleAnime',
     //   frames: config.scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),

@@ -15,11 +15,10 @@ export default class Shadow extends Enemy {
     this.base_y = this.y;
 
     this.status = {
-      hp: 100020,
+      hp: 30,
       power: 5,
-      defense: 10000000,
-      experience: 10,
-      attackPoint: 1,
+      defense: 10,
+      experience: 50,
       walkSpeed: 12
     }
 
@@ -56,11 +55,14 @@ export default class Shadow extends Enemy {
     if(!bullet.active){
       return;
     }
-    player.damage(bullet.attackPoint);
+    player.damage(bullet.power);
     bullet.explode();
 
   }
   bullet_x_playerWeapon_Collision(bullet,playerWeapon){
+    if(!playerWeapon.visible){
+      return;
+    }
     bullet.explode();
   }
   update(keys, time, delta) {
@@ -236,10 +238,9 @@ export default class Shadow extends Enemy {
     bullet.vy = object.vy;
 
     if(this.attackMode === "attack1"){
-      bullet.shot();
+      bullet.shot(this.status.power);
     }
     if(this.attackMode === "attack2"){
-      // bullet.shot(param);
       bullet.deadPoint = object.deadPoint;
       bullet.canShot = false;
       bullet.active = true;
@@ -255,7 +256,7 @@ export default class Shadow extends Enemy {
           }
           bullet.canShot = true;
           // bullet.isWait = false;
-          bullet.shot();
+          bullet.shot(this.status.power);
         },
         [],
         this

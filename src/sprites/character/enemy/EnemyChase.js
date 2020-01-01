@@ -10,8 +10,7 @@ export default class EnemyChase extends Enemy {
       hp: 10,
       power: 5,
       defense: 1,
-      experience: 10,
-      attackPoint: 2
+      experience: 10
     }
 
     this.chasingPlayerTimerEvent;

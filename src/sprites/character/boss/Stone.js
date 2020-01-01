@@ -15,8 +15,7 @@ export default class Stone extends Enemy {
       hp: 20,
       power: 5,
       defense: 6,
-      experience: 10,
-      attackPoint: 1,
+      experience: 20,
       walkSpeed: 12
     }
 

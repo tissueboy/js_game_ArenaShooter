@@ -71,7 +71,6 @@ export default class ParseObjectLayers {
         _this.scene.checkZoneGroup.add(zone);
         _this.scene.physics.world.enable(zone);
         zone.body.setAllowGravity(false);
-        // zone.body.debugBodyColor = 0x00ffff;
       }
     )
   }

@@ -23,8 +23,7 @@ export default class Enemy extends Character {
       hp: 10,
       power: 5,
       defense: 1,
-      experience: 10,
-      attackPoint: 2
+      experience: 10
     }
     this.dropItemList = [
       {
@@ -87,23 +86,7 @@ export default class Enemy extends Character {
   appearEnemyAfter(){
 
   }
-  // explode(){
 
-  //   this.active = false;  
-  //   this.explodeSprite.destroy();
-  //   this.dropItem();
-  //   this.destroy();
-
-  //   if(this.type === "boss"){
-  //     let _scene = this._scene;
-  //     setTimeout(
-  //       function(){
-  //         _scene.clearStageObj.clearStageDisplay();
-  //       }
-  //     , 1000);
-  //   }
-
-  // }
   getRandomObjName(arr){
     let random = arr[Math.floor(Math.random() * arr.length)];
     return random;
@@ -113,11 +96,10 @@ export default class Enemy extends Character {
     let item = this.getRandomObjName(this.dropItemList);
 
     let itemObject = new item.class({
-      scene: this.scene,
-      key: item.key,
+      scene: this._scene,
       x: this.x,
       y: this.y,
-      mode: "dropEnemyItem"
+      key: item.key
     });
     this.scene.itemGroup.add(itemObject);
 

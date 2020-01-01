@@ -25,12 +25,12 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
     }
 
 
-    this.cursor = this.scene.add.graphics({ lineStyle: { width: 1, color: 0xFFFFFF } });
-    this.cursor.setScrollFactor(0);
-    this.rect = new Phaser.Geom.Rectangle(0, 0, 32, 12);
-    this.cursor.strokeRectShape(this.rect);
-    this.cursor.x = 14;
-    this.cursor.y = 300;
+    // this.cursor = this.scene.add.graphics({ lineStyle: { width: 1, color: 0xFFFFFF } });
+    // this.cursor.setScrollFactor(0);
+    // this.rect = new Phaser.Geom.Rectangle(0, 0, 32, 12);
+    // this.cursor.strokeRectShape(this.rect);
+    // this.cursor.x = 14;
+    // this.cursor.y = 300;
 
   }
   addStep(count){
@@ -58,7 +58,7 @@ export default class PowerUpList extends Phaser.Physics.Arcade.Sprite{
     );
 
     /*再設定*/
-    this.cursor.x = 12+this.index*2+(this.index)*32;
+    // this.cursor.x = 12+this.index*2+(this.index)*32;
     this.scene.player.status.level = this.index + 1;
   }
 }

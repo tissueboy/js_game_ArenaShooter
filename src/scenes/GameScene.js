@@ -1,11 +1,10 @@
 import Keypad from '../helper/Keypad';
-import Keypad_PC from '../helper/Keypad_PC';
 import CollisionCheck from '../helper/CollisionCheck';
-// import CreateObjects from '../helper/CreateObjects';
 import ParseObjectLayers from '../helper/ParseObjectLayers';
 import CreateBoss from '../helper/CreateBoss';
 import ComboCount from '../helper/ComboCount';
 import ClearStage from '../helper/ClearStage';
+import ClearGame from '../helper/ClearGame';
 import DisplayStageNumber from '../helper/DisplayStageNumber';
 import GameOver from '../helper/GameOver';
 import ButtonStop from '../helper/ButtonStop';
@@ -14,6 +13,7 @@ import PowerUpList from '../helper/PowerUpList';
 import Menu from '../helper/Menu';
 import Portion from '../sprites/item/Portion';
 import Star from '../sprites/item/Star';
+import Fire from '../sprites/item/Fire';
 import Player from '../sprites/character/Player';
 import Bullet from '../sprites/weapon/Bullet';
 
@@ -28,11 +28,13 @@ class GameScene extends Phaser.Scene {
     /*==============================
     ステージの表示
     ==============================*/
+
     this.stageNumber = this.registry.list.stage;
-    // this.stageNumber = 4;
+    // this.stageNumber = 5;
     this.map = this.make.tilemap({ key: 'map'+this.stageNumber,tileWidth: 16, tileHeight: 16});
     this.tileset = this.map.addTilesetImage('tileset', 'tiles');
     this.groundLayer = this.map.createDynamicLayer('ground', this.tileset, 0, 0);
+
     this.groundLayer.setCollisionBetween(0, 1000);
     this.groundLayer.setCollisionByProperty({ collides: true });
 
@@ -42,8 +44,9 @@ class GameScene extends Phaser.Scene {
 
 
     this.hasItemList = [
-      [Star, "star","item"],//デバッグ用
-      [Portion, "portion","item"]//デバッグ用
+      // [Star,   "star",   "item"],//デバッグ用
+      // [Portion,"portion","item"],//デバッグ用
+      // [Fire,   "fire",   "item"]//デバッグ用
     ];
     if(this.registry.list.hasItemList){
       this.hasItemList = this.registry.list.hasItemList;
@@ -52,7 +55,6 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.scene.systems.game.config.width/2,
-      // y: 1000,
       // y: this.scene.systems.game.config.height*1.1,
       y: 1080,
       key: 'player'
@@ -82,20 +84,11 @@ class GameScene extends Phaser.Scene {
     /*==============================
     キー入力
     ==============================*/
-    this.keypad;
-    if(this.registry.list.MODE === "PC"){
-      this.keypad = new Keypad_PC({
-        scene: this,
-        key: 'keypad_pc',
-        input: this.input
-      });      
-    }else{
       this.keypad = new Keypad({
         scene: this,
         key: 'keypad',
         input: this.input
       });            
-    }
     this.keypad.keys.isRELEASE = false;
 
 
@@ -107,15 +100,6 @@ class GameScene extends Phaser.Scene {
     });
     this.stageActive = false;
 
-    // this.stageActiveTimerEvent = this.time.addEvent({
-    //   // startAt: 3000,
-    //   delay: 3000,
-    //   // duration: 3000,
-    //   callback: function(){
-    //   },
-    //   callbackScope: this,
-    //   loop: false
-    // });
 
     /*==============================
     UI | POWER UP LIST
@@ -157,6 +141,12 @@ class GameScene extends Phaser.Scene {
       scene: this
     });
 
+    /*==============================
+    UI | ゲームクリア
+    ==============================*/
+    this.clearGameObj = new ClearGame({
+      scene: this
+    });    
     /*==============================
     UI | ゲームオーバー
     ==============================*/
@@ -205,11 +195,11 @@ class GameScene extends Phaser.Scene {
   }
   update(time, delta) {
 
-    this.keypad.update(this.input);
 
     if (this.physics.world.isPaused) {      
       return;
     }
+    this.keypad.update(this.input);
     
     this.combo.update(time, delta);
 
@@ -236,6 +226,11 @@ class GameScene extends Phaser.Scene {
       }
     );
 
+    this.itemGroup.children.entries.forEach(
+      (sprite) => {
+        sprite.update(this.keypad.keys, time, delta);
+      }
+    );
 
   }
   titleGame(){

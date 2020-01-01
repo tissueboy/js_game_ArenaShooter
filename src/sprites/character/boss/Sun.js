@@ -18,7 +18,6 @@ export default class Sun extends Enemy {
       power: 5,
       defense: 4,
       experience: 10,
-      attackPoint: 1,
       walkSpeed: 12
     }
 
@@ -170,7 +169,7 @@ export default class Sun extends Enemy {
  
     this.scene.physics.overlap(this.scene.player,this.aroundBulletGroup,
       function(player,aroundBullet){
-        player.damage(this.status.attackPoint);
+        player.damage(this.status.power);
     },null,this);
 
 

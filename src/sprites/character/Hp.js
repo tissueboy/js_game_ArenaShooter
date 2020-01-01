@@ -35,6 +35,7 @@ export default class Hp {
     this.hp_bar_bg.y = y - this.taget.body.halfHeight - this.hp_bar_bg.height * 1.5;
   }
   calc(num,obj){
+    
     if(this.active === false){
       return;
     }
@@ -43,6 +44,7 @@ export default class Hp {
       return;
     }
     this.hp = this.hp + num;
+    obj.status.hp = this.hp;
     this.hp_bar.displayWidth = this.hp_bar.displayWidthMax * (this.hp / this.hpMax);
     if(this.hp <= 0){
       this._scene.combo_count++;

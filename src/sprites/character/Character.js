@@ -19,8 +19,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       hp: 10,
       power: 5,
       defense: 1,
-      experience: 10,
-      attackPoint: 2
+      experience: 10
     }
     this.active = true;
     this.invincible = false;
@@ -80,6 +79,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
         
     let damage = num - this.status.defense;
+
     if(damage <= 0){
       damage = 1;
     }
@@ -138,21 +138,39 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         y: this.y,
         target: this 
       });
+      // this.explodeSprite.depth = 10;
+      this.explodeSprite.setPlay();
       // this.explodeSprite.explode();
     }
   }
   explode(){
 
+
     this.active = false;  
     this.explodeSprite.destroy();
     if(this.key === "dragon"){
+      this.getExperience(this.status.experience);
       this.nextBoss();
       return;
     }
+    if(this.key === "shadow"){
+      this.getExperience(this.status.experience);
+      this.scene.cameras.main.shake(1000, 0.01, 0.01) //Duration, intensity, force
+      let _scene = this._scene;
+      setTimeout(
+        function(){
+          _scene.clearGameObj.open();
+        }
+      , 3000);
+      this.destroy();
+      return;
+    }
     if(this.type === "enemy"){
+      this.getExperience(this.status.experience);
       this.dropItem();
     }
-    this.destroy();
+    
+
     if(this.type === "player"){
       let _scene = this._scene;
       setTimeout(
@@ -162,6 +180,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       , 1000);
     }    
     if(this.type === "boss"){
+      this.getExperience(this.status.experience);
       let _scene = this._scene;
       setTimeout(
         function(){
@@ -169,5 +188,14 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         }
       , 1000);
     }
+    this.destroy();
+  }
+  getExperience(experience){
+
+
+    let setExperience = this.scene.registry.list.experience + experience;
+
+    this.scene.registry.set('experience', setExperience);
+
   }
 }

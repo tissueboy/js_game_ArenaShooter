@@ -8,11 +8,10 @@ export default class Brain extends EnemyChase {
     super(config);
 
     this.status = {
-      hp: 10,
-      power: 5,
+      hp: 5,
+      power: 2,
       defense: 1,
-      experience: 10,
-      attackPoint: 2
+      experience: 10
     }
     this.hp.hp = this.status.hp;
     this.hp.hpMax = this.status.hp;
@@ -54,29 +53,13 @@ export default class Brain extends EnemyChase {
     var direction_x = rangeRadius * Math.sin(radian);
     var direction_y = rangeRadius * Math.cos(radian);
 
-
     let bullet = {
       vx: direction_x,
       vy: direction_y
     }
-    // bullet.vx = direction_x;
-    // bullet.vx = direction_x;
 
     this.fromShotPool(bullet);
 
-    // var bullet = new Bullet({
-    //   scene: this.scene,
-    //   key: 'bullet',
-    //   x: this.x,
-    //   y: this.y,
-    //   vx: direction_x,
-    //   vy: direction_y,
-    //   target: this,
-    //   power: 0,
-    //   scale: 1,
-    //   type: "enemy"
-    // });
-    // this.scene.enemyWeaponGroup.add(bullet);   
   }
   createShot(object){    
     let bullet = new Bullet({
@@ -98,7 +81,7 @@ export default class Brain extends EnemyChase {
     bullet.y = this.y;
     bullet.vx = object.vx;
     bullet.vy = object.vy;
-    bullet.shot();
+    bullet.shot(this.status.power);
   }
   attackStop(){
     

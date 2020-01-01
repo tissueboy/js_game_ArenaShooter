@@ -28,14 +28,15 @@ export default class CollisionCheck{
     if(!enemy.appeared){
       return;
     }
-    player.damage(enemy.status.attackPoint);
+    player.damage(enemy.status.power);
  
   }
   player_x_enemyWeapon_Collision(player,obj){
     if(!obj.active){
       return;
     }
-    player.damage(obj.attackPoint);
+    player.damage(obj.power);
+    
     obj.explode();
   }
   enemy_x_playerWeapon_Collision(enemy,obj){
@@ -48,7 +49,7 @@ export default class CollisionCheck{
     if(!obj.active){
       return;
     }
-    enemy.damage(obj.attackPoint);
+    enemy.damage(obj.power);
     if(enemy.active){
       obj.explode();
     }

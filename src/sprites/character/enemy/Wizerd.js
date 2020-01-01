@@ -10,8 +10,7 @@ export default class Wizerd extends EnemyChase {
       hp: 10,
       power: 5,
       defense: 1,
-      experience: 10,
-      attackPoint: 2
+      experience: 10
     }
     this.hp.hp = this.status.hp;
     this.hp.hpMax = this.status.hp;
@@ -59,7 +58,7 @@ export default class Wizerd extends EnemyChase {
         if(!_this.active){
           return;
         }
-        player.damage(_this.status.attackPoint);
+        player.damage(_this.status.power);
 
       }
     );

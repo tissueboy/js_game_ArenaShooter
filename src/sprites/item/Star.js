@@ -2,11 +2,11 @@ import Item from './Item';
 
 export default class Star extends Item {
   constructor(config) {
-    super(config.scene);
+    super(config);
     this.key = "star";
     this.frame = "star";
-    this.scene.player.mode = "star";
-    this.scene.player.starMode();
+    config.scene.player.mode = "star";
+    config.scene.player.starMode();
     this.destroy();
   }
 }

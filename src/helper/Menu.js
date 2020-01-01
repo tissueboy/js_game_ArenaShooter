@@ -36,6 +36,8 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     this.overlapArea.setScrollFactor(0);
 
 
+
+
     /*==============================
     プレイヤー
     ==============================*/    
@@ -45,6 +47,8 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       'player'
     );
     this.player.setScrollFactor(0);
+    this.player.scaleX = 2;
+    this.player.scaleY = 2;
 
     /*==============================
     ステータス
@@ -56,17 +60,13 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       '',
       24
     );
-    this.statusText.setText(
-      [
-        'LEVEL        :'+this.scene.player.status.level,
-        'HP           :'+this.scene.player.status.hp,
-        'ATTACK POINT :'+this.scene.player.status.attackPoint,
-        'POWER        :'+this.scene.player.status.power,
-        'DEFENCE      :'+this.scene.player.status.defense
-      ],
-    );
+
     this.statusText.setOrigin(0.5,0.5);
 
+    /*==============================
+    ステータスの更新
+    ==============================*/       
+    this.refreshMenu();
 
     /*==============================
     カーソル
@@ -80,7 +80,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     ==============================*/   
     this.buttonOK = config.scene.add.sprite(
       config.scene.game.config.width/2,
-      220,
+      210,
       'button_ok'
     );    
     this.buttonOK.setScrollFactor(0);
@@ -94,12 +94,14 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
     this.buttonOK.on('pointerdown', () => {
       let selectedItem = this.selectItem.item[0];
       let selectedItemIndex = this.selectItemIndex;
-      // this.containerItem.removeAt(selectedItemIndex);
       this.containerItem.removeAll();
-      let item_key = selectedItem[1];
+      let item_key = this.selectItem.item[1];
       let item = new selectedItem({
-        scene: this
+        scene: config.scene,
+        key: item_key
       }); 
+      config.scene.itemGroup.add(item);
+
       this.scene.hasItemList.splice(selectedItemIndex, 1 );
       this.displayItemList();
       this.cursor.visible = false;  
@@ -126,7 +128,7 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
       let item = this.scene.hasItemList[i];
       let item_obj = item[0];
       let item_key = item[1];
-      let sprite = this.scene.add.sprite(30*(i+1), 180, item_key);
+      let sprite = this.scene.add.sprite(30*(i+1), 170, item_key);
       sprite.setInteractive();
       sprite.setScrollFactor(0);
       this.containerItem.add(sprite);
@@ -141,6 +143,28 @@ export default class Menu extends Phaser.Physics.Arcade.Sprite{
         this.buttonOK.visible = true;
       },this);
     }    
+  }
+  open(){
+    this.container.setVisible(true);
+    this.refreshMenu();
+  }
+  close(){
+    this.container.setVisible(false);
+  }
+  refreshMenu(){
+    this.statusText.setText(
+      [
+        'LEVEL   :'+this.scene.player.status.level,
+        'HP      :'+this.scene.player.status.hp,
+        'POWER   :'+this.scene.player.status.power,
+        'DEFENCE :'+this.scene.player.status.defense,
+        // 'experience   :'+this.scene.registry.list.experience,
+        '..............',
+        ' ',
+        ' ',
+        'ITEM          '
+      ],
+    );
   }
 }
   

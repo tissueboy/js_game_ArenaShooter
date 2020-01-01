@@ -1,4 +1,5 @@
-import Axe from '../sprites/weapon/Axe';
+
+import Fire from '../sprites/item/Fire';
 import Star from '../sprites/item/Star';
 import Portion from '../sprites/item/Portion';
 
@@ -65,7 +66,7 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
     config.scene.add.existing(this.buttonNext);
 
     this.dropItemList = [
-      [Axe, "axe","weapon"],
+      [Fire, "fire","item"],
       [Portion, "portion","item"],
       [Star, "star","item"]
     ];

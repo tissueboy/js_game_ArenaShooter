@@ -1,11 +1,15 @@
-export default class GameOver extends Phaser.Physics.Arcade.Sprite{
+
+
+export default class ClearGame extends Phaser.Physics.Arcade.Sprite{
   constructor(config) {
 
     super(config.scene);
 
+    this.visible = false;
+
     this.container = this.scene.add.container(0, 0);
-    this.container.setScrollFactor(0);
     this.container.depth = 100;
+    this.container.setScrollFactor(0);
 
     this.overlapArea = this.scene.add.graphics(
       {
@@ -14,32 +18,29 @@ export default class GameOver extends Phaser.Physics.Arcade.Sprite{
     );    
     this.rect = new Phaser.Geom.Rectangle(0, 0, config.scene.game.config.width, config.scene.game.config.height);
     this.overlapArea.fillRectShape(this.rect);
-    this.overlapArea.alpha = 0.75;
+    this.overlapArea.alpha = 0.15;
     this.overlapArea.setScrollFactor(0);
 
 
-    this.stageOverTxt = this.scene.add.bitmapText(
+    this.gameClearTxt = this.scene.add.bitmapText(
       config.scene.game.config.width/2,
       70,
-      'bitmapFont',
-      'GAME OVER',
+      'bitmapFontYellow',
+      'GAME CLEAR',
       30
     );
-    this.stageOverTxt.setOrigin(0.5,0.5);
-    config.scene.physics.world.enable(this.stageOverTxt);
-    config.scene.add.existing(this.stageOverTxt);
-    this.stageOverTxt.setScrollFactor(0);
+    this.gameClearTxt.setOrigin(0.5,0.5);
+    this.gameClearTxt.setScrollFactor(0);
 
-    this.buttonContinue = config.scene.add.sprite(
+    this.scoreTxt = this.scene.add.bitmapText(
       config.scene.game.config.width/2,
-      140,
-      'button_continue'
+      120,
+      'bitmapFont',
+      'SCORE : '+this.scene.registry.list.experience,
+      30
     );
-    this.buttonContinue.setScrollFactor(0);
-    this.buttonContinue.setOrigin(0.5,0.5);
-    this.buttonContinue.setInteractive();
-    config.scene.physics.world.enable(this.buttonContinue);
-    config.scene.add.existing(this.buttonContinue);
+    this.scoreTxt.setOrigin(0.5,0.5);
+    this.scoreTxt.setScrollFactor(0);
 
     this.buttonTitle = config.scene.add.sprite(
       config.scene.game.config.width/2,
@@ -50,27 +51,29 @@ export default class GameOver extends Phaser.Physics.Arcade.Sprite{
     this.buttonTitle.setOrigin(0.5,0.5);
     this.buttonTitle.setInteractive();
     config.scene.physics.world.enable(this.buttonTitle);
-    config.scene.add.existing(this.buttonTitle);
+    config.scene.add.existing(this.buttonTitle);    
 
     this.container.add([
       this.overlapArea,
-      this.stageOverTxt,
-      this.buttonContinue,
+      this.gameClearTxt,
+      this.scoreTxt,
       this.buttonTitle
     ]);
     
     this.container.visible = false;
 
-    this.buttonContinue.on('pointerdown', () => {
-      this.scene.refleshGame();
-    });
     this.buttonTitle.on('pointerdown', () => {
       this.scene.titleGame();
-    });
+    });    
+
 
   }
-
-  gameOverDisplay(){
+  open(){
     this.container.visible = true;
+    this.scoreTxt.setText(
+      [
+        'SCORE   :'+this.scene.registry.list.experience
+      ]
+    );
   }
 }

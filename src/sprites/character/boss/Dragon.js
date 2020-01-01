@@ -9,6 +9,7 @@ export default class Dragon extends Enemy {
 
     super(config);
 
+ 
     this.type = "boss";
     this.key = "dragon";
     this.evolutionBoss = true;
@@ -22,7 +23,6 @@ export default class Dragon extends Enemy {
       power: 5,
       defense: 4,
       experience: 10,
-      attackPoint: 1,
       walkSpeed: 12
     }
 
@@ -90,7 +90,7 @@ export default class Dragon extends Enemy {
   attackSelect(){
     var rand = Math.floor( Math.random() * 100) ;
     if(rand <= 50){
-      this.attack2();
+      this.attack1();
     }else{
       this.attack2();
     }
@@ -135,7 +135,7 @@ export default class Dragon extends Enemy {
     this.scene.physics.world.enable(shadowSprite);
     this.scene.add.existing(shadowSprite);
 
-    let dropSprite = this.scene.add.sprite(0, 0, 'barrier');
+    let dropSprite = this.scene.add.sprite(0, 0, 'bullet');
     dropSprite.setVisible(false);
     dropSprite.power = 2;
 
@@ -174,16 +174,18 @@ export default class Dragon extends Enemy {
       let sa = this.shotCountMax - this.shotCount;
       shotLength -= sa;
     }
+
+    let shotPadding = this.x + 70;
     for(var i = 0; i < shotLength; i++){
       let randomPos = this.createRandomPosition();
       let dropShotGroup = this.fromDropShotPool();
       let drop = dropShotGroup.drop;
       let shadow = dropShotGroup.shadow;
       shadow.x = randomPos.x;
-      shadow.y = randomPos.y;
+      shadow.y = randomPos.y + shotPadding;
       shadow.setVisible(true);
       drop.x = randomPos.x;
-      drop.y = randomPos.y - 40;
+      drop.y = randomPos.y - 40 + shotPadding;
       drop.setVisible(true);
       drop.alpha = 0;
       shadow.alpha = 0;
@@ -206,7 +208,7 @@ export default class Dragon extends Enemy {
         targets: drop,
         ease: 'liner',
         alpha: 1,
-        y: randomPos.y,
+        y: randomPos.y + shotPadding,
         scaleX: 1,
         scaleY: 1,
         duration: 200,
@@ -251,6 +253,31 @@ export default class Dragon extends Enemy {
     };
     return randPos;  
   }
+  createShot(object){    
+    let bullet = new Bullet({
+      scene: this.scene,
+      x: this.x,
+      y: this.y,
+      key: "bullet"
+    }); 
+    bullet.depth = 10;
+    this.scene.enemyWeaponGroup.add(bullet);
+
+  }
+  fromShotPool(object){
+    let bullet = this.scene.enemyWeaponGroup.getFirst();
+    if(!bullet){
+      this.createShot();
+      bullet = this.scene.enemyWeaponGroup.get()
+    }
+
+    bullet.x = this.x + 10;
+    bullet.y = this.y + 14;
+    bullet.vx = object.vx;
+    bullet.vy = object.vy;
+    bullet.shot(this.status.power);
+  }
+
   shotBullet(){
     this.shotDegree += 36;
     this.shotRadian = this.shotDegree * ( Math.PI / 180 ) ;
@@ -260,27 +287,36 @@ export default class Dragon extends Enemy {
 
 
     let vec = this.calcs.returnMax1(_vx,_vy);
-    let bullet = new Bullet({
-      scene: this.scene,
-      x: 10,
-      y: 10,
-      // key: "bullet",
-      // vx: vec.x,
-      // vy: vec.y,
-      // target: this,
-      // power: 10,
-      // scale: 1,
-      // parent: "dragon"
-    }); 
-    this.scene.enemyWeaponGroup.add(bullet);
+
+    let bullet = {
+      vx: _vx,
+      vy: _vy
+    }
+    
+    this.fromShotPool(bullet);
+
+    // let bullet = new Bullet({
+    //   scene: this.scene,
+    //   x: this.x,
+    //   y: this.y,
+    //   // key: "bullet",
+    //   // vx: vec.x,
+    //   // vy: vec.y,
+    //   // target: this,
+    //   // power: 10,
+    //   // scale: 1,
+    //   // parent: "dragon"
+    // }); 
+    // this.scene.enemyWeaponGroup.add(bullet);
     this.shotCount++;
   }
   nextBoss(){
     let _this = this._scene;
     this.destroy();
-    this._scene.map = _this.make.tilemap({ key: 'map2',tileWidth: 16, tileHeight: 16});
-    this.groundLayer = this._scene.map.createDynamicLayer('ground', this._scene.tileset, 0, 0);
-    this.groundLayer.depth = 1;
+
+
+    this._scene.groundLayer.alpha = 0.75;
+
     _this.shadow = new Shadow({
       scene: _this,
       x: _this.game.config.width/2,

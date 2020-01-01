@@ -1,4 +1,5 @@
 import Calcs from '../../helper/Calcs';
+import Explode from '../character/Explode';
 
 export default class Bullet extends Phaser.GameObjects.Sprite {
   constructor(config) {
@@ -14,11 +15,12 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.active = false;
     this.key = "bullet";
 
+    // this.anims.play("bulletAnime", true);
+
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
+    this.body.setCircle(this.body.width/2);
     
-    this.attackPoint = 0;
-
     this.vx = 0;
     this.vy = 0;
 
@@ -44,11 +46,31 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       x: 0,
       y: 0
     }
+
     this.deadRadius = 10;
+
+    // this.explodeAnime = false;
+
+    // // this.anims.play("bulletAnime", true);
+
     
+    // this.on('animationcomplete', function() {
+    //   console.log("end anime");
+    //   // console.log("this",this)
+    //   // this.explodeAnime = "";
+    //   this.explodeAnime = false;
+      
+    // },this);
+
   }
 
   update(time, delta) {
+
+    // if(!this.explodeAnime){
+    //   this.anims.play("bulletAnime", true);
+    // }else{
+    //   this.anims.play("explosionAnime_m", true);
+    // }
 
     if(!this.active){
       this.body.setVelocity(0,0);
@@ -78,7 +100,12 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       );
     }
   }
-  shot(param){
+  shot(power){
+
+    // this.anims.play("bulletAnime", true);
+    // this.anims.play("explosionAnime_m", false);
+
+    this.power = power ? power : this.power;
 
     if(!this.canShot){
       return;
@@ -89,29 +116,38 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.breakCounter = this.breakTime;
+
     /*==============================
     受け取ったベクトルをMAXを1にしてvx*speedを均等にする。
     ==============================*/
     this.vector_max_1 = this.calcs.returnMax1(this.vx,this.vy);
+
   }
 
   alive(){
+
     this.setActive(true);
     this.setVisible(true);
     this.active = true;
+
   }
 
   explode() {
+    console.log("explode")
+
+    // this.explodeAnime = true;
+
     this.setActive(false);
     this.setVisible(false);
-    this.active = false;
+ 
+    // this.active = false;
+    // console.log("this",this)
     this.body.setVelocity(0,0);
     this.vx = 0;
     this.vy = 0;
-    // this.canShot = false;
-    // this.breakCounter = this.breakTime;
-    // this.breakCounter = this.breakTime;
+
   }
+
   bounce(){
 
     if(!this.active){
@@ -128,8 +164,5 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
     this.body.setVelocity(this.vector_max_1.x*this.speed,this.vector_max_1.y*this.speed);
   }
-  // stop(){
-  //   this.canShot = false;
-  // }
 
 }

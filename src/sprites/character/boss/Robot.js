@@ -40,7 +40,6 @@ export default class Robot extends EnemyChase {
       power: 5,
       defense: 5,
       experience: 10,
-      attackPoint: 1,
       walkSpeed: 12
     }
     this.ATTACKING_DISTANCE = 80;

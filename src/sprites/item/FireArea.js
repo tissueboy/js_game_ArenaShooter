@@ -5,10 +5,9 @@ export default class FireArea extends Phaser.GameObjects.Sprite {
       config.x,
       config.y,
       config.key,
-      config.frame,
-      config.attackPoint
+      config.frame
     );
-    this.attackPoint = config.attackPoint;
+    
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
 
