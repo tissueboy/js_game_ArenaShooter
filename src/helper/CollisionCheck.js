@@ -63,7 +63,6 @@ export default class CollisionCheck{
   }
 
   item_x_ground_Collision(item,obj){
-    // item.checkCollision(item,obj);
   }
   item_x_objectGround_Collision(item,obj){
     item.checkCollision(item,obj);

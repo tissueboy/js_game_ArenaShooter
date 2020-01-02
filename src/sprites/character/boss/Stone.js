@@ -75,7 +75,6 @@ export default class Stone extends Enemy {
       callback: this.attackAnimation,
       callbackScope: this,
       repeat: -1,
-      // startAt: 1000,
     });    
   }
   attackAnimation(){
@@ -89,7 +88,6 @@ export default class Stone extends Enemy {
     
     this.bossAttackBefore = this.scene.tweens.timeline({
       targets: _target,
-      // y: _target_y+10,
       tweens: [{
         y: _target_y,
       },
@@ -99,7 +97,6 @@ export default class Stone extends Enemy {
       ease: 'liner',
       duration: 100,
       repeat: 4,
-      // loop: 3,
       completeDelay: 400,
       onComplete: function () {
         _target.attackMove();

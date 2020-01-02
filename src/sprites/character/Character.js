@@ -138,9 +138,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         y: this.y,
         target: this 
       });
-      // this.explodeSprite.depth = 10;
       this.explodeSprite.setPlay();
-      // this.explodeSprite.explode();
     }
   }
   explode(){

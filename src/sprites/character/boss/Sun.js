@@ -151,13 +151,7 @@ export default class Sun extends Enemy {
     if(this.shotActive){
       this.aroundBulletGroup.children.entries.forEach(
         (sprite,index) => {
-          // if(_this.active && _this.flgShot){
-          //   sprite.scaleX +=_time/10;
-          //   sprite.scaleY +=_time/10;
-          // }else{
-          //   sprite.scaleX = 1;
-          //   sprite.scaleY = 1;            
-          // }
+
           _this.barrierDegree += _time/2000;
           sprite.x = _this.x + Math.cos(_this.barrierDegree + index)*_this.barrierRadius;
           sprite.y = _this.y + Math.sin(_this.barrierDegree + index)*_this.barrierRadius;  
@@ -184,18 +178,13 @@ export default class Sun extends Enemy {
     this.invincible = true;
     this.hp.alpha = 0;
     let nextPostion;
-    // let nextPostion = {
-    //   x: this.scene.game.config.width/2,
-    //   y: this.scene.game.config.height/2
-    // };
-    // if(this.calc.getRandomInt(0,1) === 0){
-      nextPostion = this.calc.createRandomPosition(
-        this.maxDistanceArea.left,
-        this.maxDistanceArea.right,
-        this.maxDistanceArea.top,
-        this.maxDistanceArea.bottom
-      );
-    // }
+
+    nextPostion = this.calc.createRandomPosition(
+      this.maxDistanceArea.left,
+      this.maxDistanceArea.right,
+      this.maxDistanceArea.top,
+      this.maxDistanceArea.bottom
+    );
     _this.hp.hp_bar_bg.setVisible(false);
     _this.hp.hp_bar.setVisible(false);
     let hideAnime = this.scene.tweens.add({
@@ -211,7 +200,6 @@ export default class Sun extends Enemy {
         _this.y = nextPostion.y;
         _this.mask.bitmapMask.x = _this.x;
         _this.mask.bitmapMask.y = _this.y;
-        // _this.appear();
         _this.appearAnime();
       },
     });
@@ -226,14 +214,12 @@ export default class Sun extends Enemy {
       scaleY: 1,
       duration: 1000,
       repeat: 0,
-      // completeDelay: 100,
       onComplete: function () {
         _this.shotActive = true;
         _this.hp.hp_bar_bg.setVisible(true);
         _this.hp.hp_bar.setVisible(true);
         _this.invincible = false;
         _this.appeared = true;
-        // _this.appear();
       },
     });
   }

@@ -30,7 +30,6 @@ export default class Lazer extends Phaser.GameObjects.Sprite {
   
       this.target = config.target;
       
-      // this.power = Math.floor(1 * this.target.status.power + this.power);
   
       this.speed = 100;
       this.depth = 10;

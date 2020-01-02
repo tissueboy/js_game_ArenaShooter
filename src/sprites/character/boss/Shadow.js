@@ -80,11 +80,7 @@ export default class Shadow extends Enemy {
     if(this.canAttack){
       this.canAttack = false;
       this.scene.time.addEvent({ delay: 5000, callback: this.hideAttack, callbackScope: this });
-      // let fireball = this.shadowAttack.get();
-      // if (fireball)
-      // {
-      //   fireball.setVisible(true);
-      // }
+
       this.attackSelect();
     }
   }
@@ -123,11 +119,10 @@ export default class Shadow extends Enemy {
       this.shotStartTimerEvent = null;
       this.shotTimerEvent.remove(false);  
     }
-    // this.shotTimerEvent.remove(false)
   }
   attack2(){
     this.attackMode = "attack2";
-    // let pos;
+
     this.playerPosition = {
       x: this.scene.player.x + this.scene.player.width/2,
       y: this.scene.player.y + this.scene.player.height/2
@@ -138,10 +133,7 @@ export default class Shadow extends Enemy {
       duration: 100,
       startAt: 100,
       callback: function(){
-        // let pos;
-        if(this.shotCount === 0){
-          // pos = this.scene.player.getCenter();
-        }
+
         this.arroundBullet(this.playerPosition);
         this.shotCount++;
       },
@@ -162,8 +154,6 @@ export default class Shadow extends Enemy {
       x: playerPosition.x + add_x,
       y: playerPosition.y + add_y
     }
-
-    // var vecter = playerPoint.subtract(bulletPoint);
 
     var vecter = {
       x: playerPosition.x - bulletPoint.x,
@@ -255,7 +245,6 @@ export default class Shadow extends Enemy {
             return;
           }
           bullet.canShot = true;
-          // bullet.isWait = false;
           bullet.shot(this.status.power);
         },
         [],

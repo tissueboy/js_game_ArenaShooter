@@ -15,7 +15,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.active = false;
     this.key = "bullet";
 
-    // this.anims.play("bulletAnime", true);
 
     config.scene.physics.world.enable(this);
     config.scene.add.existing(this);
@@ -38,9 +37,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.breakTime = 1000;
     this.breakCounter = this.breakTime;
 
-    // this.alive();
     this.canShot = true;
-    // this.isWait = false;
 
     this.deadPoint = {
       x: 0,
@@ -49,28 +46,11 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
     this.deadRadius = 10;
 
-    // this.explodeAnime = false;
-
-    // // this.anims.play("bulletAnime", true);
-
-    
-    // this.on('animationcomplete', function() {
-    //   console.log("end anime");
-    //   // console.log("this",this)
-    //   // this.explodeAnime = "";
-    //   this.explodeAnime = false;
-      
-    // },this);
-
   }
 
   update(time, delta) {
 
-    // if(!this.explodeAnime){
-    //   this.anims.play("bulletAnime", true);
-    // }else{
-    //   this.anims.play("explosionAnime_m", true);
-    // }
+
 
     if(!this.active){
       this.body.setVelocity(0,0);
@@ -102,8 +82,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
   }
   shot(power){
 
-    // this.anims.play("bulletAnime", true);
-    // this.anims.play("explosionAnime_m", false);
 
     this.power = power ? power : this.power;
 
@@ -124,24 +102,13 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
   }
 
-  alive(){
 
-    this.setActive(true);
-    this.setVisible(true);
-    this.active = true;
-
-  }
 
   explode() {
-    console.log("explode")
-
-    // this.explodeAnime = true;
 
     this.setActive(false);
     this.setVisible(false);
  
-    // this.active = false;
-    // console.log("this",this)
     this.body.setVelocity(0,0);
     this.vx = 0;
     this.vy = 0;

@@ -73,12 +73,6 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
       }
     ];
 
-    // this.createBossTimerEvent = config.scene.time.addEvent({
-    //   delay: 30000,
-    //   callback: this.createBoss,
-    //   callbackScope: config.scene,
-    //   startAt: 0,
-    // });
     this.active = false;
   }
 
@@ -103,9 +97,6 @@ export default class CreateBoss  extends Phaser.Time.TimerEvent{
     });
 
     this._scene.enemyGroup.add(boss);
-    // this.createObjects.createObjTimerEvent.remove(false);
-
-    // this.createBoss.createBossTimerEvent.remove(false);
   }
   clearStageDisplay(){
     this.clearStageObj.container.visible = true;

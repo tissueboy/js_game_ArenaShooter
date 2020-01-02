@@ -67,7 +67,6 @@ export default class Smoke extends Enemy {
       this.idleTimerEvent = this.scene.time.addEvent({
         startAt: 3000,
         delay: 3000,
-        // duration: 3000,
         callback: this.run,
         callbackScope: this,
         loop: true

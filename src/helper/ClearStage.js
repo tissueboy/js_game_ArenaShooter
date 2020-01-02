@@ -99,7 +99,6 @@ export default class ClearStage extends Phaser.Physics.Arcade.Sprite{
       sprite.setScrollFactor(0);
       sprite.depth = 10;
       sprite.setInteractive();
-      // this.getItemGroup.add(sprite);
       this.container.add(sprite);
       sprite.itemList = dropItemName;
       sprite.on('pointerdown', () => {

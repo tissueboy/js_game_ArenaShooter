@@ -5,12 +5,36 @@ class BootScene extends Phaser.Scene {
     });
   }
   preload() {
+    this.make.text({
+      x: this.sys.game.config.width/2,
+      y: 100,
+      text: 'LOADING...',
+      origin: { x: 0.5, y: 0.5 },
+      style: {
+        fontSize: 10,
+        fontFamily: 'Arial',
+        fill: 'white',
+        align: 'center'
+      }
+    });
+    let progressNumb = this.make.text({
+      x: this.sys.game.config.width/2,
+      y: 120,
+      text: '',
+      origin: { x: 0.5, y: 0.5 },
+      style: {
+        fontSize: 10,
+        fontFamily: 'Arial',
+        fill: 'white',
+        align: 'center'
+      }
+    });
     this.progress = this.add.graphics();
 
     this.load.on('progress', (value) => {
       this.progress.clear();
       this.progress.fillStyle(0xffffff, 1);
-      this.progress.fillRect(0, this.sys.game.config.height / 2, this.sys.game.config.width * value, 60);
+      progressNumb.text = Math.round(value*100) + "%";
     });
 
     this.load.on('complete', () => {
@@ -83,7 +107,6 @@ class BootScene extends Phaser.Scene {
     this.load.image('powerUpList_5', 'assets/images/ui/powerUpList_5.png');
 
     this.load.image('bullet', 'assets/images/bullet.png');
-    // this.load.image('bullet_player', 'assets/images/bullet_player.png');
     this.load.image('sword', 'assets/images/sword.png');
     this.load.image('lazer_long', 'assets/images/lazer_long.png');
     this.load.image('lazer_base', 'assets/images/lazer_base.png');

@@ -33,6 +33,14 @@ class TitleScene extends Phaser.Scene {
     this.buttonStart.on('pointerdown', () => {
       this.startGame();
     });  
+    this.copyright = this.add.bitmapText(
+      this.game.config.width/2,
+      this.game.config.height - 20,
+      'bitmapFont',
+      '(C)SAITO TSUSHIN',
+      20
+    );
+    this.copyright.setOrigin(0.5,0.5);
 
     this.registry.set('stage', "1");
     this.registry.set('experience', 0);

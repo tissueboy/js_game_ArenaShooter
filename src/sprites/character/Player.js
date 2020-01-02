@@ -76,7 +76,6 @@ export default class Player extends Character{
     if (this.active) {
       this.hp.move(this.x,this.y);
 
-      // this.activeTime.move(this.x,this.y);
       var radian = Math.atan2(keys.VECTOR.x, keys.VECTOR.y);
       var degree = radian *  180 / Math.PI *-1;
 

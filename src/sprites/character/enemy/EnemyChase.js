@@ -159,7 +159,6 @@ export default class EnemyChase extends Enemy {
       this.attackingPlayerTimerEvent = null;
     }
 
-    // this.attackingPlayerTimerEvent.destroy();
     this.direction.x = 0;
     this.direction.y = 0;
   }

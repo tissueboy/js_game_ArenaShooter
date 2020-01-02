@@ -295,19 +295,7 @@ export default class Dragon extends Enemy {
     
     this.fromShotPool(bullet);
 
-    // let bullet = new Bullet({
-    //   scene: this.scene,
-    //   x: this.x,
-    //   y: this.y,
-    //   // key: "bullet",
-    //   // vx: vec.x,
-    //   // vy: vec.y,
-    //   // target: this,
-    //   // power: 10,
-    //   // scale: 1,
-    //   // parent: "dragon"
-    // }); 
-    // this.scene.enemyWeaponGroup.add(bullet);
+
     this.shotCount++;
   }
   nextBoss(){

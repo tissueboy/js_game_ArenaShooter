@@ -4,8 +4,7 @@ export default class Coin extends Item {
   constructor(config) {
     super(config);
     this.coinPoint = 1;
-    // this.key = "coin";
-    // this.frame = "coin";
+
 
   }
 
